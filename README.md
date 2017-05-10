@@ -1,4 +1,4 @@
 # Phoenix Equinox V
-Play as an ancient creature of myth, the Divine Phoenix. \n
+Play as an ancient creature of myth, the Divine Phoenix.
 Protect the weak and shelter the innocent.
 Fight the advances of man and aid the natural world.
