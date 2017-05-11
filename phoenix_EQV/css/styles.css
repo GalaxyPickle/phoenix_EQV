@@ -1,0 +1,8 @@
+body {
+	font-family: Helvetica;
+	text-align: center;
+	background: rgb(30, 30, 30) url("../assets/img/arches.png");
+}
+canvas {
+	margin: auto;
+}
