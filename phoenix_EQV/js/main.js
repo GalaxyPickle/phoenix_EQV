@@ -45,27 +45,26 @@ var jetpack = 100;
 var jetpackmax = 100;
 var stamina;
 var map;
+var layer;
+var tiles;
 
 var Game = function(game) {};
 Game.prototype = {
   preload: function() {
-	game.load.tilemap('map', 'json/ninja-test-level.json', null, Phaser.Tilemap.TILED_JSON);
 	game.load.image('sky', 'assets/img/bg/fff.jpg');
     game.load.image('bird', 'assets/img/entity/phoenix/phoejay_s.png');
     game.load.spritesheet('ninja-tiles', 'assets/img/meta/ninja-tiles128.png', 128, 128, 34);
-	game.load.image('kenney', 'assets/img/meta/kenney.png');
     game.load.image('mouse', '');
     game.load.spritesheet('bubbles', '', 2, 2);
     game.load.image('stamina', '')
+	
+	game.load.tilemap('map', 'json/ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('kenney', 'kenney.png');
   },
   create: function() {
 
-    // Here we tell the physics manager we system we want to use
     game.physics.startSystem(Phaser.Physics.NINJA);
-    
-    game.world.setBounds(0, 0, 1920, 1920);
 	
-	//draw background
     sky = game.add.sprite(0, 0, 'sky');
     sky.height = game.world.height;
     sky.width = game.world.width;
@@ -83,7 +82,7 @@ Game.prototype = {
 
     game.add.sprite(0, 100, 'mouse');
     game.input.mouse.capture = true;
-    
+
     stamina = game.add.sprite(0, 0, 'stamina');
     stamina.height = 2;
     stamina.width = game.width;
@@ -96,8 +95,26 @@ Game.prototype = {
     game.camera.follow(sprite1);
     game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
 
+    map = game.add.tilemap('map');
+    map.addTilesetImage('kenney');
+    layer = map.createLayer('Tile Layer 1');
+    layer.resizeWorld();
+
+    var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
+
+    tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
+	game.physics.ninja.enableCircle(sprite1, sprite1.width / 2);
+
+    //  A little more bounce
+
+    cursors = game.input.keyboard.createCursorKeys();
   },
   update: function() {
+
+    for (var i = 0; i < tiles.length; i++)
+    {
+        game.physics.ninja.enableTile(tiles[i], tiles[i].frame);
+    }
   
     stamina.width = game.width*jetpack*.01;
     if (sprite1.body.touching.down) jetpack = jetpackmax;
