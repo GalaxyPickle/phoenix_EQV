@@ -44,12 +44,16 @@ var boost = 9999.0;
 var jetpack = 100;
 var jetpackmax = 100;
 var stamina;
+var map;
 
 var Game = function(game) {};
 Game.prototype = {
   preload: function() {
-    game.load.image('bird', 'assets/img/entity/phoenix/phoejay.png');
+	game.load.tilemap('map', 'json/ninja-test-level.json', null, Phaser.Tilemap.TILED_JSON);
+	game.load.image('sky', 'assets/img/bg/fff.jpg');
+    game.load.image('bird', 'assets/img/entity/phoenix/phoejay_s.png');
     game.load.spritesheet('ninja-tiles', 'assets/img/meta/ninja-tiles128.png', 128, 128, 34);
+	game.load.image('kenney', 'assets/img/meta/kenney.png');
     game.load.image('mouse', '');
     game.load.spritesheet('bubbles', '', 2, 2);
     game.load.image('stamina', '')
@@ -60,6 +64,11 @@ Game.prototype = {
     game.physics.startSystem(Phaser.Physics.NINJA);
     
     game.world.setBounds(0, 0, 1920, 1920);
+	
+	//draw background
+    sky = game.add.sprite(0, 0, 'sky');
+    sky.height = game.world.height;
+    sky.width = game.world.width;
 
     sprite1 = game.add.sprite(600, 100, 'bird');
     sprite1.name = 'phoenix';
@@ -81,8 +90,8 @@ Game.prototype = {
 
     //init player
     player = game.add.group();
-	sprite1.width *= .2;
-	sprite1.height *= .2;
+	//sprite1.width *= .2;
+	//sprite1.height *= .2;
     
     game.camera.follow(sprite1);
     game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
@@ -100,7 +109,7 @@ Game.prototype = {
     sprite1.turnspeed = 5;
 
     if (!mouseleft) origin = 0;
-    else origin += game.input.mousePointer.x - shift;
+    else origin += game.input.mousePointer.worldX - shift;
 
     game.physics.ninja.collide(sprite1, tile);
 
@@ -128,7 +137,7 @@ Game.prototype = {
 
     if (mouseleft) {
       if (jetpack > 0) {
-        if (sprite1.y > game.input.mousePointer.y) {
+        if (sprite1.y > game.input.mousePointer.worldY) {
             jetpack -= 1;
             sprite1.body.moveUp(30);
         }
@@ -136,7 +145,7 @@ Game.prototype = {
       else sprite1.body.moveUp(11);
     }
 
-    shift = game.input.mousePointer.x;
+    shift = game.input.mousePointer.worldX;
   },
   render: function() {
 
