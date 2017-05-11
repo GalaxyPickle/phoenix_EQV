@@ -47,6 +47,7 @@ var stamina;
 var map;
 var layer;
 var tiles;
+var bubbles = new Array();
 
 var Game = function(game) {};
 Game.prototype = {
@@ -55,7 +56,8 @@ Game.prototype = {
     game.load.image('bird', 'assets/img/entity/phoenix/phoejay_s.png');
     game.load.image('mouse', '');
     game.load.spritesheet('bubbles', '', 2, 2);
-    game.load.image('stamina', '')
+    game.load.image('stamina', '');
+	game.load.spritesheet('ship', 'ship.png', 24, 32);
 	
 	game.load.tilemap('map', 'json/ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('kenney', 'assets/img/meta/kenney.png');
@@ -93,12 +95,16 @@ Game.prototype = {
     map.addTilesetImage('kenney');
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
-
     var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
-
     tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
-
+	
     cursors = game.input.keyboard.createCursorKeys();
+
+    //spawn bubbles
+    for (var i = 0; i < Math.floor(game.world.width/50); i++) {
+      bubbles[i] = new Bubbles(game, 'ship');
+	  game.add.existing(bubbles[i]);
+    }	
   },
   update: function() {
 
