@@ -53,44 +53,38 @@ Game.prototype = {
   preload: function() {
 	game.load.image('sky', 'assets/img/bg/fff.jpg');
     game.load.image('bird', 'assets/img/entity/phoenix/phoejay_s.png');
-    game.load.spritesheet('ninja-tiles', 'assets/img/meta/ninja-tiles128.png', 128, 128, 34);
     game.load.image('mouse', '');
     game.load.spritesheet('bubbles', '', 2, 2);
     game.load.image('stamina', '')
 	
 	game.load.tilemap('map', 'json/ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('kenney', 'kenney.png');
+    game.load.image('kenney', 'assets/img/meta/kenney.png');
   },
   create: function() {
+	  
+	sky = game.add.sprite(0, 0, 'sky');
+    sky.height = game.height;
+    sky.width = game.width;
+	sky.fixedToCamera = true;
 
     game.physics.startSystem(Phaser.Physics.NINJA);
-	
-    sky = game.add.sprite(0, 0, 'sky');
-    sky.height = game.world.height;
-    sky.width = game.world.width;
 
     sprite1 = game.add.sprite(600, 100, 'bird');
     sprite1.name = 'phoenix';
 
-    // Enable ninja on the sprite and creates an AABB around it
-    game.physics.ninja.enableAABB(sprite1);
-
-    tile = game.add.sprite(600, 480, 'ninja-tiles', 3);
-    game.physics.ninja.enableTile(tile, tile.frame);
+    game.physics.ninja.enableCircle(sprite1, sprite1.width / 2);
 
     cursors = game.input.keyboard.createCursorKeys();
 
-    game.add.sprite(0, 100, 'mouse');
     game.input.mouse.capture = true;
 
     stamina = game.add.sprite(0, 0, 'stamina');
     stamina.height = 2;
     stamina.width = game.width;
+	stamina.fixedToCamera = true;
 
     //init player
     player = game.add.group();
-	//sprite1.width *= .2;
-	//sprite1.height *= .2;
     
     game.camera.follow(sprite1);
     game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
@@ -103,9 +97,6 @@ Game.prototype = {
     var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
 
     tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
-	game.physics.ninja.enableCircle(sprite1, sprite1.width / 2);
-
-    //  A little more bounce
 
     cursors = game.input.keyboard.createCursorKeys();
   },
@@ -113,7 +104,7 @@ Game.prototype = {
 
     for (var i = 0; i < tiles.length; i++)
     {
-        game.physics.ninja.enableTile(tiles[i], tiles[i].frame);
+        sprite1.body.circle.collideCircleVsTile(tiles[i].tile);
     }
   
     stamina.width = game.width*jetpack*.01;
