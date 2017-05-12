@@ -57,7 +57,7 @@ Game.prototype = {
     game.load.image('mouse', '');
     game.load.spritesheet('bubbles', '', 2, 2);
     game.load.image('stamina', '');
-	game.load.spritesheet('ship', 'ship.png', 24, 32);
+	game.load.spritesheet('ship', 'assets/img/particles/ship.png', 24, 32);
 	
 	game.load.tilemap('map', 'json/ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('kenney', 'assets/img/meta/kenney.png');
