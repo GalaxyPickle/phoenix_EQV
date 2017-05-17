@@ -1,16 +1,16 @@
 //////////////////////////////////////////////////////////
-//														//
-//					Team Augment BOW					//
-//	Calvin Walantus										//
-//	Vienna Chan											//
-//	Alex Lang											//
-//	Shuoen Li											//
-//	Joey Sandmeyer										//
-//														//
-//				----Phoenix Equinox V----				//
-//														//
-//						main.js							//
-//														//
+//                                                      //
+//                  Team Augment BOW                    //
+//  Calvin Walantus                                     //
+//  Vienna Chan                                         //
+//  Alex Lang                                           //
+//  Shuoen Li                                           //
+//  Joey Sandmeyer                                      //
+//                                                      //
+//              ----Phoenix Equinox V----               //
+//                                                      //
+//                      main.js                         //
+//                                                      //
 //////////////////////////////////////////////////////////
 
 
@@ -36,54 +36,56 @@ var player;
 var sprite1;
 var tile;
 var cursors;
-var origin;
-var shift;
 var feathers;
 var turnspeed = 0.6;
 var boost = 9999.0;
-var jetpack = 100;
-var jetpackmax = 100;
+var jetpack = 20;
+var jetpackmax = 20;
+var birdWeight = 2;
 var stamina;
 var map;
 var layer;
 var tiles;
+var jump;
+var lasty;
 var bubbles = new Array();
 
 var Game = function(game) {};
 Game.prototype = {
   preload: function() {
-	game.load.image('sky', 'assets/img/bg/fff.jpg');
+    game.load.image('sky', 'assets/img/bg/fff.jpg');
     game.load.image('bird', 'assets/img/entity/phoenix/phoejay_s.png');
-    game.load.image('mouse', '');
     game.load.spritesheet('bubbles', '', 2, 2);
     game.load.image('stamina', '');
-	game.load.spritesheet('ship', 'assets/img/particles/ship.png', 24, 32);
-	
-	game.load.tilemap('map', 'json/ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.spritesheet('ship', 'assets/img/particles/ship.png', 24, 32);
+    
+    game.load.tilemap('map', 'json/ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('kenney', 'assets/img/meta/kenney.png');
   },
   create: function() {
-	  
-	sky = game.add.sprite(0, 0, 'sky');
+      
+    sky = game.add.sprite(0, 0, 'sky');
     sky.height = game.height;
     sky.width = game.width;
-	sky.fixedToCamera = true;
+    sky.fixedToCamera = true;
 
     game.physics.startSystem(Phaser.Physics.NINJA);
 
     sprite1 = game.add.sprite(600, 100, 'bird');
     sprite1.name = 'phoenix';
-
+	
     game.physics.ninja.enableCircle(sprite1, sprite1.width / 2);
+    sprite1.body.bounce = 0;
+    sprite1.body.friction = 0.03;
+	sprite1.body.gravityScale = birdWeight;
+
 
     cursors = game.input.keyboard.createCursorKeys();
-
-    game.input.mouse.capture = true;
-
+    
     stamina = game.add.sprite(0, 0, 'stamina');
     stamina.height = 2;
     stamina.width = game.width;
-	stamina.fixedToCamera = true;
+    stamina.fixedToCamera = true;
 
     //init player
     player = game.add.group();
@@ -97,34 +99,24 @@ Game.prototype = {
     layer.resizeWorld();
     var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
     tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
-	
-    cursors = game.input.keyboard.createCursorKeys();
 
     //spawn bubbles
     for (var i = 0; i < Math.floor(game.world.width/50); i++) {
       bubbles[i] = new Bubbles(game, 'ship');
-	  game.add.existing(bubbles[i]);
-    }	
+      game.add.existing(bubbles[i]);
+    }   
   },
   update: function() {
 
     for (var i = 0; i < tiles.length; i++)
-    {
-        sprite1.body.circle.collideCircleVsTile(tiles[i].tile);
-    }
+      sprite1.body.circle.collideCircleVsTile(tiles[i].tile);
   
     stamina.width = game.width*jetpack*.01;
-    if (sprite1.body.touching.down) jetpack = jetpackmax;
-
-    var mouseleft = game.input.activePointer.leftButton.isDown;
-    var mouseright = game.input.activePointer.rightButton.isDown;
-    var mousemiddle = game.input.activePointer.middleButton.isDown;
-
-    sprite1.turnspeed = 5;
-
-    if (!mouseleft) origin = 0;
-    else origin += game.input.mousePointer.worldX - shift;
-
+    if (sprite1.body.touching.down) {
+      jetpack = jetpackmax;
+       jump = 0;
+    }
+        
     game.physics.ninja.collide(sprite1, tile);
 
     if (cursors.left.isDown) {
@@ -132,40 +124,36 @@ Game.prototype = {
     } else if (cursors.right.isDown) {
       sprite1.body.moveRight(30);
     }
-
-    if (origin < 0) {
-      sprite1.body.moveLeft(-origin * turnspeed);
-      origin += 2;
-    } else if ((origin > 0)) {
-      sprite1.body.moveRight(origin * turnspeed);
-      origin += -2;
+    
+    if (sprite1.body.touching.down && cursors.up.isDown) { //first jump
+      sprite1.body.moveUp(150);
+	  jump = 1;
     }
 
-    if (cursors.up.isDown) {
+    if (jump == 1 && cursors.up.isDown) { //first jump shorthop
       if (jetpack > 0) {
-        sprite1.body.moveUp(30);
+        sprite1.body.moveUp(jetpack*4);
         jetpack -= 1;
       }
-      else sprite1.body.moveUp(11);
     }
-
-    if (mouseleft) {
-      if (jetpack > 0) {
-        if (sprite1.y > game.input.mousePointer.worldY) {
-            jetpack -= 1;
-            sprite1.body.moveUp(30);
-        }
-      }
-      else sprite1.body.moveUp(11);
+	
+	if (jump == 1 && !cursors.up.isDown) {
+	  jump = 2;	
     }
-
-    shift = game.input.mousePointer.worldX;
+	
+	if ((jump == 0 || jump == 2) && !sprite1.body.touching.down && cursors.up.isDown) { //first jump post-jump
+	  sprite1.body.moveUp(birdWeight*500);
+      jump = 3;
+    }
+    
+    if (jump == 3 && cursors.up.isDown) {
+      if (sprite1.body.y > lasty) sprite1.body.moveUp(birdWeight*10.2);
+    }
+	
+	lasty = sprite1.body.y;
   },
   render: function() {
 
-    game.debug.text("Left Button: " + game.input.activePointer.leftButton.isDown, 300, 132);
-    game.debug.text("Middle Button: " + game.input.activePointer.middleButton.isDown, 300, 196);
-    game.debug.text("Right Button: " + game.input.activePointer.rightButton.isDown, 300, 260);
 
   }
 }
