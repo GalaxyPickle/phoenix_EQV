@@ -42,6 +42,7 @@ var boost = 9999.0;
 var jetpack = 20;
 var jetpackmax = 20;
 var birdWeight = 2;
+var grounded = false;
 var stamina;
 var map;
 var layer;
@@ -79,7 +80,6 @@ Game.prototype = {
     sprite1.body.friction = 0.03;
 	sprite1.body.gravityScale = birdWeight;
 
-
     cursors = game.input.keyboard.createCursorKeys();
     
     stamina = game.add.sprite(0, 0, 'stamina');
@@ -107,14 +107,19 @@ Game.prototype = {
     }   
   },
   update: function() {
+	  
+	grounded = false;
 
     for (var i = 0; i < tiles.length; i++)
-      sprite1.body.circle.collideCircleVsTile(tiles[i].tile);
+      if (sprite1.body.circle.collideCircleVsTile(tiles[i].tile))
+		if (!sprite1.body.touching.up) grounded = true;
+	
+	if (sprite1.body.touching.down) grounded = true;
   
-    stamina.width = game.width*jetpack*.01;
-    if (sprite1.body.touching.down) {
+    stamina.width = game.width*jetpack*.05;
+    if (grounded) { //sprite1.body.touching.down
       jetpack = jetpackmax;
-       jump = 0;
+      jump = 0;
     }
         
     game.physics.ninja.collide(sprite1, tile);
@@ -125,7 +130,7 @@ Game.prototype = {
       sprite1.body.moveRight(30);
     }
     
-    if (sprite1.body.touching.down && cursors.up.isDown) { //first jump
+    if ((grounded || sprite1.body.touching.downleft || sprite1.body.touching.downright) && cursors.up.isDown) { //first jump
       sprite1.body.moveUp(150);
 	  jump = 1;
     }
@@ -141,7 +146,7 @@ Game.prototype = {
 	  jump = 2;	
     }
 	
-	if ((jump == 0 || jump == 2) && !sprite1.body.touching.down && cursors.up.isDown) { //first jump post-jump
+	if ((jump == 0 || jump == 2) && !grounded && cursors.up.isDown) { //first jump post-jump
 	  sprite1.body.moveUp(birdWeight*500);
       jump = 3;
     }
