@@ -1,38 +1,40 @@
-// state Play.js
-//	has the main play core loop
+// state Play
+//	has the player core loop
 
-var player;
-var sprite1;
-var tile;
-var cursors;
-var feathers;
-var turnspeed = 0.6;
-var boost = 9999.0;
-var jetpack = 20;
-var jetpackmax = 20;
-var birdWeight = 2;
-var grounded = false;
-var stamina;
-var map;
-var layer;
-var tiles;
-var jump;
-var lasty;
-var bubbles = new Array();
+// written by: ____________
 
 var Play = function(game) {
-	// variables 
+	// variables
+	player = null;
+	sprite1 = null;
+	tile = null;
+	cursors = null;
+	feathers = null;
+	turnspeed = 0.6;
+	boost = 9999.0;
+	jetpack = 20;
+	jetpackmax = 20;
+	birdWeight = 2;
+	grounded = false;
+	stamina = null;
+	map = null;
+	layer = null;
+	tiles = null;
+	jump = null;
+	lasty = null;
+	bubbles = new Array();
 };
 Play.prototype = {
 	preload: function() {
+
 		// bg
 		game.load.image('sky', 'assets/img/bg/fff.jpg');
 
-		
+		// moving things
 		game.load.image('bird', 'assets/img/entity/phoenix/phoejay_s.png');
-		game.load.spritesheet('bubbles', '', 2, 2);
-		game.load.image('stamina', '');
-		game.load.spritesheet('ship', 'assets/img/particles/ship.png', 24, 32);
+		//game.load.spritesheet('bubbles', '', 2, 2);
+		//game.load.image('stamina', '');
+		//game.load.spritesheet('ship', 'assets/img/particles/ship.png', 24, 32);
 
 		game.load.tilemap('map', 'json/ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('kenney', 'assets/img/meta/kenney.png');
@@ -46,7 +48,7 @@ Play.prototype = {
 
 		game.physics.startSystem(Phaser.Physics.NINJA);
 
-		sprite1 = game.add.sprite(600, 100, 'bird');
+		sprite1 = game.add.sprite(200, 100, 'bird');
 		sprite1.name = 'phoenix';
 
 		game.physics.ninja.enableCircle(sprite1, sprite1.width / 2);
@@ -85,55 +87,55 @@ Play.prototype = {
 		grounded = false;
 
 		for (var i = 0; i < tiles.length; i++)
-		if (sprite1.body.circle.collideCircleVsTile(tiles[i].tile))
+			if (sprite1.body.circle.collideCircleVsTile(tiles[i].tile))
 		if (!sprite1.body.touching.up) grounded = true;
 
 		if (sprite1.body.touching.down) grounded = true;
 
 		stamina.width = game.width*jetpack*.05;
 		if (grounded) { //sprite1.body.touching.down
-		jetpack = jetpackmax;
-		jump = 0;
+			jetpack = jetpackmax;
+			jump = 0;
 		}
 
 		game.physics.ninja.collide(sprite1, tile);
 
 		if (cursors.left.isDown) {
-		sprite1.body.moveLeft(30);
+			sprite1.body.moveLeft(30);
 		} else if (cursors.right.isDown) {
-		sprite1.body.moveRight(30);
+			sprite1.body.moveRight(30);
 		}
 
 		if ((grounded || sprite1.body.touching.downleft || sprite1.body.touching.downright) && cursors.up.isDown) { //first jump
-		sprite1.body.moveUp(150);
-		jump = 1;
+			sprite1.body.moveUp(150);
+			jump = 1;
 		}
 
 		if (jump == 1 && cursors.up.isDown) { //first jump shorthop
-		if (jetpack > 0) {
-		sprite1.body.moveUp(jetpack*4);
-		jetpack -= 1;
-		}
+			if (jetpack > 0) {
+				sprite1.body.moveUp(jetpack*4);
+				jetpack -= 1;
+			}
 		}
 
 		if (jump == 1 && !cursors.up.isDown) {
-		jump = 2; 
+			jump = 2; 
 		}
 
 		if ((jump == 0 || jump == 2) && !grounded && cursors.up.isDown) { //first jump post-jump
-		sprite1.body.moveUp(birdWeight*500);
-		jump = 3;
+			sprite1.body.moveUp(birdWeight*500);
+			jump = 3;
 		}
 
 		if (jump == 3 && cursors.up.isDown) {
-		if (sprite1.body.y > lasty) sprite1.body.moveUp(birdWeight*10.2);
+			if (sprite1.body.y > lasty) sprite1.body.moveUp(birdWeight*10.2);
 		}
 
 		lasty = sprite1.body.y;
 	},
-render: function() {
+	render: function() {
 
-}
+	}
 }
 
 //http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors

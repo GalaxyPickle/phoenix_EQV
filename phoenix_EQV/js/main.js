@@ -22,9 +22,10 @@ window.onload = function() {
 
 	game = new Phaser.Game(1280, 720);
 
-	game.state.add('Preloader', Preloader);
-	game.state.add('MainMenu', MainMenu);
+	game.state.add('Boot', Boot);
+	game.state.add('Load', Load);
+	game.state.add('Title', Title);
 	game.state.add('Play', Play);
 
-	game.state.start('Preloader');
+	game.state.start('Boot');
 }

@@ -1,10 +1,12 @@
 // state MainMenu 
 //	with start game, options, instructions
 
-var MainMenu = function(game) {
+// written by: ___________
+
+var Title = function(game) {
 	// variables
 };
-MainMenu.prototype = {
+Title.prototype = {
 	preload: function() {
 
 	},
