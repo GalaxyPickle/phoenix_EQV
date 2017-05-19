@@ -6,68 +6,58 @@
 var Play = function(game) {
 	// variables
 	player = null;
-	sprite1 = null;
+
 	tile = null;
-	cursors = null;
-	feathers = null;
-	turnspeed = 0.6;
-	boost = 9999.0;
-	jetpack = 20;
-	jetpackmax = 20;
-	birdWeight = 2;
-	grounded = false;
-	stamina = null;
 	map = null;
 	layer = null;
 	tiles = null;
-	jump = null;
-	lasty = null;
+
+	stamina = null;
+
 	bubbles = new Array();
 };
 Play.prototype = {
 	preload: function() {
+		console.log('Play: preload');
 
 		// bg
-		game.load.image('sky', 'assets/img/bg/bg@1x.png');
+		game.load.image('bg', 'assets/img/bg/bg@1x.png');
 
 		// moving things
 		game.load.image('bird', 'assets/img/entity/phoenix/phoejay_s.png');
 		//game.load.spritesheet('bubbles', '', 2, 2);
-		//game.load.image('stamina', '');
+		game.load.image('stamina', '');
 		//game.load.spritesheet('ship', 'assets/img/particles/ship.png', 24, 32);
 
 		game.load.tilemap('map', 'json/ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('kenney', 'assets/img/meta/kenney.png');
 	},
 	create: function() {
+		console.log('Play: create');
 
-		sky = game.add.sprite(0, 0, 'sky');
-		sky.height = game.height;
-		sky.width = game.width;
-		sky.fixedToCamera = true;
+		// set background and make PARALLAXING (WIP)
+		bg = game.add.tileSprite(0, 0, game.width, game.height, 'bg');
+		bg.fixedToCamera = true;
 
+		// start ninja physics
 		game.physics.startSystem(Phaser.Physics.NINJA);
 
-		sprite1 = game.add.sprite(200, 100, 'bird');
-		sprite1.name = 'phoenix';
-
-		game.physics.ninja.enableCircle(sprite1, sprite1.width / 2);
-		sprite1.body.bounce = 0;
-		sprite1.body.friction = 0.03;
-		sprite1.body.gravityScale = birdWeight;
-
-		cursors = game.input.keyboard.createCursorKeys();
-
+		/////////////////////////////////////////////////
+		// this needs to be refactored into a GUI class
 		stamina = game.add.sprite(0, 0, 'stamina');
 		stamina.height = 2;
 		stamina.width = game.width;
 		stamina.fixedToCamera = true;
+		/////////////////////////////////////////////////
 
-		//init player
-		player = game.add.group();
+		/////////////////////////////////////////////////
+		/////////// ----- behold, the power of prefab 
+		/////////////////////////////////////////////////
+		player = new Phoejay(game, 'bird', 200, 100);
+		//player.name = 'phoenix';
 
-		game.camera.follow(sprite1);
-		game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
+		game.camera.follow(player);
+		game.camera.deadzone = new Phaser.Rectangle(game.width / 3, game.height / 3, game.width / 3, game.height / 3);
 
 		map = game.add.tilemap('map');
 		map.addTilesetImage('kenney');
@@ -84,54 +74,14 @@ Play.prototype = {
 	},
 	update: function() {
 
-		grounded = false;
+		//bg.tilePosition.x -= 0.5;
 
 		for (var i = 0; i < tiles.length; i++)
-			if (sprite1.body.circle.collideCircleVsTile(tiles[i].tile))
-		if (!sprite1.body.touching.up) grounded = true;
+			player.body.circle.collideCircleVsTile(tiles[i].tile)
 
-		if (sprite1.body.touching.down) grounded = true;
+		game.physics.ninja.collide(player, tile);
 
-		stamina.width = game.width*jetpack*.05;
-		if (grounded) { //sprite1.body.touching.down
-			jetpack = jetpackmax;
-			jump = 0;
-		}
-
-		game.physics.ninja.collide(sprite1, tile);
-
-		if (cursors.left.isDown) {
-			sprite1.body.moveLeft(30);
-		} else if (cursors.right.isDown) {
-			sprite1.body.moveRight(30);
-		}
-
-		if ((grounded || sprite1.body.touching.downleft || sprite1.body.touching.downright) && cursors.up.isDown) { //first jump
-			sprite1.body.moveUp(150);
-			jump = 1;
-		}
-
-		if (jump == 1 && cursors.up.isDown) { //first jump shorthop
-			if (jetpack > 0) {
-				sprite1.body.moveUp(jetpack*4);
-				jetpack -= 1;
-			}
-		}
-
-		if (jump == 1 && !cursors.up.isDown) {
-			jump = 2; 
-		}
-
-		if ((jump == 0 || jump == 2) && !grounded && cursors.up.isDown) { //first jump post-jump
-			sprite1.body.moveUp(birdWeight*500);
-			jump = 3;
-		}
-
-		if (jump == 3 && cursors.up.isDown) {
-			if (sprite1.body.y > lasty) sprite1.body.moveUp(birdWeight*10.2);
-		}
-
-		lasty = sprite1.body.y;
+		stamina.width = game.width * player.jetpack * 0.05;
 	},
 	render: function() {
 

@@ -16,11 +16,20 @@
 
 // ONLY GLOBAL VAR, game
 var game;
+var W = 1280;
+var H = 720;
+
+var config = {
+	width: W,
+	height: H,
+	renderer: Phaser.AUTO,
+	antialias: false,
+	multiTexture: true
+}
 
 // wait for browser window load, then start the GAME
 window.onload = function() {
-
-	game = new Phaser.Game(1280, 720);
+	game = new Phaser.Game(config);
 
 	game.state.add('Boot', Boot);
 	game.state.add('Load', Load);
