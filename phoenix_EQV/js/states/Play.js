@@ -1,4 +1,4 @@
-// state Play
+	// state Play
 //	has the player core loop
 
 // written by: ____________
@@ -50,21 +50,24 @@ Play.prototype = {
 		stamina.fixedToCamera = true;
 		/////////////////////////////////////////////////
 
+		map = game.add.tilemap('map');
+		map.addTilesetImage('kenney');
+
 		/////////////////////////////////////////////////
 		/////////// ----- behold, the power of prefab 
 		/////////////////////////////////////////////////
 		player = new Phoejay(game, 'bird', 200, 100);
 		//player.name = 'phoenix';
 
-		game.camera.follow(player);
-		game.camera.deadzone = new Phaser.Rectangle(game.width / 3, game.height / 3, game.width / 3, game.height / 3);
-
-		map = game.add.tilemap('map');
-		map.addTilesetImage('kenney');
 		layer = map.createLayer('Tile Layer 1');
 		layer.resizeWorld();
 		var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
 		tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
+
+
+		game.camera.follow(player);
+		game.camera.deadzone = new Phaser.Rectangle(
+			game.width / 3, game.height / 3, game.width / 3, game.height / 3);
 
 		//spawn bubbles
 		// for (var i = 0; i < Math.floor(game.world.width/50); i++) {

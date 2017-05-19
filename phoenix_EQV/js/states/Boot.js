@@ -9,10 +9,14 @@ var Boot = function(game) {
 Boot.prototype = {
 	preload: function() {
 		console.log('Boot: preload');
+
+		// load the loading bar sprite and BG
 		
 	},
 	create: function() {
 		console.log('Boot: create');
+
+		// start the loading screen
 		game.state.start('Load');
 	}
 };
