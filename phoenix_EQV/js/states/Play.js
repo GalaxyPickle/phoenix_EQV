@@ -20,17 +20,21 @@ Play.prototype = {
 	preload: function() {
 		console.log('Play: preload');
 
+		// load images path
+		game.load.path = 'assets/img/';
+
 		// bg
-		game.load.image('bg', 'assets/img/bg/bg@1x.png');
+		game.load.image('bg', 'bg/bg@1x.png');
 
 		// moving things
-		game.load.image('bird', 'assets/img/entity/phoenix/phoejay_s.png');
-		//game.load.spritesheet('bubbles', '', 2, 2);
-		game.load.image('stamina', '');
-		//game.load.spritesheet('ship', 'assets/img/particles/ship.png', 24, 32);
+		game.load.image('bird', 'entity/phoenix/phoejay2.png');
 
-		game.load.tilemap('map', 'json/ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
-		game.load.image('kenney', 'assets/img/meta/kenney.png');
+		// tilemap stuff 
+		game.load.image('kenney', 'meta/kenney.png');
+
+		// load tilemap
+		game.load.path = 'json/';
+		game.load.tilemap('map', 'ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 	},
 	create: function() {
 		console.log('Play: create');
@@ -53,17 +57,16 @@ Play.prototype = {
 		map = game.add.tilemap('map');
 		map.addTilesetImage('kenney');
 
-		/////////////////////////////////////////////////
-		/////////// ----- behold, the power of prefab 
-		/////////////////////////////////////////////////
-		player = new Phoejay(game, 'bird', 200, 100);
-		//player.name = 'phoenix';
-
 		layer = map.createLayer('Tile Layer 1');
 		layer.resizeWorld();
 		var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
 		tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
 
+		/////////////////////////////////////////////////
+		/////////// ----- behold, the power of prefab 
+		/////////////////////////////////////////////////
+		player = new Phoejay(game, 'bird', 200, 100);
+		//player.name = 'phoenix';
 
 		game.camera.follow(player);
 		game.camera.deadzone = new Phaser.Rectangle(

@@ -5,28 +5,45 @@
 
 var Load = function(game) {
 	// variables
+	preload_bar = null;
 };
 Load.prototype = {
 	preload: function() {
 		console.log('Load: preload');
 
 		// load path to assets
-
+		game.load.path = 'assets/img/';
 		// load all the image assets for the game
 
-		// load all the audio assets for the game
+		// load all the audio music assets
+		game.load.path = 'assets/audio/music/';
+		game.load.audio('jungle_theme', ['jungle_theme.mp3', 'jungle_theme.ogg']);
 
+		// sfx loading
+		game.load.path = 'assets/audio/fx/';
+		game.load.audio('phoejay_jump', ['jump.mp3', 'jump.ogg']);
+
+		// add the bg
+		game.add.image(0, 0, 'bg');
+
+		// add the preloader bar and set it
+		this.preload_bar = game.add.sprite(game.world.centerX - 100,
+			game.world.centerY, 'bar');
+		game.load.setPreloadSprite(this.preload_bar);
 	},
 	create: function() {
 		console.log('Load: create');
 
-		// add the bg
-
 		// display the loading txt
 
-		// add the preloader bar and set it
-		
-		// go to the main splash screen
-		game.state.start('Title');
+		// disable preload bar crop while we wait for mp3 decoding
+		this.preload_bar.cropEnabled = false;
+
+	},
+	update: function() {
+		// wait for first music to properly decode
+		if (game.cache.isSoundDecoded('jungle_theme')) {
+			game.state.start('Title');
+		}
 	}
 }
