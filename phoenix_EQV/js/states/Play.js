@@ -28,7 +28,7 @@ Play.prototype = {
 	preload: function() {
 
 		// bg
-		game.load.image('sky', 'assets/img/bg/fff.jpg');
+		game.load.image('sky', 'assets/img/bg/bg@1x.png');
 
 		// moving things
 		game.load.image('bird', 'assets/img/entity/phoenix/phoejay_s.png');
