@@ -11,9 +11,14 @@ Load.prototype = {
 	preload: function() {
 		console.log('Load: preload');
 
+		// LOADING ///////////////////////////////////////////////////
+
 		// load path to assets
 		game.load.path = 'assets/img/';
 		// load all the image assets for the game
+		///////////
+		///////
+		///////////////
 
 		// load all the audio music assets
 		game.load.path = 'assets/audio/music/';
@@ -23,6 +28,8 @@ Load.prototype = {
 		game.load.path = 'assets/audio/fx/';
 		game.load.audio('phoejay_jump', ['jump.mp3', 'jump.ogg']);
 
+		// ADDING /////////////////////////////////////////////////////
+
 		// add the bg
 		game.add.image(0, 0, 'bg');
 
@@ -30,6 +37,8 @@ Load.prototype = {
 		this.preload_bar = game.add.sprite(game.world.centerX - 100,
 			game.world.centerY, 'bar');
 		game.load.setPreloadSprite(this.preload_bar);
+
+		///////////////////////////////////////////////////////////////
 	},
 	create: function() {
 		console.log('Load: create');

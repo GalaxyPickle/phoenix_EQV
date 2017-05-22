@@ -1,7 +1,7 @@
 body {
 	font-family: Helvetica;
 	text-align: center;
-	background: rgb(30, 30, 30) url("../assets/img/meta/arches.png");
+	background: rgb(90, 180, 90) url("../assets/img/meta/arches.png");
 }
 canvas {
 	margin: auto;

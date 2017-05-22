@@ -10,7 +10,7 @@ Boot.prototype = {
 	preload: function() {
 		console.log('Boot: preload');
 
-		// ready the path to load img assets
+		// ready the path to load img assets for Load state
 		game.load.path = 'assets/img/';
 		// load the loading bar sprite and BG
 		game.load.image('bar', 'meta/bar.png');
