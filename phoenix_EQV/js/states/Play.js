@@ -11,7 +11,10 @@ var Play = function(game) {
 	map = null;
 	layer = null;
 	tiles = null;
-
+	divCounter = 0;
+	deer = null;
+	fox = null;
+	burrel = null;
 	stamina = null;
 
 	bubbles = new Array();
@@ -61,6 +64,11 @@ Play.prototype = {
 		layer.resizeWorld();
 		var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
 		tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
+		//insert deer here
+		deer = new DeadAnimal(game, 'deer', 10, x, y, 5);
+		//need to add deer asset still
+		fox = new DeadAnimal(game, 'fox', 10, x, y, 6);
+		burrel = new DeadAnimal(game, 'burrel', 10, x, y, 7);
 
 		/////////////////////////////////////////////////
 		/////////// ----- behold, the power of prefab 
