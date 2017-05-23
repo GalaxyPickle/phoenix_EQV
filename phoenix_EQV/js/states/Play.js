@@ -65,10 +65,10 @@ Play.prototype = {
 		var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
 		tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
 		//insert deer here
-		deer = new DeadAnimal(game, 'deer', 10, x, y, 5);
+		//deer = new DeadAnimal(game, 'deer', 10, x, y, 5);
 		//need to add deer asset still
-		fox = new DeadAnimal(game, 'fox', 10, x, y, 6);
-		burrel = new DeadAnimal(game, 'burrel', 10, x, y, 7);
+		//fox = new DeadAnimal(game, 'fox', 10, x, y, 6);
+		//burrel = new DeadAnimal(game, 'burrel', 10, x, y, 7);
 
 		/////////////////////////////////////////////////
 		/////////// ----- behold, the power of prefab 
@@ -89,9 +89,12 @@ Play.prototype = {
 	update: function() {
 
 		//bg.tilePosition.x -= 0.5;
+		
+		player.grounded = false;
 
 		for (var i = 0; i < tiles.length; i++)
-			player.body.circle.collideCircleVsTile(tiles[i].tile)
+			if (player.body.circle.collideCircleVsTile(tiles[i].tile))
+				if (!player.body.touching.up) player.grounded = true;
 
 		game.physics.ninja.collide(player, tile);
 
