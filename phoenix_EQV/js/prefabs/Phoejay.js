@@ -39,10 +39,6 @@ Phoejay.prototype.update = function(Phoejay) {
 
      // this needs to be rewritten and simplified----/////////////
 
-     this.grounded = false;
-     
-     //if (!this.body.touching.up) this.grounded = true;
-
      if (this.body.touching.down) this.grounded = true;
 
      if (this.grounded) { //player.body.touching.down
