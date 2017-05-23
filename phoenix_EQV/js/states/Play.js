@@ -30,7 +30,7 @@ Play.prototype = {
 		game.load.image('bg', 'bg/bg@1x.png');
 
 		// moving things
-		game.load.image('bird', 'entity/phoenix/phoejay2.png');
+		game.load.spritesheet('bird', 'entity/phoenix/phoejay_s.png',60,39);
 
 		// tilemap stuff 
 		game.load.image('kenney', 'meta/kenney.png');
@@ -74,6 +74,7 @@ Play.prototype = {
 		/////////// ----- behold, the power of prefab 
 		/////////////////////////////////////////////////
 		player = new Phoejay(game, 'bird', 200, 100);
+		player.create();
 		//player.name = 'phoenix';
 
 		game.camera.follow(player);
