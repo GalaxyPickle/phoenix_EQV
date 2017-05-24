@@ -10,26 +10,46 @@
          "width":25,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":11,
+         "name":"Object Layer 1",
+         "objects":[
+                {
+                 "ellipse":true,
+                 "height":132,
+                 "id":1,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":162,
+                 "x":620,
+                 "y":376
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":25,
+         "x":0,
+         "y":0
         }],
+ "nextobjectid":4,
  "orientation":"orthogonal",
- "properties":
-    {
-
-    },
+ "renderorder":"right-down",
  "tileheight":70,
  "tilesets":[
         {
+         "columns":21,
          "firstgid":1,
-         "image":"..\/tiles\/kenney.png",
+         "image":"..\/assets\/img\/meta\/kenney.png",
          "imageheight":490,
          "imagewidth":1470,
          "margin":0,
          "name":"kenney",
-         "properties":
-            {
-
-            },
          "spacing":0,
+         "tilecount":147,
          "tileheight":70,
          "tileproperties":
             {
@@ -56,6 +76,33 @@
              "94":
                 {
                  "slope":"2"
+                }
+            },
+         "tilepropertytypes":
+            {
+             "136":
+                {
+                 "slope":"string"
+                },
+             "139":
+                {
+                 "slope":"string"
+                },
+             "31":
+                {
+                 "slope":"string"
+                },
+             "35":
+                {
+                 "slope":"string"
+                },
+             "76":
+                {
+                 "slope":"string"
+                },
+             "94":
+                {
+                 "slope":"string"
                 }
             },
          "tilewidth":70
