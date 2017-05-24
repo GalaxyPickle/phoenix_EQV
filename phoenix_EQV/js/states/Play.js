@@ -22,7 +22,7 @@ var Play = function(game) {
 Play.prototype = {
 	preload: function() {
 		console.log('Play: preload');
-
+	
 		// load images path
 		game.load.path = 'assets/img/';
 
@@ -33,21 +33,24 @@ Play.prototype = {
 		game.load.spritesheet('bird', 'entity/phoenix/phoejay_s.png',60,39);
 
 		// tilemap stuff 
-		game.load.image('kenney', 'meta/kenney.png');
+		game.load.image('forest', 'tilesets/sprite_sheet_5_23.png');
+		game.load.image('arcade-slopes', 'tilesets/arcade-slopes-64.png');
 
 		// load tilemap
 		game.load.path = 'json/';
-		game.load.tilemap('map', 'ninja-tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.tilemap('map', '5_24_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 	},
 	create: function() {
 		console.log('Play: create');
+
+		game.plugins.add(Phaser.Plugin.ArcadeSlopes);
 
 		// set background and make PARALLAXING (WIP)
 		bg = game.add.tileSprite(0, 0, game.width, game.height, 'bg');
 		bg.fixedToCamera = true;
 
 		// start ninja physics
-		game.physics.startSystem(Phaser.Physics.NINJA);
+		game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		/////////////////////////////////////////////////
 		// this needs to be refactored into a GUI class
@@ -58,12 +61,14 @@ Play.prototype = {
 		/////////////////////////////////////////////////
 
 		map = game.add.tilemap('map');
-		map.addTilesetImage('kenney');
+		map.addTilesetImage('forest', 'arcade-slopes');
 
 		layer = map.createLayer('Tile Layer 1');
-		layer.resizeWorld();
-		var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
-		tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
+		game.slopes.convertTilemapLayer(layer, 'arcadeslopes');
+		//layer.resizeWorld();
+		//var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
+		//tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
+
 		//insert deer here
 		//deer = new DeadAnimal(game, 'deer', 10, x, y, 5);
 		//need to add deer asset still
@@ -93,11 +98,15 @@ Play.prototype = {
 		
 		player.grounded = false;
 
-		for (var i = 0; i < tiles.length; i++)
-			if (player.body.circle.collideCircleVsTile(tiles[i].tile))
-				if (!player.body.touching.up) player.grounded = true;
+		// below is for ninja:
+		//
+		//for (var i = 0; i < tiles.length; i++)
+		//	if (player.body.circle.collideCircleVsTile(tiles[i].tile))
+		//		if (!player.body.touching.up) player.grounded = true;
 
-		game.physics.ninja.collide(player, tile);
+		//game.physics.ninja.collide(player, tile);
+		//
+		game.physics.arcade.collide(player, layer);
 
 		stamina.width = game.width * player.jetpack * 0.05;
 	},

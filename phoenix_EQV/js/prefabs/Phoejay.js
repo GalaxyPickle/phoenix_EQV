@@ -8,12 +8,19 @@ function Phoejay(game, key, frame, x, y, hitbox_size=100/3, birdWeight=2) {
 	Phaser.Sprite.call(this, game, x, y, key, frame);
 
 	// set sprite properties
-	game.physics.ninja.enableCircle(this, hitbox_size);
+	//
+	// below is for ninja:
+	//game.physics.ninja.enableCircle(this, hitbox_size);
+	//
+	//below is for arcade:
+	game.physics.arcade.enable(this);
+	game.slopes.enable(this);
 	this.body.bounce = 0;
 	this.body.friction = 0.03;
 	this.scale.x = 1;
 	this.scale.y = 1;
-	this.body.gravityScale = birdWeight;
+	//this.body.gravityScale = birdWeight;
+	this.body.gravity.y = 100;
 
 	// set CUSTOM properties
 	this.cursors = game.input.keyboard.createCursorKeys();
@@ -67,9 +74,9 @@ Phoejay.prototype.update = function(Phoejay) {
 		}
 		else this.running = false;
 		if (dir < 0) {
-			this.body.moveLeft(30);
+			this.body.velocity.x = -1000;
 		} else if (dir > 0) {
-			this.body.moveRight(30);
+			this.body.velocity.x = 1000;
 		}
 	}
 
