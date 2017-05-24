@@ -33,12 +33,15 @@ Play.prototype = {
 		game.load.spritesheet('bird', 'entity/phoenix/phoejay_s.png',60,39);
 
 		// tilemap stuff 
-		game.load.image('forest', 'tilesets/sprite_sheet_5_23.png');
+		game.load.image('forest', 'tilesets/forest_tilemap.png');
 		game.load.image('arcade-slopes', 'tilesets/arcade-slopes-64.png');
 
 		// load tilemap
 		game.load.path = 'json/';
-		game.load.tilemap('map', '5_24_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.tilemap('map', 'forest_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+
+		// load slope map
+		game.load.json('slope_map', 'slope_map.json');
 	},
 	create: function() {
 		console.log('Play: create');
@@ -61,10 +64,12 @@ Play.prototype = {
 		/////////////////////////////////////////////////
 
 		map = game.add.tilemap('map');
-		map.addTilesetImage('forest', 'arcade-slopes');
+		//map.addTilesetImage('forest', 'arcade-slopes');
+		map.addTilesetImage('forest_tilemap', 'forest');
 
 		layer = map.createLayer('Tile Layer 1');
-		game.slopes.convertTilemapLayer(layer, 'arcadeslopes');
+		game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
+		map.setCollisionBetween(1, 304, true, "Tile Layer 1");
 		//layer.resizeWorld();
 		//var slopeMap = { '32': 1, '77': 1, '95': 2, '36': 3, '137': 3, '140': 2 };
 		//tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
