@@ -15,7 +15,6 @@ var Play = function(game) {
 	deer = null;
 	fox = null;
 	burrel = null;
-	stamina = null;
 
 	bubbles = new Array();
 	
@@ -73,7 +72,7 @@ var Play = function(game) {
 		tilemapOffsetY2: 0,
 		
 		// World
-		gravity: 1000,
+		gravity: 1500,
 		enableGravity: true,
 		
 		// Fun
@@ -97,13 +96,10 @@ Play.prototype = {
 		// tilemap stuff 
 		game.load.image('forest', 'tilesets/forest_tilemap.png');
 		game.load.image('arcade-slopes', 'tilesets/arcade-slopes-64.png');
-		this.load.spritesheet('pink-collision-spritesheet', 'ninja-tiles32-pink.png', 32, 32);
-		this.load.spritesheet('arcade-slopes-spritesheet', 'arcade-slopes-32-pink.png', 32, 32);
 
 		// load tilemap
 		game.load.path = 'json/';
-		//game.load.tilemap('map', 'forest_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
-		this.load.tilemap('demo-tilemap', 'demo.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.tilemap('map', 'forest_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 
 		// load slope map
 		game.load.json('slope_map', 'slope_map.json');
@@ -122,26 +118,16 @@ Play.prototype = {
 		this.stage.backgroundColor = '#facade';
 		
 		// Create the tilemap object from the map JSON data
-		this.map = this.add.tilemap('demo-tilemap');
-		
-		// Attach the tileset images to the tilesets defined in the tilemap
-		this.map.addTilesetImage('collision', 'pink-collision-spritesheet');
-		this.map.addTilesetImage('arcade-slopes-32', 'arcade-slopes-spritesheet');
-		
-		// Create TilemapLayer objects from the collision layers of the map
-		this.ground = this.map.createLayer('collision');
-		this.ground2 = this.map.createLayer('collision2');
-		this.ground.resizeWorld();
-		
-		// Enable collision between the appropriate tile indices for each
-		// layer in the map
-		this.map.setCollisionBetween(2, 34, true, 'collision');
-		this.map.setCollisionBetween(49, 73, true, 'collision2');
-		
-		// Map Arcade Slopes tile types to the correct tilesets, preparing
-		// slope data for each tile in the layers
-		this.game.slopes.convertTilemapLayer(this.ground, 'ninja');
-		this.game.slopes.convertTilemapLayer(this.ground2, 'arcadeslopes', 49);
+
+		this.map = this.add.tilemap('map');
+		//map.addTilesetImage('forest', 'arcade-slopes');
+		this.map.addTilesetImage('forest_tilemap', 'forest');
+
+		layer = this.map.createLayer('Tile Layer 1');
+		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
+		this.map.setCollisionBetween(1, 304, true, "Tile Layer 1");
+
+		layer.resizeWorld();
 		
 		// Create a player sprite
 		this.player = this.add.sprite(595, 384);
@@ -154,6 +140,9 @@ Play.prototype = {
 		
 		// Set the gravity
 		this.physics.arcade.gravity.y = 1000;
+		
+		// Set the Jetpack
+		this.jetpack = this.jetpackmax = 24;
 		
 		// Add a touch of tile padding for the collision detection
 		this.player.body.tilePadding.x = 1;
@@ -237,26 +226,7 @@ Play.prototype = {
 		// Prevent the debug text from rendering with a shadow
 		this.game.debug.renderShadow = false;
 	},
-	/*update: function() {
 
-		//bg.tilePosition.x -= 0.5;
-		
-		player.grounded = false;
-
-		// below is for ninja:
-		//
-		//for (var i = 0; i < tiles.length; i++)
-		//	if (player.body.circle.collideCircleVsTile(tiles[i].tile))
-		//		if (!player.body.touching.up) player.grounded = true;
-
-		//game.physics.ninja.collide(player, tile);
-		//
-		game.physics.arcade.collide(player, layer);
-
-	},
-	render: function() {
-
-	}*/
 	updatePlayer: function (player) {
 		var features = this.features;
 		var graphics = this.playerGraphics;
@@ -371,18 +341,6 @@ Play.prototype = {
 		body.slopes.snapLeft   = features.snapLeft;
 		body.slopes.snapRight  = features.snapRight;
 		
-		// Offset the tilemap layers
-		this.ground.tileOffset.x = features.tilemapOffsetX1;
-		this.ground.tileOffset.y = features.tilemapOffsetY1;
-		this.ground2.tileOffset.x = features.tilemapOffsetX2;
-		this.ground2.tileOffset.y = features.tilemapOffsetY2;
-		
-		// Debug output for the tilemap
-		this.ground.debug = features.debugLayers;
-		this.ground.debugSettings.forceFullRedraw = this.ground.debug;
-		this.ground2.debug = this.ground.debug;
-		this.ground.debugSettings.forceFullRedraw = this.ground.debug;
-		
 		// Keep the particle emitter attached to the player (though there's
 		// probably a better way than this)
 		this.emitter.x = this.player.x;
@@ -428,8 +386,7 @@ Play.prototype = {
 		}
 		
 		// Collide the player against the collision layer
-		this.physics.arcade.collide(this.player, this.ground);
-		this.physics.arcade.collide(this.player, this.ground2);
+		this.physics.arcade.collide(this.player, layer);
 		
 		// Collide the player against the particles
 		//this.physics.arcade.collide(this.emitter, this.player);
@@ -438,9 +395,6 @@ Play.prototype = {
 		if (features.particleSelfCollide) {
 			this.physics.arcade.collide(this.emitter);
 		}
-		
-		// Collide the particles against the collision layer
-		this.physics.arcade.collide(this.emitter, this.ground);
 		
 		// Move the camera
 		if (controls.cameraUp.isDown) {
@@ -482,6 +436,7 @@ Play.prototype = {
 		
 		// Accelerate or jump up
 		var grounded = false;
+		this.jumpswitch = !this.jumpswitch && controls.up.isDown;
 		
 		if (gravity.y > 0 && (blocked.down || touching.down)) {
 			this.jetpack = this.jetpackmax;
@@ -490,10 +445,36 @@ Play.prototype = {
 			//if (!dir) this.animations.play('idle');
 		}
 		
-		if (grounded && controls.up.isDown) {
-			body.velocity.y = -features.jump;
+		if (grounded && this.jumpswitch) {
+			body.velocity.y = -features.jump*.3;
 			this.jump = 1;
 		}
+		
+		if (this.jump == 1 && controls.up.isDown) { //first jump shorthop
+			if (this.jetpack > 0) {
+				body.velocity.y = -360;
+				this.jetpack -= 1;
+			}
+			//this.animations.play('jump1');
+		}
+		
+		if (this.jump == 1 && !controls.up.isDown) //reset
+			this.jump = 2; 
+			
+		if (this.jump == 3) {
+			if (controls.up.isDown) {
+				if (body.y > this.lasty) body.velocity.y = 130;
+				//this.animations.play('glide');
+			}
+			//else this.animations.play('jump2');
+		}
+			
+		if ((this.jump == 0 || this.jump == 2) && !grounded && controls.up.isDown) { //first jump post-jump
+			body.velocity.y = -features.jump;
+			this.jump = 3;
+		}
+		this.jumpswitch = controls.up.isDown;
+		this.lasty = body.y;
 		
 		
 		// Accelerate down or jump down
