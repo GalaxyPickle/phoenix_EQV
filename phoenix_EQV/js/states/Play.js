@@ -61,7 +61,7 @@ var Play = function(game) {
 		jump: 500,
 		wallJump: 350,
 		shape: 'aabb',
-		size: 96,
+		size: 40,
 		anchorX: 0.5,
 		anchorY: 0.5,
 		
@@ -130,7 +130,12 @@ Play.prototype = {
 		layer.resizeWorld();
 		
 		// Create a player sprite
-		this.player = this.add.sprite(595, 384);
+		this.player = this.add.sprite(100, 100, 'bird');
+		this.player.animations.add('idle', [0], 1, false);
+		this.player.animations.add('run', [1, 2], 12, true);
+		this.player.animations.add('jump1', [3], 1, false);
+		this.player.animations.add('jump2', [4], 1, false);
+		this.player.animations.add('glide', [5], 1, false);
 		
 		// Create a graphics object for the player
 		this.playerGraphics = new Phaser.Graphics(this);
@@ -138,11 +143,10 @@ Play.prototype = {
 		// Generate a texture for the player and give it a physics body
 		this.updatePlayer(this.player);
 		
-		// Set the gravity
+		// Set the player modifiers
 		this.physics.arcade.gravity.y = 1000;
-		
-		// Set the Jetpack
 		this.jetpack = this.jetpackmax = 24;
+		this.running = false;
 		
 		// Add a touch of tile padding for the collision detection
 		this.player.body.tilePadding.x = 1;
@@ -253,11 +257,7 @@ Play.prototype = {
 		
 		player.body.setCircle(halfSize);
 		graphics.drawCircle(0, 0, features.size);
-		
-		// Create a Pixi texture from the graphics and give it to the player
-		player.setTexture(graphics.generateTexture(), true);
 			
-		player.width = size;
 		player.height = size;
 		
 		// Enable Arcade Slopes physics
@@ -417,16 +417,13 @@ Play.prototype = {
 		body.acceleration.x = 0;
 		body.acceleration.y = 0;
 		
+		var grounded = false;
 		dir = controls.right.isDown - controls.left.isDown; //direction facing
+		this.jumpswitch = !this.jumpswitch && controls.up.isDown;
 		
 		//vertical movement
 		if (dir) {
-			//this.scale.x = -dir;
-			if (this.grounded && !this.running) {
-				//this.animations.play('run');
-				//this.running = true;
-			}
-			//else this.running = false;
+			this.player.scale.x = -dir;
 			if (dir < 0) {
 				body.acceleration.x = -features.acceleration;
 			} else if (dir > 0) {
@@ -435,14 +432,12 @@ Play.prototype = {
 		}
 		
 		// Accelerate or jump up
-		var grounded = false;
-		this.jumpswitch = !this.jumpswitch && controls.up.isDown;
-		
 		if (gravity.y > 0 && (blocked.down || touching.down)) {
 			this.jetpack = this.jetpackmax;
 			this.jump = 0;
 			grounded = true;
-			//if (!dir) this.animations.play('idle');
+			if (!dir) this.player.animations.play('idle');
+			else this.player.animations.play('run');
 		}
 		
 		if (grounded && this.jumpswitch) {
@@ -455,7 +450,7 @@ Play.prototype = {
 				body.velocity.y = -360;
 				this.jetpack -= 1;
 			}
-			//this.animations.play('jump1');
+			this.player.animations.play('jump1');
 		}
 		
 		if (this.jump == 1 && !controls.up.isDown) //reset
@@ -464,9 +459,9 @@ Play.prototype = {
 		if (this.jump == 3) {
 			if (controls.up.isDown) {
 				if (body.y > this.lasty) body.velocity.y = 130;
-				//this.animations.play('glide');
+				this.player.animations.play('glide');
 			}
-			//else this.animations.play('jump2');
+			else this.player.animations.play('jump2');
 		}
 			
 		if ((this.jump == 0 || this.jump == 2) && !grounded && controls.up.isDown) { //first jump post-jump
