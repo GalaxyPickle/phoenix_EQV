@@ -72,7 +72,7 @@ var Play = function(game) {
 		tilemapOffsetY2: 0,
 		
 		// World
-		gravity: 1500,
+		gravity: 2000,
 		enableGravity: true,
 		
 		// Fun
@@ -109,26 +109,6 @@ Play.prototype = {
 	},
 	preload: function() {
 		console.log('Play: preload');
-	
-		// load images path
-		game.load.path = 'assets/img/';
-
-		// bg
-		game.load.image('bg', 'bg/bg@1x.png');
-
-		// moving things
-		game.load.spritesheet('bird', 'entity/phoenix/phoejay_s.png',60,39);
-
-		// tilemap stuff 
-		game.load.image('forest', 'tilesets/forest_tilemap.png');
-		game.load.image('arcade-slopes', 'tilesets/arcade-slopes-64.png');
-
-		// load tilemap
-		game.load.path = 'json/';
-		game.load.tilemap('map', 'forest_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
-
-		// load slope map
-		game.load.json('slope_map', 'slope_map.json');
 	},
 	create: function() {
 		console.log('Play: create');
@@ -146,6 +126,8 @@ Play.prototype = {
 		
 		// Set the stage background colour
 		this.stage.backgroundColor = '#facade';
+
+		// add background image/tilemaps
 		
 		// Create the tilemap object from the map JSON data
 
@@ -260,6 +242,12 @@ Play.prototype = {
 		
 		// Prevent the debug text from rendering with a shadow
 		this.game.debug.renderShadow = false;
+
+		// fade-in
+		// add the fade-in sprite overlay
+		fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
+		fade_in.alpha = 1;
+		game.add.tween(fade_in).to( { alpha: 0 }, 2000, "Linear", true, 0); // unveil
 	},
 
 	updatePlayer: function (player) {

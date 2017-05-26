@@ -45,21 +45,21 @@ Load.prototype = {
 		space = game.add.text(game.world.centerX, game.world.centerY, "", big_style);
 		click_b = game.add.text(game.world.centerX, game.world.height - 50, "", small_style);
 		//	Progress report for loading bar
-    	text_loading = game.add.text(game.world.centerX, game.world.centerY + 3, 'Loading...', small_style);
-    	text_loading.anchor.set(0.5);
+		text_loading = game.add.text(game.world.centerX, game.world.centerY + 3, 'Loading...', small_style);
+		text_loading.anchor.set(0.5);
 
 		// add fullscreen key (esc)
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.RESIZE;
 		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
-        fullscreen_key.onDown.add(this.goFull, game);
+		fullscreen_key.onDown.add(this.goFull, game);
 
-        // add the fade-in sprite overlay
-        this.fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
-        this.fade_in.alpha = 1;
-        game.add.tween(this.fade_in).to( { alpha: 0 }, 500, "Linear", true, 0); // unveil
+		// add the fade-in sprite overlay
+		this.fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
+		this.fade_in.alpha = 1;
+		game.add.tween(this.fade_in).to( { alpha: 0 }, 500, "Linear", true, 0); // unveil
 
-        // start the loading
-        this.start();
+		// start the loading
+		this.start();
 
 	},
 	start: function() {
@@ -127,44 +127,43 @@ Load.prototype = {
 		let centerX = game.world.centerX
 		let centerY = game.world.centerY;
 
-	    if (game.scale.isFullScreen) {
-	    	console.log('{fullscreen} FALSE')
-	        game.scale.stopFullScreen();
-	        game.width = game.world.width = W;
-	        game.height = game.world.height = H;
+		if (game.scale.isFullScreen) {
+			console.log('{fullscreen} FALSE')
+			game.scale.stopFullScreen();
+			game.width = game.world.width = W;
+			game.height = game.world.height = H;
 
-	        // set click fullscreen text
-	        click_b.setText("double-tap F for fullscreen");
+			// set click fullscreen text
+			click_b.setText("double-tap F for fullscreen");
 
-	        // set center
-	        centerX = game.width / 2;
-	        centerY = game.height / 2;
-	    }
-	    else {
-	    	console.log('{fullscreen} TRUE')
-	        game.scale.startFullScreen(false);
-	        game.width = window.screen.width;
-	        game.height = window.screen.height;
+			// set center
+			centerX = game.width / 2;
+			centerY = game.height / 2;
+		}
+		else {
+			console.log('{fullscreen} TRUE')
+			game.scale.startFullScreen(false);
+			game.width = window.screen.width;
+			game.height = window.screen.height;
 
-	        // set click fullscreen text
-	        click_b.setText("double-tap F for windowed");
+			// set click fullscreen text
+			click_b.setText("double-tap F for windowed");
 
-	        // set center
-	        centerX = window.screen.width / 2;
-	        centerY = window.screen.height / 2;
-	    }
-	    // set all elements in center
-	    let text_array = [space, click_b];
-	    text_array.forEach(function(element) {
-	    	element.x = centerX;
-	    	element.y = centerY;
-	    });
-	    click_b.y = centerY * 2 - 50;
+			// set center
+			centerX = window.screen.width / 2;
+			centerY = window.screen.height / 2;
+		}
+		// set all elements in center
+		let text_array = [space, click_b];
+		text_array.forEach(function(element) {
+			element.x = centerX;
+			element.y = centerY;
+		});
+		click_b.y = centerY * 2 - 50;
 	},
 	killAll: function() {
 		// KILL EM ALL
 		// click text
-		//this.click.kill();
 		click_b.setText("");
 		// space start text
 		space.setText("");
@@ -182,16 +181,20 @@ Load.prototype = {
 		// wait for first music to properly decode
 		if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
 			this.killAll();
-			game.state.start('Title');
+			tween = game.add.tween(this.fade_in).to( { alpha: 1 }, 3000, "Linear", true, 0); // REVEIL
+			tween.onComplete.add(this.startGame, game);
 		}
 		// tilesprite movement
 		this.bg_tree.tilePosition.x -= 1;
 		this.bg_tree.tilePosition.y += .1;
 	},
+	startGame: function() {
+		game.state.start('Title');
+	},
 	render: function() {
 
 		// debug info
-	    // game.debug.text('Click / Tap to go fullscreen', 0, 16);
-	    // game.debug.inputInfo(32, 32);
+		// game.debug.text('Click / Tap to go fullscreen', 0, 16);
+		// game.debug.inputInfo(32, 32);
 	}
 }

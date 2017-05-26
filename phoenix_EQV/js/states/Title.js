@@ -29,13 +29,23 @@ Title.prototype = {
 		splash.anchor.set(0.5);
 
 		// set text for member names
+
+
+		// fade-in
+		// add the fade-in sprite overlay
+		fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
+		fade_in.alpha = 1;
+		game.add.tween(fade_in).to( { alpha: 0 }, 2000, "Linear", true, 0); // unveil
 	},
 	update: function() {
 
 		// have a splash screen lasting maybe ~5 sec
 		//	with title and sound intro thing
-		if (timer01.seconds >= max - 1 || game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR))
-			this.startGame();
+		if (timer01.seconds >= max - 1 || game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
+			tween = game.add.tween(fade_in).to( { alpha: 1 }, 2000, "Linear", true, 0); // REVEIL
+			tween.onComplete.add(this.startGame, game);
+		}
+			//this.startGame();
 	},
 	render: function() {
 		// show timer01 debug text
