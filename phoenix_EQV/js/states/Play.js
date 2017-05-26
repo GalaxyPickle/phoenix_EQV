@@ -228,8 +228,11 @@ Play.prototype = {
 			that.player.body.velocity.set(0);
 		});
 		
-		// Prevent the debug text from rendering with a shadow
-		this.game.debug.renderShadow = false;
+		//spawn divinity
+		for (var i = 0; i < Math.floor(game.world.width/50); i++) {
+			divinities[i] = new Divinity(game, 'ship', '', this.player.body);
+			game.add.existing(divinities[i]);
+		}   
 	},
 
 	updatePlayer: function (player) {
@@ -555,6 +558,7 @@ Play.prototype = {
 }
 
 var fireTime = 2000;
+var divinities = new Array();
 
 //http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
 // function shadeColor1(color, percent) { // deprecated. See below.
