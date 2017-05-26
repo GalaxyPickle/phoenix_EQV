@@ -51,9 +51,10 @@ Load.prototype = {
     	text_loading.anchor.set(0.5);
 
 		// add fullscreen key (esc)
-		this.fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+		this.fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
         game.scale.fullScreenScaleMode = Phaser.ScaleManager.RESIZE;
-        game.input.onDown.add(this.goFull, game);
+        this.fullscreen_key.onDown.add(this.goFull, game); 
+        //game.input.onDown.add(this.goFull, game);
 
         // add the fade-in sprite overlay
         this.fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
@@ -119,7 +120,7 @@ Load.prototype = {
 
 		// set other texts
 		space.setText("PRESS SPACE");
-		click_b.setText("click for fullscreen");
+		click_b.setText("double-tap F for fullscreen");
 
 		texties = [space, click_b];
 		// for each text, make it tween foreverrrrr flash
@@ -141,7 +142,7 @@ Load.prototype = {
 	        game.height = game.world.height = H;
 
 	        // set click fullscreen text
-	        click_b.setText("click for fullscreen");
+	        click_b.setText("double-tap F for fullscreen");
 
 	        // set center
 	        centerX = game.width / 2;
@@ -154,7 +155,7 @@ Load.prototype = {
 	        game.height = window.screen.height;
 
 	        // set click fullscreen text
-	        click_b.setText("click for windowed");
+	        click_b.setText("double-tap F for windowed");
 
 	        // set center
 	        centerX = window.screen.width / 2;

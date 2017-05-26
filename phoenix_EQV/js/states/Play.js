@@ -124,6 +124,7 @@ Play.prototype = {
 		this.map.addTilesetImage('forest_tilemap', 'forest');
 
 		layer = this.map.createLayer('Tile Layer 1');
+		layer.debug = true;
 		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
 		this.map.setCollisionBetween(1, 304, true, "Tile Layer 1");
 
@@ -255,7 +256,8 @@ Play.prototype = {
 		graphics._currentBounds = null; // Get Phaser to behave
 		graphics.beginFill(Phaser.Color.hexToRGB('#e3cce9'), 1);
 		
-		player.body.setCircle(halfSize);
+		// player.body.setCircle(halfSize);
+		player.body.enable = true;
 		graphics.drawCircle(0, 0, features.size);
 			
 		player.height = size;
@@ -506,6 +508,8 @@ Play.prototype = {
 		var debug = this.game.debug;
 		var controls = this.controls;
 		var features = this.features;
+
+		game.debug.body(this.player);
 		
 		// Render the frame rate
 		debug.text(this.time.fps || '--', 4, 16, "#ffffff");
