@@ -92,6 +92,7 @@ Play.prototype = {
 
 		// moving things
 		game.load.spritesheet('bird', 'entity/phoenix/phoejay_s.png',60,39);
+		game.load.spritesheet('ember', 'entity/ember.png',5,5);
 
 		// tilemap stuff 
 		game.load.image('forest', 'tilesets/forest_tilemap.png');
@@ -437,7 +438,10 @@ Play.prototype = {
 			this.jump = 0;
 			grounded = true;
 			if (!dir) this.player.animations.play('idle');
-			else this.player.animations.play('run');
+			else { //running
+				this.player.animations.play('run');
+				fireTime -= 1;
+			}
 		}
 		
 		if (grounded && this.jumpswitch) {
@@ -490,16 +494,23 @@ Play.prototype = {
 			if (!(blocked.down || blocked.up || touching.up)) {
 				// Would be even better to use collision normals here
 				if (blocked.left || touching.left) {
-					body.velocity.x = features.wallJump;
-					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
+					//body.velocity.x = features.wallJump;
+					//body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
 				}
 				
 				if (blocked.right || touching.right) {
-					body.velocity.x = -features.wallJump;
-					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
+					//body.velocity.x = -features.wallJump;
+					//body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
 				}
 			}
 		}
+		
+		//Embers
+		if (fireTime < 0) {
+			fireTime = 800;
+			var v = game.add.sprite(body.x + body.width/2, body.y + body.height, 'ember');
+		}
+		//
 	},
 	
 	render: function () {
@@ -542,6 +553,8 @@ Play.prototype = {
 		}
 	}
 }
+
+var fireTime = 2000;
 
 //http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
 // function shadeColor1(color, percent) { // deprecated. See below.
