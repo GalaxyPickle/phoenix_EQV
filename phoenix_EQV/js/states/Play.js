@@ -72,7 +72,7 @@ var Play = function(game) {
 		tilemapOffsetY2: 0,
 		
 		// World
-		gravity: 2000,
+		gravity: 1500,
 		enableGravity: true,
 		
 		// Fun
@@ -128,6 +128,11 @@ Play.prototype = {
 		this.stage.backgroundColor = '#facade';
 
 		// add background image/tilemaps
+		// add the bg
+		bg = game.add.tileSprite(0, 0, 3000, 2000, 'bg');
+		bg_trees = game.add.tileSprite(0, 0, 1989, 2386, 'bg_tree');
+		bg.fixedToCamera = true;
+		bg_trees.fixedToCamera = true;
 		
 		// Create the tilemap object from the map JSON data
 
@@ -136,6 +141,7 @@ Play.prototype = {
 		this.map.addTilesetImage('forest_tilemap', 'forest');
 
 		layer = this.map.createLayer('Tile Layer 1');
+		// DEBUG
 		layer.debug = true;
 		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
 		this.map.setCollisionBetween(1, 304, true, "Tile Layer 1");
@@ -341,6 +347,11 @@ Play.prototype = {
 		} else {
 			gravity.y = 0;
 		}
+
+		// update the tilesprites for prallaxing
+		bg_trees.tilePosition.x = -camera.view.x / 5;
+		bg_trees.tilePosition.y = -camera.view.y / 5;
+		bg.tilePosition.y = -camera.view.y / 10;
 		
 		// Update player body properties
 		body.drag.x = features.dragX;
@@ -530,7 +541,7 @@ Play.prototype = {
 		game.debug.body(this.player);
 		
 		// Render the frame rate
-		debug.text(this.time.fps || '--', 4, 16, "#ffffff");
+		debug.text('FPS: ' + this.time.fps || '--', 50, 50, "yellow");
 		
 		// Render the keyboard controls
 		if(controls.controls.isDown) {

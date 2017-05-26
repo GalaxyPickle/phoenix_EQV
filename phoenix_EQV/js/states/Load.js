@@ -181,8 +181,11 @@ Load.prototype = {
 		// wait for first music to properly decode
 		if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
 			this.killAll();
-			tween = game.add.tween(this.fade_in).to( { alpha: 1 }, 3000, "Linear", true, 0); // REVEIL
+			tween = game.add.tween(this.fade_in).to( { alpha: 1 }, 1000, "Linear", true, 0); // REVEIL
 			tween.onComplete.add(this.startGame, game);
+		}
+		if (game.input.keyboard.justPressed(Phaser.Keyboard.ENTER)) {
+			game.state.start('Play');
 		}
 		// tilesprite movement
 		this.bg_tree.tilePosition.x -= 1;
