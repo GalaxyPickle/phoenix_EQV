@@ -19,7 +19,7 @@ Boot.prototype = {
 		game.load.image('bar_frame', 'meta/bar_frame.png');
 		// bgs
 		game.load.image('bg', 'bg/background.png');
-		game.load.image('bg_tree', 'bg/tree/trees.png');
+		game.load.image('bg_tree', 'bg/trees.png');
 
 		// make the canvas look better?
 		game.renderer.renderSession.roundPixels = true;
