@@ -30,7 +30,6 @@ var config = {
 // wait for browser window load, then start the GAME
 window.onload = function() {
 	game = new Phaser.Game(config);
-	// make game fullscreen
 
 	game.state.add('Boot', Boot);
 	game.state.add('Load', Load);

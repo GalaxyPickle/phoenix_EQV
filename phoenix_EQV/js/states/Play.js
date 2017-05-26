@@ -81,6 +81,32 @@ var Play = function(game) {
 	};
 };
 Play.prototype = {
+	goFull: function() {
+
+		let centerX = game.world.centerX
+		let centerY = game.world.centerY;
+
+	    if (game.scale.isFullScreen) {
+	    	console.log('{fullscreen} FALSE')
+	        game.scale.stopFullScreen();
+	        game.width = game.world.width = W;
+	        game.height = game.world.height = H;
+
+	        // set center
+	        centerX = game.width / 2;
+	        centerY = game.height / 2;
+	    }
+	    else {
+	    	console.log('{fullscreen} TRUE')
+	        game.scale.startFullScreen(false);
+	        game.width = window.screen.width;
+	        game.height = window.screen.height;
+
+	        // set center
+	        centerX = window.screen.width / 2;
+	        centerY = window.screen.height / 2;
+	    }
+	},
 	preload: function() {
 		console.log('Play: preload');
 	
@@ -106,6 +132,10 @@ Play.prototype = {
 	},
 	create: function() {
 		console.log('Play: create');
+
+		// fullscreen key
+		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
+        fullscreen_key.onDown.add(this.goFull, game);
 		
 		// I always have this on :)
 		this.time.advancedTiming = true;

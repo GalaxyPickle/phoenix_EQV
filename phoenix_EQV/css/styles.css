@@ -1,5 +1,16 @@
+/* NATURE font */
+@font-face {
+	font-family: 'Nature';
+	src: url('Nature.ttf');
+}
+/* GOTHICALISH FONT font */
+@font-face {
+	font-family: 'Meta';
+	src: url('Metamorphous-Regular.ttf');
+}
+
 body {
-	font-family: 'Metamorphous', cursive;
+	font-family: 'Nature', cursive;
 	text-align: center;
 	background: #80B535 url("../assets/img/meta/arches.png");
 	/* fire-orange: #f4520b */

@@ -15,16 +15,35 @@ Title.prototype = {
 	create: function() {
 		console.log('Title: create');
 
+		// timer
+		// create a Timer object - (autoDestroy) = kill timer after its event is dispatched
+		timer01 = game.time.create(false);
+		// add a new event to the Timer (delay, callback, context)
+		max = 11;
+		timedEvent01 = timer01.add(Phaser.Timer.SECOND * max, null, game);
+		// start the timer (delay)
+		timer01.start();
+
+		// load splash screen image
 		splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');
+		splash.anchor.set(0.5);
+
+		// set text for member names
 	},
 	update: function() {
 
 		// have a splash screen lasting maybe ~5 sec
 		//	with title and sound intro thing
-
+		if (timer01.seconds >= max - 1 || game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR))
+			this.startGame();
+	},
+	render: function() {
+		// show timer01 debug text
+		game.debug.text('ms: ' + timer01.seconds, 32, 32, "#ff0");
+	},
+	startGame: function() {
 		// once the splash screen is over go to the play state(?)
 		//	(if there's no main menu) start the game!!!!!
 		game.state.start('Play');
-
 	}
 }

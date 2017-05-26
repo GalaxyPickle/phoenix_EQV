@@ -10,8 +10,6 @@ var Load = function(game) {
 	bg = null;
 	bg_trees = null;
 
-	// click to go into fullscreen
-	fullscreen_key = null;
 	// click text
 	click_b = null;
 	// space start text
@@ -40,8 +38,8 @@ Load.prototype = {
 		game.load.setPreloadSprite(preload_bar);
 
 		// TEXT STYLE
-		small_style = { fontSize: '20px', fill: '#333', font: 'Metamorphous'};
-		big_style = { fontSize: '100px', fill: '#333', font: 'Metamorphous'};
+		big_style = { fontSize: '100px', fill: '#333', font: 'Meta'};
+		small_style = { fontSize: '20px', fill: '#333', font: 'Meta'};
 
 		// set other texts
 		space = game.add.text(game.world.centerX, game.world.centerY, "", big_style);
@@ -51,10 +49,9 @@ Load.prototype = {
     	text_loading.anchor.set(0.5);
 
 		// add fullscreen key (esc)
-		this.fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
-        game.scale.fullScreenScaleMode = Phaser.ScaleManager.RESIZE;
-        this.fullscreen_key.onDown.add(this.goFull, game); 
-        //game.input.onDown.add(this.goFull, game);
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.RESIZE;
+		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
+        fullscreen_key.onDown.add(this.goFull, game);
 
         // add the fade-in sprite overlay
         this.fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
@@ -97,11 +94,6 @@ Load.prototype = {
 		game.load.path = 'assets/audio/music/';
 		// load all the audio music assets
 		game.load.audio('jungle_theme', ['jungle_theme.mp3', 'jungle_theme.ogg']);
-		// game.load.audio('music1', ['fun_themeV2.mp3']);
-		// game.load.audio('music2', ['holy\ fuq.mp3']);
-		// game.load.audio('music3', ['HOLY\ yep.mp3']);
-		// game.load.audio('music4', ['Jerry-8BIT.mp3']);
-		// game.load.audio('music5', ['jerry-8BIT2.mp3']);
 		// sfx loading
 		game.load.path = 'assets/audio/fx/';
 		game.load.audio('phoejay_jump', ['jump.mp3', 'jump.ogg']);
