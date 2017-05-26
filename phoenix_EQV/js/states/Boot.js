@@ -14,7 +14,7 @@ Boot.prototype = {
 		game.load.path = 'assets/img/';
 		// load the loading bar sprite and BG
 		game.load.image('bar', 'meta/bar.png');
-		game.load.image('bg', 'bg/bg@1x.png')
+		game.load.image('bg', 'bg/bg@1x.png');
 	},
 	create: function() {
 		console.log('Boot: create');
