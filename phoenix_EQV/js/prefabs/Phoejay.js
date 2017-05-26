@@ -3,7 +3,7 @@
 
 // written by: _________
 
-function Phoejay(game, key, frame, x, y, hitbox_size=100/3, birdWeight=2) {
+function Phoejay(game, key, frame, x, y, hitbox_size=100/3) {
 	// call to Pahser.Sprite // new Sprite(game, x, y, key, frame)
 	Phaser.Sprite.call(this, game, x, y, key, frame);
 
@@ -59,6 +59,21 @@ Phoejay.prototype.update = function(Phoejay) {   //                |__|   |__| -
 	this.animations.play("jump1")),1!=this.jump||this.cursors.up.isDown||(this.jump=2),       /*    (=`.`=)     */
 	0!=this.jump&&2!=this.jump||this.grounded||!this.cursors.up.isDown||                      /*    (") (")    */ (this.body.moveUp(500*this.birdWeight),
 	this.jump=3),this.jumpswitch=this.cursors.up.isDown;
-
-	////////////////////////////////////////////////////////////////
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// EOF //

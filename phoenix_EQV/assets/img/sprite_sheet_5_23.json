@@ -2,39 +2,39 @@
 
 {
 	"filename": "Branch2.png",
-	"frame": {"x":577,"y":0,"w":193,"h":33},
+	"frame": {"x":832,"y":0,"w":192,"h":64},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":33},
-	"sourceSize": {"w":193,"h":33}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":64},
+	"sourceSize": {"w":192,"h":64}
 },
 {
 	"filename": "Branch2_flip.png",
-	"frame": {"x":193,"y":33,"w":193,"h":33},
+	"frame": {"x":192,"y":64,"w":192,"h":64},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":33},
-	"sourceSize": {"w":193,"h":33}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":64},
+	"sourceSize": {"w":192,"h":64}
 },
 {
 	"filename": "branch_W.png",
-	"frame": {"x":0,"y":0,"w":192,"h":33},
+	"frame": {"x":576,"y":64,"w":192,"h":64},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":33},
-	"sourceSize": {"w":192,"h":33}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":64},
+	"sourceSize": {"w":192,"h":64}
 },
 {
 	"filename": "branch_W_flip.png",
-	"frame": {"x":385,"y":0,"w":192,"h":33},
+	"frame": {"x":640,"y":0,"w":192,"h":64},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":33},
-	"sourceSize": {"w":192,"h":33}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":64},
+	"sourceSize": {"w":192,"h":64}
 },
 {
 	"filename": "ground3.png",
-	"frame": {"x":0,"y":97,"w":192,"h":64},
+	"frame": {"x":0,"y":0,"w":192,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":64},
@@ -42,7 +42,7 @@
 },
 {
 	"filename": "ground4.png",
-	"frame": {"x":642,"y":33,"w":192,"h":64},
+	"frame": {"x":192,"y":0,"w":192,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":64},
@@ -50,7 +50,7 @@
 },
 {
 	"filename": "ground5.png",
-	"frame": {"x":578,"y":33,"w":64,"h":64},
+	"frame": {"x":576,"y":0,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -58,7 +58,7 @@
 },
 {
 	"filename": "ground_1.png",
-	"frame": {"x":386,"y":33,"w":192,"h":64},
+	"frame": {"x":384,"y":0,"w":192,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":64},
@@ -66,115 +66,115 @@
 },
 {
 	"filename": "ground_2.png",
-	"frame": {"x":385,"y":97,"w":192,"h":129},
+	"frame": {"x":0,"y":192,"w":192,"h":128},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":129},
-	"sourceSize": {"w":192,"h":129}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":128},
+	"sourceSize": {"w":192,"h":128}
 },
 {
 	"filename": "mushroom.png",
-	"frame": {"x":192,"y":97,"w":193,"h":129},
+	"frame": {"x":768,"y":64,"w":192,"h":128},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":129},
-	"sourceSize": {"w":193,"h":129}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":128},
+	"sourceSize": {"w":192,"h":128}
 },
 {
 	"filename": "Newest_branch.png",
-	"frame": {"x":0,"y":33,"w":193,"h":33},
+	"frame": {"x":0,"y":64,"w":192,"h":64},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":33},
-	"sourceSize": {"w":193,"h":33}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":64},
+	"sourceSize": {"w":192,"h":64}
 },
 {
 	"filename": "Newest_branch_flip.png",
-	"frame": {"x":192,"y":0,"w":193,"h":33},
+	"frame": {"x":384,"y":64,"w":192,"h":64},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":33},
-	"sourceSize": {"w":193,"h":33}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":64},
+	"sourceSize": {"w":192,"h":64}
 },
 {
 	"filename": "tree1.0.png",
-	"frame": {"x":496,"y":485,"w":234,"h":802},
+	"frame": {"x":704,"y":384,"w":256,"h":832},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":234,"h":802},
-	"sourceSize": {"w":234,"h":802}
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":832},
+	"sourceSize": {"w":256,"h":832}
 },
 {
 	"filename": "tree3.0@1x.png",
-	"frame": {"x":193,"y":485,"w":110,"h":641},
+	"frame": {"x":384,"y":384,"w":128,"h":640},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":110,"h":641},
-	"sourceSize": {"w":110,"h":641}
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":640},
+	"sourceSize": {"w":128,"h":640}
 },
 {
 	"filename": "tree_mush.png",
-	"frame": {"x":0,"y":290,"w":193,"h":193},
+	"frame": {"x":0,"y":384,"w":192,"h":192},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":193},
-	"sourceSize": {"w":193,"h":193}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":192},
+	"sourceSize": {"w":192,"h":192}
 },
 {
 	"filename": "tree_mush_flip.png",
-	"frame": {"x":577,"y":97,"w":193,"h":193},
+	"frame": {"x":768,"y":192,"w":192,"h":192},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":193},
-	"sourceSize": {"w":193,"h":193}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":192},
+	"sourceSize": {"w":192,"h":192}
 },
 {
 	"filename": "tree_W@1x.png",
-	"frame": {"x":303,"y":485,"w":193,"h":705},
+	"frame": {"x":512,"y":384,"w":192,"h":704},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":705},
-	"sourceSize": {"w":193,"h":705}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":704},
+	"sourceSize": {"w":192,"h":704}
 },
 {
 	"filename": "vine3.png",
-	"frame": {"x":386,"y":290,"w":193,"h":194},
+	"frame": {"x":576,"y":192,"w":192,"h":192},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":194},
-	"sourceSize": {"w":193,"h":194}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":192},
+	"sourceSize": {"w":192,"h":192}
 },
 {
 	"filename": "vine3_flip.png",
-	"frame": {"x":193,"y":290,"w":193,"h":194},
+	"frame": {"x":384,"y":192,"w":192,"h":192},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":194},
-	"sourceSize": {"w":193,"h":194}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":192},
+	"sourceSize": {"w":192,"h":192}
 },
 {
 	"filename": "vine_4.png",
-	"frame": {"x":579,"y":290,"w":193,"h":195},
+	"frame": {"x":192,"y":192,"w":192,"h":192},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":195},
-	"sourceSize": {"w":193,"h":195}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":192},
+	"sourceSize": {"w":192,"h":192}
 },
 {
 	"filename": "vine_4_flip.png",
-	"frame": {"x":0,"y":485,"w":193,"h":195},
+	"frame": {"x":192,"y":384,"w":192,"h":192},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":195},
-	"sourceSize": {"w":193,"h":195}
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":192},
+	"sourceSize": {"w":192,"h":192}
 }],
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "sprite_sheet_5_23.png",
 	"format": "RGBA8888",
-	"size": {"w":834,"h":1287},
+	"size": {"w":1024,"h":1216},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:340aa5677273a014616f590d0625f344:b84d591c026296f859120abdb48b522e:d1edcd398e2e88a597d04287303f0361$"
+	"smartupdate": "$TexturePacker:SmartUpdate:e363f7caf0350e30002169f14f4ce72b:be8ea883c42066bbf0db37f651e857ae:d1edcd398e2e88a597d04287303f0361$"
 }
 }
