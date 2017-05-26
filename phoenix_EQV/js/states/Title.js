@@ -15,6 +15,7 @@ Title.prototype = {
 	create: function() {
 		console.log('Title: create');
 
+		splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');
 	},
 	update: function() {
 

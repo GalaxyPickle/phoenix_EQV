@@ -1,7 +1,8 @@
 body {
-	font-family: Helvetica;
+	font-family: 'Metamorphous', cursive;
 	text-align: center;
-	background: rgb(90, 180, 90) url("../assets/img/meta/arches.png");
+	background: #80B535 url("../assets/img/meta/arches.png");
+	/* fire-orange: #f4520b */
 }
 canvas {
 	margin: auto;
