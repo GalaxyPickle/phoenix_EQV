@@ -81,32 +81,41 @@ var Play = function(game) {
 	};
 };
 Play.prototype = {
+	goFull: function() {
+
+		let centerX = game.world.centerX
+		let centerY = game.world.centerY;
+
+	    if (game.scale.isFullScreen) {
+	    	console.log('{fullscreen} FALSE')
+	        game.scale.stopFullScreen();
+	        game.width = W;
+	        game.height = H;
+
+	        // set center
+	        centerX = game.width / 2;
+	        centerY = game.height / 2;
+	    }
+	    else {
+	    	console.log('{fullscreen} TRUE')
+	        game.scale.startFullScreen(false);
+	        game.width = window.screen.width;
+	        game.height = window.screen.height;
+
+	        // set center
+	        centerX = window.screen.width / 2;
+	        centerY = window.screen.height / 2;
+	    }
+	},
 	preload: function() {
 		console.log('Play: preload');
-	
-		// load images path
-		game.load.path = 'assets/img/';
-
-		// bg
-		game.load.image('bg', 'bg/bg@1x.png');
-
-		// moving things
-		game.load.spritesheet('bird', 'entity/phoenix/phoejay_s.png',60,39);
-		game.load.spritesheet('ember', 'entity/ember.png',5,5);
-
-		// tilemap stuff 
-		game.load.image('forest', 'tilesets/forest_tilemap.png');
-		game.load.image('arcade-slopes', 'tilesets/arcade-slopes-64.png');
-
-		// load tilemap
-		game.load.path = 'json/';
-		game.load.tilemap('map', 'forest_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
-
-		// load slope map
-		game.load.json('slope_map', 'slope_map.json');
 	},
 	create: function() {
 		console.log('Play: create');
+
+		// fullscreen key
+		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
+        fullscreen_key.onDown.add(this.goFull, game);
 		
 		// I always have this on :)
 		this.time.advancedTiming = true;
@@ -117,6 +126,13 @@ Play.prototype = {
 		
 		// Set the stage background colour
 		this.stage.backgroundColor = '#facade';
+
+		// add background image/tilemaps
+		// add the bg
+		bg = game.add.tileSprite(0, 0, 3000, 2000, 'bg');
+		bg_trees = game.add.tileSprite(0, 0, 1989, 2386, 'bg_tree');
+		bg.fixedToCamera = true;
+		bg_trees.fixedToCamera = true;
 		
 		// Create the tilemap object from the map JSON data
 
@@ -125,6 +141,8 @@ Play.prototype = {
 		this.map.addTilesetImage('forest_tilemap', 'forest');
 
 		layer = this.map.createLayer('Tile Layer 1');
+		// DEBUG
+		layer.debug = true;
 		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
 		this.map.setCollisionBetween(1, 304, true, "Tile Layer 1");
 
@@ -230,11 +248,18 @@ Play.prototype = {
 		
 		// Prevent the debug text from rendering with a shadow
 		this.game.debug.renderShadow = false;
+
 		//spawn divinity
 		for (var i = 0; i < Math.floor(game.world.width/50); i++) {
 			divinities[i] = new Divinity(game, 'ship', '', this.player.body);
 			game.add.existing(divinities[i]);
 		}   
+
+		// fade-in
+		// add the fade-in sprite overlay
+		fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
+		fade_in.alpha = 1;
+		game.add.tween(fade_in).to( { alpha: 0 }, 2000, "Linear", true, 0); // unveil
 	},
 
 	updatePlayer: function (player) {
@@ -261,7 +286,8 @@ Play.prototype = {
 		graphics._currentBounds = null; // Get Phaser to behave
 		graphics.beginFill(Phaser.Color.hexToRGB('#e3cce9'), 1);
 		
-		player.body.setCircle(halfSize);
+		// player.body.setCircle(halfSize);
+		player.body.enable = true;
 		graphics.drawCircle(0, 0, features.size);
 			
 		player.height = size;
@@ -327,6 +353,11 @@ Play.prototype = {
 		} else {
 			gravity.y = 0;
 		}
+
+		// update the tilesprites for prallaxing
+		bg_trees.tilePosition.x = -camera.view.x / 5;
+		bg_trees.tilePosition.y = -camera.view.y / 5;
+		bg.tilePosition.y = -camera.view.y / 10;
 		
 		// Update player body properties
 		body.drag.x = features.dragX;
@@ -522,9 +553,11 @@ Play.prototype = {
 		var debug = this.game.debug;
 		var controls = this.controls;
 		var features = this.features;
+
+		game.debug.body(this.player);
 		
 		// Render the frame rate
-		debug.text(this.time.fps || '--', 4, 16, "#ffffff");
+		debug.text('FPS: ' + this.time.fps || '--', 50, 50, "yellow");
 		
 		// Render the keyboard controls
 		if(controls.controls.isDown) {

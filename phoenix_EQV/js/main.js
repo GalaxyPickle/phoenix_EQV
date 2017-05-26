@@ -24,7 +24,7 @@ var config = {
 	height: H,
 	renderer: Phaser.AUTO,
 	antialias: false,
-	multiTexture: true
+	multiTexture: false
 }
 
 // wait for browser window load, then start the GAME
