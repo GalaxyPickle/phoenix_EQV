@@ -16,7 +16,7 @@ var Play = function(game) {
 	fox = null;
 	burrel = null;
 
-	bubbles = new Array();
+	//bubbles = new Array();
 	
 	this.features = {
 		// Arcade slopes
@@ -88,6 +88,7 @@ Play.prototype = {
 
 	    if (game.scale.isFullScreen) {
 	    	console.log('{fullscreen} FALSE')
+	    	
 	        game.scale.stopFullScreen();
 	        game.width = W;
 	        game.height = H;
@@ -98,6 +99,7 @@ Play.prototype = {
 	    }
 	    else {
 	    	console.log('{fullscreen} TRUE')
+
 	        game.scale.startFullScreen(false);
 	        game.width = window.screen.width;
 	        game.height = window.screen.height;
@@ -137,14 +139,14 @@ Play.prototype = {
 		// Create the tilemap object from the map JSON data
 
 		this.map = this.add.tilemap('map');
-		//map.addTilesetImage('forest', 'arcade-slopes');
-		this.map.addTilesetImage('forest_tilemap', 'forest');
+		// this.map.addTilesetImage('forest_tilemap', 'forest');
+		this.map.addTilesetImage('tilemap_platforms', 'forest');
 
-		layer = this.map.createLayer('Tile Layer 1');
+		layer = this.map.createLayer('layer_platforms');
 		// DEBUG
 		layer.debug = true;
 		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
-		this.map.setCollisionBetween(1, 304, true, "Tile Layer 1");
+		this.map.setCollisionBetween(1, 170, true, "layer_platforms");
 
 		layer.resizeWorld();
 		
@@ -250,10 +252,10 @@ Play.prototype = {
 		this.game.debug.renderShadow = false;
 
 		//spawn divinity
-		for (var i = 0; i < Math.floor(game.world.width/50); i++) {
-			divinities[i] = new Divinity(game, 'ship', '', this.player.body);
-			game.add.existing(divinities[i]);
-		}   
+		// for (var i = 0; i < Math.floor(game.world.width/50); i++) {
+		// 	divinities[i] = new Divinity(game, 'ship', '', this.player.body);
+		// 	game.add.existing(divinities[i]);
+		// }   
 
 		// fade-in
 		// add the fade-in sprite overlay
@@ -557,7 +559,7 @@ Play.prototype = {
 		game.debug.body(this.player);
 		
 		// Render the frame rate
-		debug.text('FPS: ' + this.time.fps || '--', 50, 50, "yellow");
+		debug.text('FPS: ' + this.time.fps || '--', 50, 50, "red");
 		
 		// Render the keyboard controls
 		if(controls.controls.isDown) {
@@ -592,8 +594,8 @@ Play.prototype = {
 	}
 }
 
-var fireTime = 2000;
-var divinities = new Array();
+var fireTime = 10;
+// var divinities = new Array();
 
 
 

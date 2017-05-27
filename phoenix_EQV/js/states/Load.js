@@ -78,14 +78,13 @@ Load.prototype = {
 		game.load.spritesheet('ember', 'entity/ember.png',5,5);
 
 		// tilemap spritesheets
-		game.load.image('forest', 'tilesets/forest_tilemap.png');
+		game.load.image('forest', 'tilesets/tilemap_platforms.png');
 		game.load.image('arcade-slopes', 'tilesets/arcade-slopes-64.png');
 
 		// load tilemap path
 		game.load.path = 'json/';
 		// load tilemaps
 		game.load.tilemap('map', 'forest_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
-
 		// load slope map
 		game.load.json('slope_map', 'slope_map.json');
 
