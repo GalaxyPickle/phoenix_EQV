@@ -1,11 +1,18 @@
 Below is a list of all arcade tile types.
 For an empty tile, just skip the tile index
 
+MAKING IN ORDER!!!
+
 'FULL',
+'HALF_TOP',
+'HALF_BOTTOM',
+'HALF_LEFT',
+'HALF_RIGHT',
 'HALF_BOTTOM_LEFT',
 'HALF_BOTTOM_RIGHT',
 'HALF_TOP_LEFT',
 'HALF_TOP_RIGHT',
+
 'QUARTER_BOTTOM_LEFT_LOW',
 'QUARTER_BOTTOM_RIGHT_LOW',
 'QUARTER_TOP_RIGHT_LOW',
@@ -22,9 +29,9 @@ For an empty tile, just skip the tile index
 'QUARTER_RIGHT_BOTTOM_LOW',
 'QUARTER_RIGHT_TOP_HIGH',
 'QUARTER_LEFT_TOP_HIGH',
-'HALF_BOTTOM',
-'HALF_RIGHT',
-'HALF_TOP',
-'HALF_LEFT',
+
+
+
+
 
 

@@ -28,6 +28,19 @@
          "tilecount":304,
          "tileheight":64,
          "tilewidth":64
+        }, 
+        {
+         "columns":17,
+         "firstgid":305,
+         "image":"..\/assets\/img\/tilesets\/tilemap_platforms.png",
+         "imageheight":640,
+         "imagewidth":1088,
+         "margin":0,
+         "name":"tilemap_platforms",
+         "spacing":0,
+         "tilecount":170,
+         "tileheight":64,
+         "tilewidth":64
         }],
  "tilewidth":64,
  "version":1,
