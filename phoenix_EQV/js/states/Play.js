@@ -77,7 +77,7 @@ var Play = function(game) {
 		
 		// Fun
 		slowMotion: 1,
-		debug: 0,
+		debug: 1,
 	};
 };
 Play.prototype = {
@@ -114,6 +114,8 @@ Play.prototype = {
 	},
 	create: function() {
 		console.log('Play: create');
+		
+		this.game.flower = false;
 
 		// fullscreen key
 		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
@@ -252,10 +254,11 @@ Play.prototype = {
 		this.game.debug.renderShadow = false;
 
 		//spawn divinity
-		// for (var i = 0; i < Math.floor(game.world.width/50); i++) {
-		// 	divinities[i] = new Divinity(game, 'ship', '', this.player.body);
-		// 	game.add.existing(divinities[i]);
-		// }   
+		this.player.body.divinity = 0;
+		for (var i = 0; i < 8; i++) {
+			divinities[i] = new Divinity(game, 'divinity', '', this.player.body, i);
+			game.add.existing(divinities[i]);
+		}   
 
 		// fade-in
 		// add the fade-in sprite overlay
@@ -311,6 +314,13 @@ Play.prototype = {
 		var touching = body.touching;
 		var controls = this.controls;
 		var features = this.features;
+		
+		//handle lock-and-key mechanisms
+		if (this.player.body.divinity >= 8 && !this.game.flower) {
+			this.game.flower = 1;
+			console.log(500);
+			game.add.sprite(300, 600, 'mushroom');
+		}
 		
 		// Update slow motion values; these two are great fun together
 		// ( ?° ?? ?°)
@@ -595,7 +605,7 @@ Play.prototype = {
 }
 
 var fireTime = 10;
-// var divinities = new Array();
+var divinities = new Array();
 
 
 
