@@ -548,13 +548,13 @@ Play.prototype = {
 			if (!(blocked.down || blocked.up || touching.up)) {
 				// Would be even better to use collision normals here
 				if (blocked.left || touching.left) {
-					//body.velocity.x = features.wallJump;
-					//body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
+					body.velocity.x = features.wallJump;
+					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
 				}
 				
 				if (blocked.right || touching.right) {
-					//body.velocity.x = -features.wallJump;
-					//body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
+					body.velocity.x = -features.wallJump;
+					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
 				}
 			}
 		}
