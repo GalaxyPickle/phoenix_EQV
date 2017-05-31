@@ -76,6 +76,7 @@ Load.prototype = {
 		// player
 		game.load.spritesheet('bird', 'entity/phoenix/phoejay_s.png', 60, 39);
 		game.load.spritesheet('ember', 'entity/ember.png',5,5);
+		game.load.image('divinity', 'entity/divinity.png', 88, 95);
 
 		// tilemap spritesheets
 		game.load.image('forest', 'tilesets/tilemap_platforms.png');
