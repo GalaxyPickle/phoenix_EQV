@@ -74,13 +74,16 @@ Load.prototype = {
 		game.load.image('splash', 'meta/splash.png');
 
 		// player
-		game.load.spritesheet('bird', 'entity/phoenix/phoejay_s.png', 60, 39);
+		//load the player
+		game.load.path = 'assets/img/entity/phoenix/';
+		this.game.load.atlas('phoejay', 'phoejay_mov.png', 'phoejay_mov.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+		
 		game.load.spritesheet('ember', 'entity/ember.png',5,5);
 		game.load.image('divinity', 'entity/divinity.png', 88, 95);
 
 		// tilemap spritesheets
-		game.load.image('forest', 'tilesets/tilemap_platforms.png');
-		game.load.image('arcade-slopes', 'tilesets/arcade-slopes-64.png');
+		game.load.image('forest', 'tilesets/collision_layer.png');
+		game.load.image('forest2', 'tilesets/noncollision_layer.png');
 
 		// load tilemap path
 		game.load.path = 'json/';
