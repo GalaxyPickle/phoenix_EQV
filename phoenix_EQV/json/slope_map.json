@@ -1,5 +1,4 @@
-{
-"1": "FULL",
+{"1": "FULL",
 "2": "HALF_TOP",
 "3": "HALF_BOTTOM",
 "4": "HALF_LEFT",
@@ -8,114 +7,113 @@
 "7": "HALF_BOTTOM_RIGHT",
 "8": "HALF_TOP_LEFT",
 "9": "HALF_TOP_RIGHT",
-"10": "FULL",
-"11": "FULL",
-"12": "FULL",
-"13": "FULL",
-"14": "FULL",
-"15": "FULL",
-"16": "FULL",
-"17": "HALF_BOTTOM",
-"18": "HALF_BOTTOM",
-"19": "HALF_BOTTOM",
-"20": "HALF_BOTTOM",
-"21": "FULL",
-"22": "FULL",
-"23": "FULL",
-"24": "FULL",
-"25": "FULL",
+"10": "QUARTER_TOP_LEFT_HIGH",
+"11": "QUARTER_TOP_LEFT_LOW",
+"12": "QUARTER_TOP_RIGHT_LOW",
+"13": "QUARTER_TOP_RIGHT_HIGH",
+"14": "QUARTER_BOTTOM_LEFT_HIGH",
+"15": "QUARTER_BOTTOM_LEFT_LOW",
+"16": "QUARTER_BOTTOM_RIGHT_LOW",
+"17": "QUARTER_BOTTOM_RIGHT_HIGH",
+"18": "QUARTER_LEFT_BOTTOM_HIGH",
+"19": "QUARTER_RIGHT_BOTTOM_HIGH",
+"20": "QUARTER_LEFT_TOP_HIGH",
+"21": "QUARTER_RIGHT_TOP_HIGH",
+"22": "HALF_TOP",
+"23": "HALF_TOP",
+"24": "HALF_TOP",
+"25": "HALF_RIGHT",
 "26": "FULL",
-"27": "FULL",
-"28": "FULL",
-"29": "FULL",
+"27": "HALF_LEFT",
+
+"29": "HALF_RIGHT",
 "30": "FULL",
-"31": "FULL",
-"32": "FULL",
-"33": "FULL",
-"34": "FULL",
-"35": "FULL",
-"36": "FULL",
-"37": "FULL",
-"38": "FULL",
-"39": "FULL",
-"40": "FULL",
-"41": "FULL",
-"42": "FULL",
+"31": "HALF_LEFT",
+
+
+
+"35": "QUARTER_LEFT_BOTTOM_LOW",
+"36": "QUARTER_RIGHT_BOTTOM_LOW",
+"37": "QUARTER_LEFT_TOP_LOW",
+"38": "QUARTER_RIGHT_TOP_LOW",
+"39": "HALF_TOP",
+"40": "HALF_TOP",
+"41": "HALF_TOP",
+"42": "HALF_RIGHT",
 "43": "FULL",
-"44": "FULL",
-"45": "FULL",
-"46": "FULL",
+"44": "HALF_LEFT",
+
+"46": "HALF_RIGHT",
 "47": "FULL",
-"48": "FULL",
-"49": "FULL",
-"50": "FULL",
-"51": "FULL",
-"52": "FULL",
+"48": "HALF_LEFT",
+
+
+
+"52": "HALF_BOTTOM_RIGHT",
 "53": "FULL",
-"54": "FULL",
-"55": "FULL",
-"56": "FULL",
-"57": "FULL",
-"58": "FULL",
-"59": "FULL",
+"54": "HALF_BOTTOM_LEFT",
+
+
+
+
+"59": "HALF_RIGHT",
 "60": "FULL",
-"61": "FULL",
-"62": "FULL",
-"63": "FULL",
+"61": "HALF_LEFT",
+
+"63": "HALF_RIGHT",
 "64": "FULL",
-"65": "FULL",
-"66": "FULL",
-"67": "FULL",
-"68": "FULL",
-"69": "FULL",
-"70": "FULL",
-"71": "FULL",
-"72": "FULL",
-"73": "FULL",
-"74": "FULL",
-"75": "FULL",
-"76": "FULL",
+"65": "HALF_LEFT",
+
+
+
+
+
+
+
+
+
+
+"76": "HALF_RIGHT",
 "77": "FULL",
-"78": "FULL",
-"79": "FULL",
-"80": "FULL",
+"78": "HALF_LEFT",
+
+"80": "HALF_RIGHT",
 "81": "FULL",
-"82": "FULL",
-"83": "FULL",
-"84": "FULL",
-"85": "FULL",
-"86": "FULL",
-"87": "FULL",
-"88": "FULL",
-"89": "FULL",
-"90": "FULL",
-"91": "FULL",
-"92": "FULL",
-"93": "FULL",
+"82": "HALF_LEFT",
+
+
+
+
+
+
+
+
+
+
+"93": "HALF_RIGHT",
 "94": "FULL",
-"95": "FULL",
-"96": "FULL",
-"97": "FULL",
+"95": "HALF_LEFT",
+
+"97": "HALF_RIGHT",
 "98": "FULL",
-"99": "FULL",
-"100": "FULL",
-"101": "FULL",
-"102": "FULL",
-"103": "FULL",
-"104": "FULL",
-"105": "FULL",
-"106": "FULL",
-"107": "FULL",
-"108": "FULL",
-"109": "FULL",
-"110": "FULL",
+"99": "HALF_LEFT",
+
+
+
+
+
+
+
+
+
+
+"110": "HALF_RIGHT",
 "111": "FULL",
-"112": "FULL",
-"113": "FULL",
-"114": "FULL",
+"112": "HALF_LEFT",
+
+"114": "HALF_RIGHT",
 "115": "FULL",
-"116": "FULL",
-"117": "FULL",
+"116": "HALF_LEFT",
 "118": "FULL",
 "119": "FULL",
 "120": "FULL",
