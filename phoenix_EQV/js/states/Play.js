@@ -142,23 +142,30 @@ Play.prototype = {
 
 		this.map = this.add.tilemap('map');
 		// this.map.addTilesetImage('forest_tilemap', 'forest');
-		this.map.addTilesetImage('tilemap_platforms', 'forest');
+		this.map.addTilesetImage('collision_layer','forest');
+		this.map.addTilesetImage('noncollision_layer','forest');
 
-		layer = this.map.createLayer('layer_platforms');
+		layer = this.map.createLayer('Noncollision_2');
+		layer = this.map.createLayer('Noncollision_1');
+
+		layer = this.map.createLayer('Collision_1');
+		this.map.setCollisionBetween(1, 107, true, "Collision_1");
 		// DEBUG
 		layer.debug = true;
 		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
-		this.map.setCollisionBetween(1, 170, true, "layer_platforms");
 
 		layer.resizeWorld();
 		
-		// Create a player sprite
-		this.player = this.add.sprite(100, 100, 'bird');
-		this.player.animations.add('idle', [0], 1, false);
-		this.player.animations.add('run', [1, 2], 12, true);
-		this.player.animations.add('jump1', [3], 1, false);
-		this.player.animations.add('jump2', [4], 1, false);
-		this.player.animations.add('glide', [5], 1, false);
+		// Create a player texture atlas
+		this.player = this.add.sprite(10, 10, 'phoejay','static');
+		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
+		this.player.animations.add('static', ['static'], 1, false);
+		this.player.animations.add('hop', ['hop'], 1, false);
+		this.player.animations.add('top', ['top'], 1, false);
+		this.player.animations.add('glide', ['glide'], 1, false);
+		this.player.animations.add('crouch', ['wallcrouch'], 1, false);
+		this.player.animations.add('walljump', ['wallhop'], 1, false);
+		
 		
 		// Create a graphics object for the player
 		this.playerGraphics = new Phaser.Graphics(this);
@@ -485,9 +492,9 @@ Play.prototype = {
 			this.jetpack = this.jetpackmax;
 			this.jump = 0;
 			grounded = true;
-			if (!dir) this.player.animations.play('idle');
+			if (!dir) this.player.animations.play('static');
 			else { //running
-				this.player.animations.play('run');
+				this.player.animations.play('walk');
 				fireTime -= 1;
 			}
 		}
@@ -502,7 +509,7 @@ Play.prototype = {
 				body.velocity.y = -360;
 				this.jetpack -= 1;
 			}
-			this.player.animations.play('jump1');
+			this.player.animations.play('hop');
 		}
 		
 		if (this.jump == 1 && !controls.up.isDown) //reset
@@ -511,9 +518,9 @@ Play.prototype = {
 		if (this.jump == 3) {
 			if (controls.up.isDown) {
 				if (body.y > this.lasty) body.velocity.y = 130;
-				this.player.animations.play('glide');
+				this.player.animations.play('top');
 			}
-			else this.player.animations.play('jump2');
+			else this.player.animations.play('glide');
 		}
 			
 		if ((this.jump == 0 || this.jump == 2) && !grounded && controls.up.isDown) { //first jump post-jump

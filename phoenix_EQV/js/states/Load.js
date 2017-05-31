@@ -85,7 +85,7 @@ Load.prototype = {
 		// load tilemap path
 		game.load.path = 'json/';
 		// load tilemaps
-		game.load.tilemap('map', 'forest_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.tilemap('map', 'forest.json', null, Phaser.Tilemap.TILED_JSON);
 		// load slope map
 		game.load.json('slope_map', 'slope_map.json');
 
