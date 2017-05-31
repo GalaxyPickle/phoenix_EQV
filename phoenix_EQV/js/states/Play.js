@@ -301,8 +301,7 @@ Play.prototype = {
 		// player.body.setCircle(halfSize);
 		player.body.enable = true;
 		graphics.drawCircle(0, 0, features.size);
-			
-		player.height = size;
+		// I don't know why we need this lol	//player.height = size;
 		
 		// Enable Arcade Slopes physics
 		if (this.game.slopes) {
