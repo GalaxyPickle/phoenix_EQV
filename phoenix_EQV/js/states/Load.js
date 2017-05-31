@@ -82,7 +82,7 @@ Load.prototype = {
 		game.load.image('divinity', 'divinity.png', 88, 95);
 
 		// tilemap spritesheets
-		game.load.path = 'assets/img/';
+		game.load.path = 'assets/img/USE_THESE';
 		game.load.image('forest', 'tilesets/collision_layer.png');
 		game.load.image('forest2', 'tilesets/noncollision_layer.png');
 

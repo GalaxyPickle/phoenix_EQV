@@ -143,7 +143,7 @@ Play.prototype = {
 		this.map = this.add.tilemap('map');
 		// this.map.addTilesetImage('forest_tilemap', 'forest');
 		this.map.addTilesetImage('collision_layer','forest');
-		this.map.addTilesetImage('noncollision_layer','forest');
+		this.map.addTilesetImage('noncollision_layer','forest2');
 
 		layer = this.map.createLayer('Noncollision_2');
 		layer = this.map.createLayer('Noncollision_1');
