@@ -159,14 +159,19 @@ Play.prototype = {
 		this.map.addTilesetImage('collision_layer','forest');
 		this.map.addTilesetImage('noncollision_layer','forest2');
 
-		layer = this.map.createLayer('Noncollision_2');
+	
 		layer = this.map.createLayer('Noncollision_1');
 
 		layer = this.map.createLayer('Collision_1');
-		this.map.setCollisionBetween(1, 107, true, "Collision_1");
+		this.map.setCollisionBetween(1, 107, true, "Collision_1");	
+		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
+
+		layer = this.map.createLayer('Noncollision_2');
+
+
 		// DEBUG
 		//layer.debug = true;
-		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
+		
 
 		layer.resizeWorld();
 		
@@ -559,7 +564,9 @@ Play.prototype = {
 		
 		// Wall jump
 		if (features.wallJump && (controls.up.isDown && gravity.y > 0) || (controls.down.isDown && gravity.y < 0)) {
+			this.player.animations.play('crouch');
 			if (!(blocked.down || blocked.up || touching.up)) {
+				this.player.animations.play('crouch');
 				// Would be even better to use collision normals here
 				if (blocked.left || touching.left) {
 					this.player.animations.play('crouch');
