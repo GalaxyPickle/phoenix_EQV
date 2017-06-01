@@ -301,6 +301,9 @@ Play.prototype = {
 		// player.body.setCircle(halfSize);
 		player.body.enable = true;
 		graphics.drawCircle(0, 0, features.size);
+		// SET PLAYER BODY SMALLER
+		// rect width, rect height, start x, start y
+		player.body.setSize(player.width / 3, player.height * 3 / 5, player.width / 3, player.height / 4);
 		// I don't know why we need this lol	//player.height = size;
 		
 		// Enable Arcade Slopes physics
@@ -537,7 +540,7 @@ Play.prototype = {
 		}
 		
 		// Wall jump
-		if (features.wallJump && (controls.up.isDown && gravity.y > 0) || (controls.down.isDown && gravity.y < 0)) {
+		if (features.wallJump && (controls.up.justPressed() && gravity.y > 0) || (controls.down.isDown && gravity.y < 0)) {
 			if (!(blocked.down || blocked.up || touching.up)) {
 				// Would be even better to use collision normals here
 				if (blocked.left || touching.left) {
