@@ -3,6 +3,8 @@
 
 // written by: ____________
 
+var divinity;
+
 var Play = function(game) {
 	// variables
 	player = null;
@@ -261,11 +263,9 @@ Play.prototype = {
 		this.game.debug.renderShadow = false;
 
 		//spawn divinity
-		this.player.body.divinity = 0;
-		for (var i = 0; i < 8; i++) {
-			divinities[i] = new Divinity(game, 'divinity', '', this.player.body, i);
-			game.add.existing(divinities[i]);
-		}   
+		divinity = 0;
+		var creature = new DeadAnimal(game, 'animal', 'divinity', '', this.player.body, 8, 300);
+		game.add.existing(creature);
 
 		// fade-in
 		// add the fade-in sprite overlay
@@ -320,13 +320,6 @@ Play.prototype = {
 		var touching = body.touching;
 		var controls = this.controls;
 		var features = this.features;
-		
-		//handle lock-and-key mechanisms
-		if (this.player.body.divinity >= 8 && !this.game.flower) {
-			this.game.flower = 1;
-			console.log(500);
-			game.add.sprite(300, 600, 'mushroom');
-		}
 		
 		// Update slow motion values; these two are great fun together
 		// ( ?° ?? ?°)
@@ -611,7 +604,6 @@ Play.prototype = {
 }
 
 var fireTime = 10;
-var divinities = new Array();
 
 
 
