@@ -38,7 +38,7 @@ var Play = function(game) {
 		cameraMicroZoom: 0.0,
 		cameraRotation: 0.0,
 		cameraMicroRotation: 0.0,
-		cameraLerp: 0.1,
+		cameraLerp: 0.5,
 		cameraFollow: true,
 		cameraRoundPixels: false,
 		
@@ -102,7 +102,7 @@ Play.prototype = {
 	    else {
 	    	console.log('{fullscreen} TRUE')
 
-	        game.scale.startFullScreen(false);
+	        game.scale.startFullScreen(true);
 	        game.width = window.screen.width;
 	        game.height = window.screen.height;
 
@@ -117,7 +117,19 @@ Play.prototype = {
 	create: function() {
 		console.log('Play: create');
 		
-		this.game.flower = false;
+		sfx_jump1 = game.add.audio('jump1');
+		sfx_jump2 = game.add.audio('jump2');
+		sfx_jump3 = game.add.audio('jump3');
+		sfx_land1 = game.add.audio('land' );
+		sfx_glide = game.add.audio('glide');
+		sfx_fall1 = game.add.audio('fall' );
+
+		// MUSICCXSSSSSZZZZZ
+		jungle_music = game.add.audio('end_theme');
+		jungle_music.play('', 0, .75, true);
+		jungle_music.loop = true;
+
+		// SOUND FX
 
 		// fullscreen key
 		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
@@ -153,7 +165,7 @@ Play.prototype = {
 		layer = this.map.createLayer('Collision_1');
 		this.map.setCollisionBetween(1, 107, true, "Collision_1");
 		// DEBUG
-		layer.debug = true;
+		//layer.debug = true;
 		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
 
 		layer.resizeWorld();
@@ -227,19 +239,19 @@ Play.prototype = {
 		
 		// Map some keys for use in our update() loop
 		this.controls = this.input.keyboard.addKeys({
-			'up': Phaser.KeyCode.W,
-			'down': Phaser.KeyCode.S,
-			'left': Phaser.KeyCode.A,
-			'right': Phaser.KeyCode.D,
+			'up': Phaser.KeyCode.UP,
+			'down': Phaser.KeyCode.DOWN,
+			'left': Phaser.KeyCode.LEFT,
+			'right': Phaser.KeyCode.RIGHT,
 			'follow': Phaser.KeyCode.F,
 			'gravity': Phaser.KeyCode.G,
 			'controls': Phaser.KeyCode.C,
 			'particles': Phaser.KeyCode.J,
 			'toggle': Phaser.KeyCode.K,
-			'cameraUp': Phaser.KeyCode.UP,
-			'cameraDown': Phaser.KeyCode.DOWN,
-			'cameraLeft': Phaser.KeyCode.LEFT,
-			'cameraRight': Phaser.KeyCode.RIGHT
+			'cameraUp': Phaser.KeyCode.W,
+			'cameraDown': Phaser.KeyCode.A,
+			'cameraLeft': Phaser.KeyCode.S,
+			'cameraRight': Phaser.KeyCode.D
 		});
 		
 		// Follow the player with the camera
@@ -487,6 +499,7 @@ Play.prototype = {
 			this.jetpack = this.jetpackmax;
 			this.jump = 0;
 			grounded = true;
+			sfx_land1.play()
 			if (!dir) this.player.animations.play('static');
 			else { //running
 				this.player.animations.play('walk');
@@ -495,11 +508,13 @@ Play.prototype = {
 		}
 		
 		if (grounded && this.jumpswitch) {
-			body.velocity.y = -features.jump*.3;
+			body.velocity.y = -features.jump*.3;    
 			this.jump = 1;
+			sfx_jump1.play()
 		}
 		
 		if (this.jump == 1 && controls.up.isDown) { //first jump shorthop
+			sfx_jump2.play()
 			if (this.jetpack > 0) {
 				body.velocity.y = -360;
 				this.jetpack -= 1;
@@ -516,11 +531,13 @@ Play.prototype = {
 				this.player.animations.play('top');
 			}
 			else this.player.animations.play('glide');
+			sfx_glide.play()
 		}
 			
 		if ((this.jump == 0 || this.jump == 2) && !grounded && controls.up.isDown) { //first jump post-jump
 			body.velocity.y = -features.jump;
 			this.jump = 3;
+			sfx_jump2.play()
 		}
 		this.jumpswitch = controls.up.isDown;
 		this.lasty = body.y;
@@ -536,32 +553,35 @@ Play.prototype = {
 			
 			if (!features.jump || gravity.y >= 0){
 				body.acceleration.y = Math.abs(gravity.y) + features.acceleration;
+				sfx_fall1.play()
 			}
 		}
 		
 		// Wall jump
-		if (features.wallJump && (controls.up.justPressed() && gravity.y > 0) || (controls.down.isDown && gravity.y < 0)) {
+		if (features.wallJump && (controls.up.isDown && gravity.y > 0) || (controls.down.isDown && gravity.y < 0)) {
 			if (!(blocked.down || blocked.up || touching.up)) {
 				// Would be even better to use collision normals here
 				if (blocked.left || touching.left) {
 					this.player.animations.play('crouch');
 					body.velocity.x = features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
+					sfx_jump3.play()
 				}
 				
 				if (blocked.right || touching.right) {
 					this.player.animations.play('crouch');
 					body.velocity.x = -features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
+					sfx_jump3.play()
 				}
 			}
 		}
 		
 		//Embers
-		if (fireTime < 0) {
-			fireTime = 800;
-			var v = game.add.sprite(body.x + body.width/2, body.y + body.height, 'ember');
-		}
+		// if (fireTime < 0) {
+		// 	fireTime = 800;
+		// 	var v = game.add.sprite(body.x + body.width/2, body.y + body.height, 'ember');
+		// }
 		//
 	},
 	
@@ -570,7 +590,7 @@ Play.prototype = {
 		var controls = this.controls;
 		var features = this.features;
 
-		game.debug.body(this.player);
+		//game.debug.body(this.player);
 		
 		// Render the frame rate
 		debug.text('FPS: ' + this.time.fps || '--', 50, 50, "red");
