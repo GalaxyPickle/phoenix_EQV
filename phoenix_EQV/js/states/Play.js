@@ -125,7 +125,7 @@ Play.prototype = {
 		sfx_fall1 = game.add.audio('fall' );
 
 		// MUSICCXSSSSSZZZZZ
-		jungle_music = game.add.audio('end_theme');
+		jungle_music = game.add.audio('jungle_theme');
 		jungle_music.play('', 0, .75, true);
 		jungle_music.loop = true;
 
@@ -499,7 +499,7 @@ Play.prototype = {
 			this.jetpack = this.jetpackmax;
 			this.jump = 0;
 			grounded = true;
-			sfx_land1.play()
+			//sfx_land1.play()
 			if (!dir) this.player.animations.play('static');
 			else { //running
 				this.player.animations.play('walk');
@@ -510,11 +510,11 @@ Play.prototype = {
 		if (grounded && this.jumpswitch) {
 			body.velocity.y = -features.jump*.3;    
 			this.jump = 1;
-			sfx_jump1.play()
+			//sfx_jump1.play()
 		}
 		
 		if (this.jump == 1 && controls.up.isDown) { //first jump shorthop
-			sfx_jump2.play()
+			// sfx_jump2.play()
 			if (this.jetpack > 0) {
 				body.velocity.y = -360;
 				this.jetpack -= 1;
@@ -531,13 +531,13 @@ Play.prototype = {
 				this.player.animations.play('top');
 			}
 			else this.player.animations.play('glide');
-			sfx_glide.play()
+			//sfx_glide.play()
 		}
 			
 		if ((this.jump == 0 || this.jump == 2) && !grounded && controls.up.isDown) { //first jump post-jump
 			body.velocity.y = -features.jump;
 			this.jump = 3;
-			sfx_jump2.play()
+			//sfx_jump2.play()
 		}
 		this.jumpswitch = controls.up.isDown;
 		this.lasty = body.y;
@@ -553,7 +553,7 @@ Play.prototype = {
 			
 			if (!features.jump || gravity.y >= 0){
 				body.acceleration.y = Math.abs(gravity.y) + features.acceleration;
-				sfx_fall1.play()
+				//sfx_fall1.play()
 			}
 		}
 		
@@ -564,13 +564,13 @@ Play.prototype = {
 				if (blocked.left || touching.left) {
 					body.velocity.x = features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					sfx_jump3.play()
+					//sfx_jump3.play()
 				}
 				
 				if (blocked.right || touching.right) {
 					body.velocity.x = -features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					sfx_jump3.play()
+					//sfx_jump3.play()
 				}
 			}
 		}
