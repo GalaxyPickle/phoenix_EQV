@@ -38,7 +38,7 @@ var Play = function(game) {
 		cameraMicroZoom: 0.0,
 		cameraRotation: 0.0,
 		cameraMicroRotation: 0.0,
-		cameraLerp: 0.1,
+		cameraLerp: 0.5,
 		cameraFollow: true,
 		cameraRoundPixels: false,
 		
@@ -120,7 +120,7 @@ Play.prototype = {
 		this.game.flower = false;
 
 		// MUSICCXSSSSSZZZZZ
-		jungle_music = game.add.audio('jungle_theme');
+		jungle_music = game.add.audio('end_theme');
 		jungle_music.play('', 0, .75, true);
 		jungle_music.loop = true;
 
@@ -160,7 +160,7 @@ Play.prototype = {
 		layer = this.map.createLayer('Collision_1');
 		this.map.setCollisionBetween(1, 107, true, "Collision_1");
 		// DEBUG
-		layer.debug = true;
+		//layer.debug = true;
 		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
 
 		layer.resizeWorld();
@@ -577,7 +577,7 @@ Play.prototype = {
 		var controls = this.controls;
 		var features = this.features;
 
-		game.debug.body(this.player);
+		//game.debug.body(this.player);
 		
 		// Render the frame rate
 		debug.text('FPS: ' + this.time.fps || '--', 50, 50, "red");
