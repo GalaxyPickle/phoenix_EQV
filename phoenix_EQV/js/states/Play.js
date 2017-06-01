@@ -544,11 +544,13 @@ Play.prototype = {
 			if (!(blocked.down || blocked.up || touching.up)) {
 				// Would be even better to use collision normals here
 				if (blocked.left || touching.left) {
+					this.player.animations.play('crouch');
 					body.velocity.x = features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
 				}
 				
 				if (blocked.right || touching.right) {
+					this.player.animations.play('crouch');
 					body.velocity.x = -features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
 				}
