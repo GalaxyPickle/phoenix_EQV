@@ -117,7 +117,12 @@ Play.prototype = {
 	create: function() {
 		console.log('Play: create');
 		
-		this.game.flower = false;
+		sfx_jump1 = game.add.audio('jump1');
+		sfx_jump2 = game.add.audio('jump2');
+		sfx_jump3 = game.add.audio('jump3');
+		sfx_land1 = game.add.audio('land' );
+		sfx_glide = game.add.audio('glide');
+		sfx_fall1 = game.add.audio('fall' );
 
 		// MUSICCXSSSSSZZZZZ
 		jungle_music = game.add.audio('end_theme');
@@ -494,6 +499,7 @@ Play.prototype = {
 			this.jetpack = this.jetpackmax;
 			this.jump = 0;
 			grounded = true;
+			sfx_land1.play()
 			if (!dir) this.player.animations.play('static');
 			else { //running
 				this.player.animations.play('walk');
@@ -502,11 +508,13 @@ Play.prototype = {
 		}
 		
 		if (grounded && this.jumpswitch) {
-			body.velocity.y = -features.jump*.3;
+			body.velocity.y = -features.jump*.3;    
 			this.jump = 1;
+			sfx_jump1.play()
 		}
 		
 		if (this.jump == 1 && controls.up.isDown) { //first jump shorthop
+			sfx_jump2.play()
 			if (this.jetpack > 0) {
 				body.velocity.y = -360;
 				this.jetpack -= 1;
@@ -514,26 +522,26 @@ Play.prototype = {
 			this.player.animations.play('hop');
 		}
 		
-		if (this.jump == 1 && !controls.up.isDown) { //reset
+		if (this.jump == 1 && !controls.up.isDown) //reset
 			this.jump = 2; 
-		}
 			
 		if (this.jump == 3) {
 			if (controls.up.isDown) {
-				if (body.y > this.lasty)  {
-					body.velocity.y = 130;
-				}
+				if (body.y > this.lasty) body.velocity.y = 130;
 				this.player.animations.play('top');
 			}
 			else this.player.animations.play('glide');
+			sfx_glide.play()
 		}
 			
 		if ((this.jump == 0 || this.jump == 2) && !grounded && controls.up.isDown) { //first jump post-jump
 			body.velocity.y = -features.jump;
 			this.jump = 3;
+			sfx_jump2.play()
 		}
 		this.jumpswitch = controls.up.isDown;
 		this.lasty = body.y;
+		
 		
 		// Accelerate down or jump down
 		if (controls.down.isDown) {
@@ -545,21 +553,24 @@ Play.prototype = {
 			
 			if (!features.jump || gravity.y >= 0){
 				body.acceleration.y = Math.abs(gravity.y) + features.acceleration;
+				sfx_fall1.play()
 			}
 		}
 		
 		// Wall jump
-		if (features.wallJump && (controls.up.justPressed() && gravity.y > 0) || (controls.down.isDown && gravity.y < 0)) {
+		if (features.wallJump && (controls.up.isDown && gravity.y > 0) || (controls.down.isDown && gravity.y < 0)) {
 			if (!(blocked.down || blocked.up || touching.up)) {
 				// Would be even better to use collision normals here
 				if (blocked.left || touching.left) {
 					body.velocity.x = features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
+					sfx_jump3.play()
 				}
 				
 				if (blocked.right || touching.right) {
 					body.velocity.x = -features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
+					sfx_jump3.play()
 				}
 			}
 		}
