@@ -151,7 +151,7 @@ Play.prototype = {
 		layer = this.map.createLayer('Collision_1');
 		this.map.setCollisionBetween(1, 107, true, "Collision_1");
 		// DEBUG
-		layer.debug = true;
+		layer.debug = false;
 		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
 
 		layer.resizeWorld();
