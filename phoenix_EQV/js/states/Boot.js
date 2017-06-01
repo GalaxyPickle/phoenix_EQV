@@ -17,15 +17,20 @@ Boot.prototype = {
 		// load the loading bar sprite and BG
 		game.load.image('bar', 'meta/bar.png');
 		game.load.image('bar_frame', 'meta/bar_frame.png');
+
 		// bgs
 		game.load.image('bg', 'bg/background.png');
 		game.load.image('bg_tree', 'bg/trees.png');
+
+		// load nice sfx for menu
+		game.load.path = 'assets/audio/fx/';
+		game.load.audio('jungle_sounds', ['jungle_sounds.mp3', 'jungle_sounds.ogg']); // first part jungle sounds
 
 		// make the canvas look better?
 		game.renderer.renderSession.roundPixels = true;
 		Phaser.Canvas.setImageRenderingCrisp(game.canvas);
 		// don't allow losing browser to halt game
-		// game.stage.disableVisibilityChange = true;
+		game.stage.disableVisibilityChange = true;
 	},
 	create: function() {
 		console.log('Boot: create');

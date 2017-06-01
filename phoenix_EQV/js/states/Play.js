@@ -102,7 +102,7 @@ Play.prototype = {
 	    else {
 	    	console.log('{fullscreen} TRUE')
 
-	        game.scale.startFullScreen(false);
+	        game.scale.startFullScreen(true);
 	        game.width = window.screen.width;
 	        game.height = window.screen.height;
 
@@ -118,6 +118,13 @@ Play.prototype = {
 		console.log('Play: create');
 		
 		this.game.flower = false;
+
+		// MUSICCXSSSSSZZZZZ
+		jungle_music = game.add.audio('jungle_theme');
+		jungle_music.play('', 0, .75, true);
+		jungle_music.loop = true;
+
+		// SOUND FX
 
 		// fullscreen key
 		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
@@ -227,19 +234,19 @@ Play.prototype = {
 		
 		// Map some keys for use in our update() loop
 		this.controls = this.input.keyboard.addKeys({
-			'up': Phaser.KeyCode.W,
-			'down': Phaser.KeyCode.S,
-			'left': Phaser.KeyCode.A,
-			'right': Phaser.KeyCode.D,
+			'up': Phaser.KeyCode.UP,
+			'down': Phaser.KeyCode.DOWN,
+			'left': Phaser.KeyCode.LEFT,
+			'right': Phaser.KeyCode.RIGHT,
 			'follow': Phaser.KeyCode.F,
 			'gravity': Phaser.KeyCode.G,
 			'controls': Phaser.KeyCode.C,
 			'particles': Phaser.KeyCode.J,
 			'toggle': Phaser.KeyCode.K,
-			'cameraUp': Phaser.KeyCode.UP,
-			'cameraDown': Phaser.KeyCode.DOWN,
-			'cameraLeft': Phaser.KeyCode.LEFT,
-			'cameraRight': Phaser.KeyCode.RIGHT
+			'cameraUp': Phaser.KeyCode.W,
+			'cameraDown': Phaser.KeyCode.A,
+			'cameraLeft': Phaser.KeyCode.S,
+			'cameraRight': Phaser.KeyCode.D
 		});
 		
 		// Follow the player with the camera
@@ -507,12 +514,15 @@ Play.prototype = {
 			this.player.animations.play('hop');
 		}
 		
-		if (this.jump == 1 && !controls.up.isDown) //reset
+		if (this.jump == 1 && !controls.up.isDown) { //reset
 			this.jump = 2; 
+		}
 			
 		if (this.jump == 3) {
 			if (controls.up.isDown) {
-				if (body.y > this.lasty) body.velocity.y = 130;
+				if (body.y > this.lasty)  {
+					body.velocity.y = 130;
+				}
 				this.player.animations.play('top');
 			}
 			else this.player.animations.play('glide');
@@ -524,7 +534,6 @@ Play.prototype = {
 		}
 		this.jumpswitch = controls.up.isDown;
 		this.lasty = body.y;
-		
 		
 		// Accelerate down or jump down
 		if (controls.down.isDown) {
@@ -556,10 +565,10 @@ Play.prototype = {
 		}
 		
 		//Embers
-		if (fireTime < 0) {
-			fireTime = 800;
-			var v = game.add.sprite(body.x + body.width/2, body.y + body.height, 'ember');
-		}
+		// if (fireTime < 0) {
+		// 	fireTime = 800;
+		// 	var v = game.add.sprite(body.x + body.width/2, body.y + body.height, 'ember');
+		// }
 		//
 	},
 	

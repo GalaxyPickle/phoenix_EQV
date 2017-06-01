@@ -23,6 +23,12 @@ Load.prototype = {
 		this.bg = game.add.tileSprite(0, 0, 3000, 3000, 'bg');
 		this.bg_tree = game.add.tileSprite(0, 0, 1989, 2386, 'bg_tree');
 
+		// aaaaand start the ambiance ;)
+		jungle_sounds = game.add.audio('jungle_sounds');
+		jungle_sounds.play('', 0, 1, true);
+		jungle_sounds.loop = true;
+		jungle_sounds.onDecoded.add(this.music_fade, game);
+
 		// show loading text when starts loading
 		game.load.onFileComplete.add(this.fileComplete, game);
 		game.load.onLoadComplete.add(this.loadComplete, game);
@@ -98,10 +104,16 @@ Load.prototype = {
 		// load path to snd assets
 		game.load.path = 'assets/audio/music/';
 		// load all the audio music assets
-		game.load.audio('jungle_theme', ['jungle_theme.mp3', 'jungle_theme.ogg']);
+		game.load.audio('jungle_theme', ['jungle_theme.mp3', 'jungle_theme.ogg']); // first stage theme
+		game.load.audio('deforest_theme', ['deforest_theme.mp3', 'deforest_theme.ogg']); // middle part theme
+		game.load.audio('end_theme', ['end_theme.mp3', 'end_theme.ogg']); // end game intense theme
+
 		// sfx loading
 		game.load.path = 'assets/audio/fx/';
-		game.load.audio('phoejay_jump', ['jump.mp3', 'jump.ogg']);
+		// environmental sounds
+		game.load.audio('heavy_wind', ['heavy_wind.mp3', 'heavy_wind.ogg']); // 2nd/last part stump mountain wind sound
+		// game SFX
+		game.load.audio('jump', ['jump.mp3', 'jump.ogg']); // jump
 
 		game.load.start();
 	},
@@ -126,6 +138,9 @@ Load.prototype = {
 			e.alpha = 0.5;
 			game.add.tween(e).to( { alpha: 1 }, 1000, "Linear", true, 0, -1, true); // forever
 		}); 
+	},
+	music_fade: function() {
+		jungle_sounds.fadeIn(5000);
 	},
 	goFull: function() {
 
