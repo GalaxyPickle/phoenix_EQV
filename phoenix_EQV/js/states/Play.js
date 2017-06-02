@@ -178,7 +178,7 @@ Play.prototype = {
 		this.player.animations.add('top', ['top'], 1, false);
 		this.player.animations.add('glide', ['glide'], 1, false);
 		this.player.animations.add('crouch', ['wallcrouch'], 1, false);
-		this.player.animations.add('walljump', ['wallhop'], 1, false);
+		this.player.animations.add('fall', ['wallhop'], 1, true);
 
 
 		// Create a graphics object for the player
@@ -522,9 +522,12 @@ Play.prototype = {
 			this.player.animations.play('hop');
 		}
 
-		if (this.jump == 1 && !controls.up.isDown) //reset
+		if (this.jump == 1 && !controls.up.isDown){
+			//reset
+			
 			this.jump = 2;
-
+			
+		}
 		if (this.jump == 3) {
 			if (controls.up.isDown) {
 				if (body.y > this.lasty) body.velocity.y = 130;
@@ -545,6 +548,7 @@ Play.prototype = {
 
 		// Accelerate down or jump down
 		if (controls.down.isDown) {
+			
 			if (features.jump) {
 				if (gravity.y < 0 && (blocked.up || touching.up)) {
 					body.velocity.y = features.jump;
@@ -559,7 +563,9 @@ Play.prototype = {
 
 		// Wall jump
 		if (features.wallJump && (controls.up.justPressed() && gravity.y > 0) || (controls.down.justPressed() && gravity.y < 0)) {
-			if (!(blocked.down || blocked.up || touching.up)) {
+			
+			if (!(features.down || blocked.up || touching.up)) {
+				
 				// Would be even better to use collision normals here
 				if (blocked.left || touching.left) {
 					body.velocity.x = features.wallJump;
