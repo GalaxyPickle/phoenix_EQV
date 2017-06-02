@@ -1,0 +1,43 @@
+TODO:
+1. Tilemap for part 2
+	-Calvin
+2. Tilemap for part 3
+	-Alex
+3. Tan ground set tiles
+	-Alex
+4. Background mush
+	-Alex
+5. Background grass / leaves
+	-Alex
+6. FLOWER
+	-Vienna Chan
+7. Transition Magic
+	-Vienna Chan
+8. Particle Effects
+	-Joey/Alex
+9. Fix Tween
+	-Joey
+10. Pan Camera to animal on discovery and healing and stump
+	-Joey
+11. Wall Jump animation
+	-Shuoen
+12. Sound FX for divinity
+	-Alex
+13. Sound FX for PJ
+	-Alex
+14. Sound FX for animals
+	-Everyone
+15. Refactor codey codey
+	-Calvin
+16. Program game end
+	-Alex
+17. New Background
+	-Shuoen
+18. Instruction Set
+	-Calvin
+19. Pause Menu (resume, quit, restart)
+	-Joey
+20. Name Game
+	-Shuoen (le Bird)
+21. Move this list to excel spreadsheet
+	-Alex
