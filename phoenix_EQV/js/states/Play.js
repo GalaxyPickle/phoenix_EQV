@@ -38,9 +38,11 @@ var Play = function(game) {
 		cameraMicroZoom: 0.0,
 		cameraRotation: 0.0,
 		cameraMicroRotation: 0.0,
-		cameraLerp: 0.5,
+		cameraLerp: 0.15,
 		cameraFollow: true,
 		cameraRoundPixels: false,
+		cam_y_move: 51,
+		cam_x_move: 77,
 
 		// Collision controls
 		particleSelfCollide: 0,
@@ -247,8 +249,8 @@ Play.prototype = {
 			'particles': Phaser.KeyCode.J,
 			'toggle': Phaser.KeyCode.K,
 			'cameraUp': Phaser.KeyCode.W,
-			'cameraDown': Phaser.KeyCode.A,
-			'cameraLeft': Phaser.KeyCode.S,
+			'cameraDown': Phaser.KeyCode.S,
+			'cameraLeft': Phaser.KeyCode.A,
 			'cameraRight': Phaser.KeyCode.D
 		});
 
@@ -459,19 +461,19 @@ Play.prototype = {
 
 		// Move the camera
 		if (controls.cameraUp.isDown) {
-			camera.y -= 20;
+			camera.y -= features.cam_y_move;
 		}
 
 		if (controls.cameraDown.isDown) {
-			camera.y += 20;
+			camera.y += features.cam_y_move;
 		}
 
 		if (controls.cameraLeft.isDown) {
-			camera.x -= 20;
+			camera.x -= features.cam_x_move;
 		}
 
 		if (controls.cameraRight.isDown) {
-			camera.x += 20;
+			camera.x += features.cam_x_move;
 		}
 
 		// Reset the player acceleration
