@@ -11,6 +11,9 @@ class Divinity extends Phaser.Sprite {
 		this.anchor.set(0.5);
 		this.player = playerbody;
 		
+		this.height = Math.random()*28 + 80;
+		this.width = Math.random()*25 + 72;
+		
 		this.xdest = playerbody.x + 350 + (index-4)*40; //x coordinate for divinity location
 		this.ydest = playerbody.x + 70; //y coordinate
 		
@@ -36,6 +39,8 @@ class Divinity extends Phaser.Sprite {
 	    //	false means don't explode all the sprites at once, but instead release at a rate of one particle per 100ms
 	    //	The 2000 value is the lifespan of each particle before it's killed
 	    this.emitter.start(false, 2000, 100);
+		
+		tween = game.add.tween(this).to( { x: this.xdest, y: this.ydest }, 2400, Phaser.Easing.Exponential.InOut, true);
 	}
 	
 	update() {
@@ -60,19 +65,13 @@ class Divinity extends Phaser.Sprite {
 		}
 		
 		else {
+			
 			this.ydistance = this.xdest - this.x;
 			this.xdistance = this.ydest - this.y;
 			this.distance = Math.sqrt(this.xdistance*this.xdistance + this.ydistance*this.ydistance);
 			
 			if (this.distance < 10) {
 				this.ready = true;
-				console.log("hi");
-			}
-			else {
-				if (this.xdest + 20 > this.x) this.x += .05*this.distance;
-				else this.x -= .5*this.distance;
-				if (this.ydest + 20 > this.y) this.y += .5*this.distance;
-				else this.y -= .5*this.distance;
 			}
 		}
 
@@ -84,16 +83,11 @@ class Divinity extends Phaser.Sprite {
 			p.alpha = p.lifespan / 2000;	
 		});
 	}
+	
+	remove() {
+		this.emitter.on = false;
+		this.destroy();
+	}
 }
-
-
-
-
-
-
-
-
-
-
 
 // EOF //

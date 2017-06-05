@@ -19,7 +19,7 @@ class DeadAnimal extends Phaser.Sprite {
 		
 		if (this.t < 0 && this.t > -100) {
 			for (var i = 0; i < this.n; i++)
-				this.divinities[i].destroy();
+				this.divinities[i].remove();
 		}
 		
 		if (divinity >= this.n) this.success();
@@ -45,30 +45,6 @@ class DeadAnimal extends Phaser.Sprite {
 		console.log("congrats");
 		
 		game.add.sprite(300, 600, 'mushroom');
+		this.destroy();
 	}
 }
-	/*
-DeadAnimal.prototype.update = function(DeadAnimal) {
-    
-    
-    function collideWithPhoejay(){
-        //this is for when the Phoejay collides with the dead animal
-        if  (animalStatus = 0){
-            alive = 1;
-            //so now in a state where animal is in the process of reviving
-            if (divCounter == divRequired)
-            {
-                //divCounter should be the global variable in Phoejay
-                animalStatus = 2;
-                alive = true;
-                divCounter = 0;
-            }
-            else if (divCounter != divRequired && timerRunsOut){
-                alive = 0;
-                //animal is dead again and the player can retouch  it again to retry
-                divCounter = 0;
-            }
-
-    }
-
-}*/
