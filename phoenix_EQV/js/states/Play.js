@@ -171,7 +171,7 @@ Play.prototype = {
 		layer.resizeWorld();
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(10, 10, 'phoejay','static');
+		this.player = this.add.sprite(100, 100, 'phoejay','static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
@@ -276,7 +276,7 @@ Play.prototype = {
 
 		//spawn divinity
 		divinity = 0;
-		var creature = new DeadAnimal(game, 'animal', 'divinity', '', this.player.body, 8, 300);
+		var creature = new DeadAnimal(game, 100, 200, 'sacked', 'divinity', '', this.player.body, 8, 1000);
 		game.add.existing(creature);
 
 		// fade-in

@@ -6,8 +6,9 @@ class Divinity extends Phaser.Sprite {
 		var frame = Math.floor(Math.random()*1);
 		super(game, x, y, key_div);
 		
-		this.width = 89 / 2;
-		this.height = 96 / 2;
+		this.width = 89 / 2; // half width
+		this.height = 96 / 2; // half height
+		this.anchor.set(0.5);
 		this.player = playerbody;
 		
 		this.xdest = playerbody.x + 350 + (index-4)*40; //x coordinate for divinity location
@@ -17,20 +18,20 @@ class Divinity extends Phaser.Sprite {
 
 		// EMITTER
 		//	Emitters have a center point and a width/height, which extends from their center point to the left/right and up/down
-	    this.emitter = game.add.emitter(this.x, this.y, 50, 50);
+	    this.emitter = game.add.emitter(this.x, this.y, 20, 20);
 
 	    //	This emitter will have a width of 800px, so a particle can emit from anywhere in the range emitter.x += emitter.width / 2
-	    this.emitter.width = 50;
+	    this.emitter.width = 10;
 
 	    this.emitter.makeParticles('particle_divinity');
 
-	    this.emitter.minParticleSpeed.set(0, 0);
-	    this.emitter.maxParticleSpeed.set(0, 0);
+	    this.emitter.minParticleSpeed.set(-50, -50);
+	    this.emitter.maxParticleSpeed.set(50, -100);
 
-	    this.emitter.setRotation(0, 0);
-	    this.emitter.setAlpha(0.3, 0.8);
-	    this.emitter.setScale(0.5, 0.5, 1, 1);
-	    this.emitter.gravity = 100;
+	    this.emitter.setRotation(0, 360);
+	    this.emitter.setAlpha(0.5, 1);
+	    this.emitter.setScale(1, 1, 1, 1);
+	    this.emitter.gravity = -1500;
 
 	    //	false means don't explode all the sprites at once, but instead release at a rate of one particle per 100ms
 	    //	The 2000 value is the lifespan of each particle before it's killed
@@ -47,7 +48,7 @@ class Divinity extends Phaser.Sprite {
 			
 			if (this.distance < 50) {
 				divinity += 1;
-				this.emitter.kill();
+				this.emitter.on = false;
 				this.destroy();
 			}
 			else if (this.distance < 150) {
@@ -56,9 +57,6 @@ class Divinity extends Phaser.Sprite {
 				if (this.player.y + 20 > this.y) this.y += 120/this.distance;
 				else this.y -= 120/this.distance;
 			}
-			//stamina.height = 2;
-			//stamina.width = game.width;
-			//stamina.fixedToCamera = true;
 		}
 		
 		else {
@@ -77,5 +75,25 @@ class Divinity extends Phaser.Sprite {
 				else this.y -= .5*this.distance;
 			}
 		}
+
+		// update emitter
+		this.emitter.x = this.x;
+		this.emitter.y = this.y;
+
+		this.emitter.forEachAlive(function(p) {
+			p.alpha = p.lifespan / 2000;	
+		});
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+// EOF //

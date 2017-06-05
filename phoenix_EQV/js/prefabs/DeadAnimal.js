@@ -1,12 +1,12 @@
 var divinity;
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, key_animal, key_div, key_bar, playerbody, n, time) {
+	constructor(game, x, y, atlas, key_animal, key_div, key_bar, playerbody, n, time) {
+
+		super(game, x, y, atlas, key_animal);
 		
-		var x = 100;
-		var y = 100;
-		super(game, x, y, key_animal);
-		
+		this.anchor.set(0.5);
+
 		this.n = n;
 		this.time = time;
 		this.t = -100;

@@ -83,8 +83,15 @@ Load.prototype = {
 		//load the player
 		game.load.path = 'assets/img/entity/phoenix/';
 		game.load.atlas('phoejay', 'phoejay_mov.png', 'phoejay_mov.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+		// load divinity
 		game.load.path = 'assets/img/entity/';
-		game.load.image('divinity', 'divinity.png', 88, 95);
+		game.load.image('divinity', 'divinity.png');
+
+		// all the animals path
+		game.load.path = 'assets/img/entity/animals/';
+		// here we goooooooo
+		game.load.atlas('animals', 'animals.png', 'animals.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+		game.load.image('dead_burrel', 'images/dead_burrel.png');
 
 		// particlesssss
 		game.load.path = 'assets/img/particles/';
