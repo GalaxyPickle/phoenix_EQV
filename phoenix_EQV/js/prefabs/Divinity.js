@@ -6,8 +6,8 @@ class Divinity extends Phaser.Sprite {
 		var frame = Math.floor(Math.random()*1);
 		super(game, x, y, key_div);
 		
-		this.width = 89 / 2; // half width
-		this.height = 96 / 2; // half height
+		// this.width = 89 / 2; // half width
+		// this.height = 96 / 2; // half height
 		this.anchor.set(0.5);
 		this.player = playerbody;
 		

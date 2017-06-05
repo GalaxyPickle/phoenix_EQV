@@ -276,7 +276,7 @@ Play.prototype = {
 
 		//spawn divinity
 		divinity = 0;
-		var creature = new DeadAnimal(game, 100, 200, 'sacked', 'divinity', '', this.player.body, 8, 1000);
+		var creature = new DeadAnimal(game, 200, 200, 'dead_burrel', 'divinity', '', this.player.body, 10, 1000);
 		game.add.existing(creature);
 
 		// fade-in
