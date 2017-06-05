@@ -284,6 +284,31 @@ Play.prototype = {
 		fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
 		fade_in.alpha = 1;
 		game.add.tween(fade_in).to( { alpha: 0 }, 2000, "Linear", true, 0); // unveil
+		
+		/*
+        Code for the pause menu
+		*/
+
+		// Create a label to use as a button
+		pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
+		pause_label.fixedToCamera = true;
+		pause_label.inputEnabled = true;
+		pause_label.events.onInputUp.add(function () {
+			// When the paus button is pressed, we pause the game
+			game.paused = true;
+
+			// Then add the menu
+			menu = game.add.sprite(game.width/2, game.height/2, 'pause_menu');
+			menu.anchor.setTo(0.5, 0.5);
+			menu.fixedToCamera = true;
+
+			// And a label to illustrate which menu item was chosen. (This is not necessary)
+			choiseLabel = game.add.text(game.width/2, game.height/2, 'Click outside menu to continue', { font: '30px Arial', fill: '#fff' });
+			choiseLabel.anchor.setTo(0.5, 0.5);
+		});
+
+		// Add a input listener that can help us return from being paused
+		game.input.onDown.add(unpause, self);
 	},
 
 	updatePlayer: function (player) {
@@ -633,7 +658,16 @@ Play.prototype = {
 var fireTime = 10;
 
 
+function unpause(event){
+	// Only act if paused
+	if(game.paused){
+		menu.destroy();
+		choiseLabel.destroy();
 
+		// Unpause the game
+		game.paused = false;
+	}
+};
 
 
 

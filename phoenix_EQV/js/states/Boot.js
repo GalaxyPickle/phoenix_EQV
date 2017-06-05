@@ -22,6 +22,9 @@ Boot.prototype = {
 		game.load.image('bg', 'bg/background.png');
 		game.load.image('bg_tree', 'bg/trees.png');
 		
+		//menu
+		game.load.image('pause_menu', 'meta/number-buttons-90x90.png', 270, 180);
+		
 		//audio
 		game.load.path = 'assets/audio/fx/';
 		
