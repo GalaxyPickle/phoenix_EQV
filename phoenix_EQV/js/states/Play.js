@@ -124,6 +124,13 @@ Play.prototype = {
 		sfx_land1 = game.add.audio('land' );
 		sfx_glide = game.add.audio('glide');
 		sfx_fall1 = game.add.audio('fall' );
+		
+		this.jump1 = false;
+		this.jump2 = false;
+		this.jump3 = false;
+		this.land1 = false;
+		this.glide = false;
+		this.fall1 = false;
 
 		// MUSICCXSSSSSZZZZZ
 		jungle_music = game.add.audio('jungle_theme');
@@ -297,13 +304,8 @@ Play.prototype = {
 			// When the paus button is pressed, we pause the game
 			game.paused = true;
 
-			// Then add the menu
-			menu = game.add.sprite(game.width/2, game.height/2, 'pause_menu');
-			menu.anchor.setTo(0.5, 0.5);
-			menu.fixedToCamera = true;
-
 			// And a label to illustrate which menu item was chosen. (This is not necessary)
-			choiseLabel = game.add.text(game.width/2, game.height/2, 'Click outside menu to continue', { font: '30px Arial', fill: '#fff' });
+			choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', { font: '30px Arial', fill: '#fff' });
 			choiseLabel.anchor.setTo(0.5, 0.5);
 		});
 
@@ -508,6 +510,11 @@ Play.prototype = {
 		var grounded = false;
 		dir = controls.right.isDown - controls.left.isDown; //direction facing
 		this.jumpswitch = !this.jumpswitch && controls.up.isDown;
+		
+		//wall touch animation
+		/*
+		if (blocked.left || touching.left || blocked.right || touching.right)
+			this.player.animations.play('crouch');*/
 
 		//vertical movement
 		if (dir) {
@@ -523,23 +530,27 @@ Play.prototype = {
 		if (gravity.y > 0 && (blocked.down || touching.down)) {
 			this.jetpack = this.jetpackmax;
 			this.jump = 0;
+			this.jump2 = false;
 			grounded = true;
-			//sfx_land1.play()
+			if (!this.land1) {
+				sfx_land1.play();
+				this.land1 = true;
+			}
 			if (!dir) this.player.animations.play('static');
 			else { //running
 				this.player.animations.play('walk');
 				fireTime -= 1;
 			}
 		}
+		else this.land1 = false;
 
 		if (grounded && this.jumpswitch) {
 			body.velocity.y = -features.jump*.3;    
 			this.jump = 1;
-			//sfx_jump1.play()
+			sfx_jump1.play()
 		}
 
 		if (this.jump == 1 && controls.up.isDown) { //first jump shorthop
-			// sfx_jump2.play()
 			if (this.jetpack > 0) {
 				body.velocity.y = -360;
 				this.jetpack -= 1;
@@ -547,19 +558,31 @@ Play.prototype = {
 			this.player.animations.play('hop');
 		}
 
-		if (this.jump == 1 && !controls.up.isDown){
-			//reset
-			
+		if (this.jump == 1 && !controls.up.isDown){ //reset
 			this.jump = 2;
-			
 		}
 		if (this.jump == 3) {
 			if (controls.up.isDown) {
 				if (body.y > this.lasty) body.velocity.y = 130;
 				this.player.animations.play('top');
+				if (!this.jump2) {
+					sfx_jump2.play();
+					this.jump2 = true;
+				}
+				else if (!this.glide) {
+					sfx_glide.play();
+					this.glide = true;
+				}
 			}
-			else this.player.animations.play('glide');
-			//sfx_glide.play()
+			else {
+				this.player.animations.play('glide');
+				this.glide = false;
+			}
+			
+			/*if (blocked.left || touching.left || blocked.right || touching.right)
+			this.player.animations.play('crouch');*/
+			
+			//
 		}
 
 		if ((this.jump == 0 || this.jump == 2) && !grounded && controls.up.isDown) { //first jump post-jump
@@ -582,9 +605,13 @@ Play.prototype = {
 
 			if (!features.jump || gravity.y >= 0){
 				body.acceleration.y = Math.abs(gravity.y) + features.acceleration;
-				//sfx_fall1.play()
+				if (!this.fall1) {
+					sfx_fall1.play()
+					this.fall1 = true;
+				}
 			}
 		}
+		else this.fall1 = false;
 
 		// Wall jump
 		if (features.wallJump && (controls.up.justPressed() && gravity.y > 0) || (controls.down.justPressed() && gravity.y < 0)) {
@@ -595,13 +622,13 @@ Play.prototype = {
 				if (blocked.left || touching.left) {
 					body.velocity.x = features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					//sfx_jump3.play()
+					sfx_jump3.play()
 				}
 
 				if (blocked.right || touching.right) {
 					body.velocity.x = -features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					//sfx_jump3.play()
+					sfx_jump3.play()
 				}
 			}
 		}
@@ -658,10 +685,9 @@ Play.prototype = {
 var fireTime = 10;
 
 
-function unpause(event){
+function unpause(event) {
 	// Only act if paused
 	if(game.paused){
-		menu.destroy();
 		choiseLabel.destroy();
 
 		// Unpause the game
