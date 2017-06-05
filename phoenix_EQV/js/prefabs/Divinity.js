@@ -40,7 +40,7 @@ class Divinity extends Phaser.Sprite {
 	    //	The 2000 value is the lifespan of each particle before it's killed
 	    this.emitter.start(false, 2000, 100);
 		
-		tween = game.add.tween(this).to( { x: this.xdest, y: this.ydest }, 2400, Phaser.Easing.Exponential.InOut, true);
+		var tween = game.add.tween(this).to( { x: this.xdest, y: this.ydest }, 2400, Phaser.Easing.Exponential.InOut, true);
 	}
 	
 	update() {
