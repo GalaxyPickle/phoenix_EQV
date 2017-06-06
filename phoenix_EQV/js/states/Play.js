@@ -522,11 +522,6 @@ Play.prototype = {
 		if (blocked.left || touching.left || blocked.right || touching.right)
 			this.player.animations.play('crouch');*/
 
-		// MAKE A CALL PHOEJAY!!!!!!
-		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
-			game.add.audio('screech').play();
-		}
-
 		//vertical movement
 		if (dir) {
 			this.player.scale.x = -dir;
@@ -544,7 +539,7 @@ Play.prototype = {
 			this.jump2 = false;
 			grounded = true;
 			if (!this.land1) {
-				sfx_land1.play();
+				sfx_land1.play('', 0, 2, false);
 				this.land1 = true;
 			}
 			if (!dir) this.player.animations.play('static');
@@ -558,7 +553,7 @@ Play.prototype = {
 		if (grounded && this.jumpswitch) {
 			body.velocity.y = -features.jump*.3;    
 			this.jump = 1;
-			sfx_jump1.play()
+			sfx_jump1.play('', 0, 2, false)
 		}
 
 		if (this.jump == 1 && controls.up.isDown) { //first jump shorthop
@@ -577,11 +572,11 @@ Play.prototype = {
 				if (body.y > this.lasty) body.velocity.y = 130;
 				this.player.animations.play('top');
 				if (!this.jump2) {
-					sfx_jump2.play();
+					sfx_jump2.play('', 0, 2, false);
 					this.jump2 = true;
 				}
 				else if (!this.glide) {
-					sfx_glide.play();
+					sfx_glide.play('', 0, 2, false);
 					this.glide = true;
 				}
 			}
@@ -617,7 +612,7 @@ Play.prototype = {
 			if (!features.jump || gravity.y >= 0){
 				body.acceleration.y = Math.abs(gravity.y) + features.acceleration;
 				if (!this.fall1) {
-					sfx_fall1.play()
+					sfx_fall1.play('', 0, 2, false)
 					this.fall1 = true;
 				}
 			}
@@ -633,23 +628,24 @@ Play.prototype = {
 				if (blocked.left || touching.left) {
 					body.velocity.x = features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					sfx_jump3.play()
+					sfx_jump3.play('', 0, 2, false)
 				}
 
 				if (blocked.right || touching.right) {
 					body.velocity.x = -features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					sfx_jump3.play()
+					sfx_jump3.play('', 0, 2, false)
 				}
 			}
 		}
 
-		//Embers
-		// if (fireTime < 0) {
-		// 	fireTime = 800;
-		// 	var v = game.add.sprite(body.x + body.width/2, body.y + body.height, 'ember');
-		// }
-		//
+		// MAKE A CALL, PHOEJAY!!!!!!
+		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
+			sfx_call.play('', 0, 1, false);
+		}
+		if (this.input.keyboard.isDown(Phaser.KeyCode.C) && touching.down) {
+			this.player.animations.play('top');
+		}
 	},
 
 	render: function () {

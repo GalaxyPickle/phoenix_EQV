@@ -14,6 +14,10 @@ Boot.prototype = {
 		game.load.path = 'assets/img/';
 		// fade-in sprite
 		game.load.image('fade-in', 'meta/fade_in.png');
+
+		// splash screen
+		game.load.image('splash', 'meta/splash.png');
+
 		// load the loading bar sprite and BG
 		game.load.image('bar', 'meta/bar.png');
 		game.load.image('bar_frame', 'meta/bar_frame.png');
@@ -35,6 +39,6 @@ Boot.prototype = {
 		console.log('Boot: create');
 
 		// start the loading screen
-		game.state.start('Load');
+		game.state.start('Title');
 	}
 };
