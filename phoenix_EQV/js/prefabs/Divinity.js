@@ -11,8 +11,8 @@ class Divinity extends Phaser.Sprite {
 		this.anchor.set(0.5);
 		this.player = playerbody;
 		
-		this.height = Math.random()*28 + 80;
-		this.width = Math.random()*25 + 72;
+		// this.height = Math.random()*28 + 80;
+		// this.width = Math.random()*25 + 72;
 		
 		this.xdest = playerbody.x + 350 + (index-4)*40; //x coordinate for divinity location
 		this.ydest = playerbody.x + 70; //y coordinate

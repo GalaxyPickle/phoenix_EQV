@@ -124,6 +124,7 @@ Play.prototype = {
 		sfx_land1 = game.add.audio('land' );
 		sfx_glide = game.add.audio('glide');
 		sfx_fall1 = game.add.audio('fall' );
+		sfx_call = game.add.audio('screech');
 		
 		this.jump1 = false;
 		this.jump2 = false;
@@ -250,11 +251,13 @@ Play.prototype = {
 			'down': Phaser.KeyCode.DOWN,
 			'left': Phaser.KeyCode.LEFT,
 			'right': Phaser.KeyCode.RIGHT,
+
 			'follow': Phaser.KeyCode.F,
 			'gravity': Phaser.KeyCode.G,
-			'controls': Phaser.KeyCode.C,
+			'controls': Phaser.KeyCode.X,
 			'particles': Phaser.KeyCode.J,
 			'toggle': Phaser.KeyCode.K,
+			
 			'cameraUp': Phaser.KeyCode.W,
 			'cameraDown': Phaser.KeyCode.S,
 			'cameraLeft': Phaser.KeyCode.A,
@@ -363,6 +366,9 @@ Play.prototype = {
 		var touching = body.touching;
 		var controls = this.controls;
 		var features = this.features;
+
+		// our own variables
+
 		// Update slow motion values; these two are great fun together
 		// ( ?� ?? ?�)
 		if (this.time.slowMotion !== features.slowMotion) {
@@ -515,6 +521,11 @@ Play.prototype = {
 		/*
 		if (blocked.left || touching.left || blocked.right || touching.right)
 			this.player.animations.play('crouch');*/
+
+		// MAKE A CALL PHOEJAY!!!!!!
+		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
+			game.add.audio('screech').play();
+		}
 
 		//vertical movement
 		if (dir) {

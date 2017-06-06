@@ -120,7 +120,21 @@ Load.prototype = {
 		game.load.audio('end_theme', ['end_theme.mp3', 'end_theme.ogg']); // end game intense theme
 
 		// sfx loading
-		game.load.path = 'assets/audio/fx/';
+
+		// MOVEMENT
+		game.load.path = 'assets/audio/fx/movement/';
+
+		game.load.audio('jump1', ['jump.mp3', 'jump.ogg']);
+		game.load.audio('jump2', ['jump_low.mp3']);
+		game.load.audio('jump3', ['boing.mp3', 'boing.ogg']);
+		game.load.audio('land', ['tap_land.mp3']);
+		game.load.audio('glide', ['jump_high.mp3']);
+
+		// ANIMALS
+		game.load.path = 'assets/audio/fx/animals/';
+				
+		game.load.audio('screech', ['screech.mp3', 'screech.ogg']);
+
 		// environmental sounds
 		game.load.audio('heavy_wind', ['heavy_wind.mp3', 'heavy_wind.ogg']); // 2nd/last part stump mountain wind sound
 		// game SFX

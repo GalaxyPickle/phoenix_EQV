@@ -24,16 +24,6 @@ Boot.prototype = {
 		
 		//menu
 		game.load.image('pause_menu', 'meta/number-buttons-90x90.png', 270, 180);
-		
-		//audio
-		game.load.path = 'assets/audio/fx/';
-		
-		game.load.audio('jump1', 'jump7.wav' , false);
-		game.load.audio('jump2', 'jump12.wav', false);
-		game.load.audio('jump3', 'jump14.wav', false);
-		game.load.audio('land', 'land1.wav'  , false);
-		game.load.audio('glide', 'glide.wav' , false);
-		game.load.audio('fall', 'fall.wav'  , false);
 
 		// make the canvas look better?
 		game.renderer.renderSession.roundPixels = true;
