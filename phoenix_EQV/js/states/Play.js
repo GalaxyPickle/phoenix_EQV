@@ -4,11 +4,11 @@
 // written by: ____________
 
 var divinity;
+var alive;
 
 var Play = function(game) {
 	// variables
 	player = null;
-
 	tile = null;
 	map = null;
 	layer1 = null;
@@ -302,6 +302,12 @@ Play.prototype = {
 		]
 		var creature = new DeadAnimal(game, 200, 200, 'dead_burrel', 'divinity', '', this.player.body, coordinates, 1000);
 		game.add.existing(creature);
+		//add the live burrel at the same time but make it invisible at first
+		burrel = this.add.sprite(6050, 1145, 'burrel', 'static');
+		burrel.animations.add('burrel_animate', [0, 1, 2], 5, true);
+		burrel.animations.play('burrel_animate');
+		burrel.visible = alive;
+		//could change the variable name when other animals are added
 
 		// fade-in
 		// add the fade-in sprite overlay
@@ -671,6 +677,9 @@ Play.prototype = {
 			
 			layer3.resizeWorld();
 		}
+
+		//ANIMALS
+		burrel.visible = alive;
 
 		//Embers
 		// if (fireTime < 0) {
