@@ -9,9 +9,9 @@ TODO:
 	-Alex
 5. Background grass / leaves
 	-Alex
-6. FLOWER
+6. FLOWER ---- COMPLETE
 	-Vienna Chan
-7. Transition Magic
+7. Transition Magic ----- COMPLETE
 	-Vienna Chan
 8. Particle Effects
 	-Joey/Alex
@@ -41,3 +41,7 @@ TODO:
 	-Shuoen (le Bird)
 21. Move this list to excel spreadsheet
 	-Alex
+22. Story screen
+	-Vienna
+23. Implement transitions and live animals
+	-Vienna
