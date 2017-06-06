@@ -214,36 +214,41 @@ Play.prototype = {
 		this.player.body.maxVelocity.y = 1000;
 		this.player.body.collideWorldBounds = true;
 
-		// Create a particle emitter and position it on the player
-		this.emitter = this.add.emitter(this.player.x, this.player.y, 2000);
+		// Create a particle emitter and position it on the player (particle lifespan for 1000)
+		this.emitter = this.add.emitter(this.player.x, this.player.y, 1000);
 
 		// Particle graphics
-		var particleGraphics = new Phaser.Graphics(this)
-			.beginFill(Phaser.Color.hexToRGB('#fff'), 0.5)
-			.drawCircle(0, 0, 16);
+		// var particleGraphics = new Phaser.Graphics(this)
+		// 	.beginFill(Phaser.Color.hexToRGB('#fff'), 0.5)
+		// 	.drawCircle(0, 0, 16);
 
-		// Cache the particle graphics as an image
-		this.cache.addImage('particle', null, particleGraphics.generateTexture().baseTexture.source);
+		// // Cache the particle graphics as an image
+		// this.cache.addImage('particle', null, particleGraphics.generateTexture().baseTexture.source);
 
 		// Create 2000 particles using our newly cached image
-		this.emitter.makeParticles('particle', 0, 2000, true, true);
+		this.emitter.makeParticles('particle_PJ');
 
 		// Give each particle a circular collision body
-		this.emitter.forEach(function (particle) {
-			particle.body.setCircle(8);
+		this.emitter.forEach(function (p) {
+			p.alpha = p.lifespan / 1000;
 		});
 
 		// Attach Arcade Physics polygon data to the particle bodies
-		this.game.slopes.enable(this.emitter);
+		// this.game.slopes.enable(this.emitter);
 
 		// Set some particle behaviours and properties
-		this.emitter.gravity.y = -this.physics.arcade.gravity.y;
-		this.emitter.bounce.set(1, 1);
-		this.emitter.width = this.player.width;
-		this.emitter.height = this.player.height;
-		this.emitter.setAlpha(1, 0, 6000);
-		this.emitter.setXSpeed(-500, 500);
-		this.emitter.setYSpeed(-500, 500);
+		// this.emitter.bounce.set(1, 1);
+		this.emitter.setXSpeed(-10, 10);
+		this.emitter.setYSpeed(-10, 10);
+		this.emitter.width = 10;
+		this.emitter.height = 10;
+
+	    this.emitter.setRotation(0, 360);
+	    this.emitter.setAlpha(0.5, 1);
+	    this.emitter.setScale(1);
+	    this.emitter.gravity.y = -1200;
+
+	    this.emitter.start(false, 1000, 1);
 
 		// Map some keys for use in our update() loop
 		this.controls = this.input.keyboard.addKeys({
@@ -437,15 +442,8 @@ Play.prototype = {
 		body.slopes.snapLeft   = features.snapLeft;
 		body.slopes.snapRight  = features.snapRight;
 
-		// Keep the particle emitter attached to the player (though there's
-		// probably a better way than this)
-		this.emitter.x = this.player.x;
-		this.emitter.y = this.player.y;
-		this.emitter.width = this.player.width;
-		this.emitter.height = this.player.height;
-
 		// Update particle lifespan
-		this.emitter.lifespan = 3000 / this.time.slowMotion;
+		// this.emitter.lifespan = 3000 / this.time.slowMotion;
 
 		// This provides a much better slow motion effect for particles, but
 		// because this only affects newly spawned particles, old particles
@@ -516,6 +514,11 @@ Play.prototype = {
 		var grounded = false;
 		dir = controls.right.isDown - controls.left.isDown; //direction facing
 		this.jumpswitch = !this.jumpswitch && controls.up.isDown;
+
+		// Keep the particle emitter attached to the player (though there's
+		// probably a better way than this)
+		this.emitter.x = this.player.x + 50 * this.player.scale.x * -1;
+		this.emitter.y = this.player.y - 25;
 		
 		//wall touch animation
 		/*
