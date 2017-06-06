@@ -90,8 +90,24 @@ Load.prototype = {
 		// all the animals path
 		game.load.path = 'assets/img/entity/animals/';
 		// here we goooooooo
+		//load burrel animations
+		game.load.atlas('burrel', 'animations/burrel_animation.png', 'animations/burrel_animation.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+		//load fox animations 
+		game.load.atlas('fox', 'animations/fox_animation.png', 'animations/fox_animation.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+		//load deer animations
+		game.load.atlas('deer', 'animations/deer_animation.png', 'animations/deer_animation.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
 		game.load.atlas('animals', 'animals.png', 'animals.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+		//load dead animals
 		game.load.image('dead_burrel', 'images/dead_burrel.png');
+		game.load.image('dead_fox', 'images/dead_fox.png');
+		game.load.image('dead_deer', 'images/dead_deer.png');
+		//load flower
+		game.load.image('sprout', 'images/sprout.png');
+		game.load.image('flower', 'images/flower.png');
+
+		//load the revival transition thing
+		game.load.path = 'assets/img/entity/revival/';
+		game.load.atlas('revival', 'revival_animation.png', 'revival_animation.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
 
 		// particlesssss
 		game.load.path = 'assets/img/particles/';
