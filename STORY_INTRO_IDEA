@@ -1,0 +1,10 @@
+So I think the story intro should be right before the game starts.
+It should advance by having the player press space. Each time they press space a new line of the story comes up and maybe a small 
+animation for the story.
+Something along the lines of this:
+"After 100 years the phoenix Phoejay is finally reborn." [Art of a pile of ashes starts to burn] (reuse revival transition art, floor art,
+forest background art)
+"The forest is familiar yet foreign to the young phoenix. Parts of the forest remain the same but it can tell that something has
+changed..." [Fire stops burning to reveal Phoenix]
+"The phoenix can feel something ominous in the air, but can't put its foot on what. And so it beings to explore..." [Phoenix walks off screen 
+and then game starts]

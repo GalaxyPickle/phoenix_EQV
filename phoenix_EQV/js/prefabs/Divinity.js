@@ -1,7 +1,7 @@
 var divinity;
 class Divinity extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_div, key_bar, playerbody, index) {
+	constructor(game, x, y, key_div, playerbody, coords) {
 		
 		var frame = Math.floor(Math.random()*1);
 		super(game, x, y, key_div);
@@ -14,8 +14,8 @@ class Divinity extends Phaser.Sprite {
 		// this.height = Math.random()*28 + 80;
 		// this.width = Math.random()*25 + 72;
 		
-		this.xdest = playerbody.x + 350 + (index-4)*40; //x coordinate for divinity location
-		this.ydest = playerbody.x + 70; //y coordinate
+		this.xdest = coords[0]; //x coordinate for divinity location
+		this.ydest = coords[1]; //y coordinate
 		
 		this.ready = false;
 
@@ -54,6 +54,7 @@ class Divinity extends Phaser.Sprite {
 			if (this.distance < 50) {
 				divinity += 1;
 				this.emitter.on = false;
+				game.camera.shake(0.005, 160);
 				this.destroy();
 			}
 			else if (this.distance < 150) {
@@ -86,6 +87,7 @@ class Divinity extends Phaser.Sprite {
 	
 	remove() {
 		this.emitter.on = false;
+		//game.camera.shake(0.005, 50);
 		this.destroy();
 	}
 }

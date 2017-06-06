@@ -11,7 +11,9 @@ var Play = function(game) {
 
 	tile = null;
 	map = null;
-	layer = null;
+	layer1 = null;
+	layer2 = null;
+	layer3 = null;
 	tiles = null;
 	divCounter = 0;
 	deer = null;
@@ -167,16 +169,16 @@ Play.prototype = {
 		this.map.addTilesetImage('collision_layer','forest');
 		this.map.addTilesetImage('noncollision_layer','forest2');
 
-		layer = this.map.createLayer('Noncollision_2');
-		layer = this.map.createLayer('Noncollision_1');
+		layer1 = this.map.createLayer('Noncollision_2');
+		layer2 = this.map.createLayer('Noncollision_1');
 
-		layer = this.map.createLayer('Collision_1');
+		layer3 = this.map.createLayer('Collision_1');
 		this.map.setCollisionBetween(1, 107, true, "Collision_1");
 		// DEBUG
 		//layer.debug = true;
-		this.game.slopes.convertTilemapLayer(layer, game.cache.getJSON('slope_map'));
+		this.game.slopes.convertTilemapLayer(layer3, game.cache.getJSON('slope_map'));
 
-		layer.resizeWorld();
+		layer3.resizeWorld();
 
 		// Create a player texture atlas
 		this.player = this.add.sprite(100, 100, 'phoejay','static');
@@ -291,7 +293,14 @@ Play.prototype = {
 
 		//spawn divinity
 		divinity = 0;
-		var creature = new DeadAnimal(game, 200, 200, 'dead_burrel', 'divinity', '', this.player.body, 10, 1000);
+		var coordinates = [
+			[1,2],
+			[100,200],
+			[120,200],
+			[500,400],
+			[60,700]
+		]
+		var creature = new DeadAnimal(game, 200, 200, 'dead_burrel', 'divinity', '', this.player.body, coordinates, 1000);
 		game.add.existing(creature);
 
 		// fade-in
@@ -480,7 +489,7 @@ Play.prototype = {
 		}
 
 		// Collide the player against the collision layer
-		this.physics.arcade.collide(this.player, layer);
+		this.physics.arcade.collide(this.player, layer3);
 
 		// Collide the player against the particles
 		//this.physics.arcade.collide(this.emitter, this.player);
@@ -525,6 +534,11 @@ Play.prototype = {
 		if (blocked.left || touching.left || blocked.right || touching.right)
 			this.player.animations.play('crouch');*/
 
+		// MAKE A CALL PHOEJAY!!!!!!
+		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
+			game.add.audio('screech').play();
+		}
+
 		//vertical movement
 		if (dir) {
 			this.player.scale.x = -dir;
@@ -542,7 +556,7 @@ Play.prototype = {
 			this.jump2 = false;
 			grounded = true;
 			if (!this.land1) {
-				sfx_land1.play('', 0, 2, false);
+				sfx_land1.play();
 				this.land1 = true;
 			}
 			if (!dir) this.player.animations.play('static');
@@ -556,7 +570,7 @@ Play.prototype = {
 		if (grounded && this.jumpswitch) {
 			body.velocity.y = -features.jump*.3;    
 			this.jump = 1;
-			sfx_jump1.play('', 0, 2, false)
+			sfx_jump1.play()
 		}
 
 		if (this.jump == 1 && controls.up.isDown) { //first jump shorthop
@@ -575,11 +589,11 @@ Play.prototype = {
 				if (body.y > this.lasty) body.velocity.y = 130;
 				this.player.animations.play('top');
 				if (!this.jump2) {
-					sfx_jump2.play('', 0, 2, false);
+					sfx_jump2.play();
 					this.jump2 = true;
 				}
 				else if (!this.glide) {
-					sfx_glide.play('', 0, 2, false);
+					sfx_glide.play();
 					this.glide = true;
 				}
 			}
@@ -615,7 +629,7 @@ Play.prototype = {
 			if (!features.jump || gravity.y >= 0){
 				body.acceleration.y = Math.abs(gravity.y) + features.acceleration;
 				if (!this.fall1) {
-					sfx_fall1.play('', 0, 2, false)
+					sfx_fall1.play()
 					this.fall1 = true;
 				}
 			}
@@ -631,24 +645,39 @@ Play.prototype = {
 				if (blocked.left || touching.left) {
 					body.velocity.x = features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					sfx_jump3.play('', 0, 2, false)
+					sfx_jump3.play()
 				}
 
 				if (blocked.right || touching.right) {
 					body.velocity.x = -features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					sfx_jump3.play('', 0, 2, false)
+					sfx_jump3.play()
 				}
 			}
 		}
+		
+		//next level
+		if (this.player.body.x > game.world.width - 50) {
+			layer1.destroy();
+			layer2.destroy();
+			layer3.destroy();
+			
+			layer1 = this.map.createLayer('Noncollision_2');
+			layer2 = this.map.createLayer('Noncollision_1');
+			layer3 = this.map.createLayer('Collision_1');
+			this.player.body.x = 100;
+			this.player.body.y = 100;
+			this.player.bringToTop();
+			
+			layer3.resizeWorld();
+		}
 
-		// MAKE A CALL, PHOEJAY!!!!!!
-		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
-			sfx_call.play('', 0, 1, false);
-		}
-		if (this.input.keyboard.isDown(Phaser.KeyCode.C) && touching.down) {
-			this.player.animations.play('top');
-		}
+		//Embers
+		// if (fireTime < 0) {
+		// 	fireTime = 800;
+		// 	var v = game.add.sprite(body.x + body.width/2, body.y + body.height, 'ember');
+		// }
+		//
 	},
 
 	render: function () {
@@ -693,7 +722,6 @@ Play.prototype = {
 }
 
 var fireTime = 10;
-
 
 function unpause(event) {
 	// Only act if paused
