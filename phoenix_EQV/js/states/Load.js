@@ -82,10 +82,21 @@ Load.prototype = {
 		// player
 		//load the player
 		game.load.path = 'assets/img/entity/phoenix/';
-		this.game.load.atlas('phoejay', 'phoejay_mov.png', 'phoejay_mov.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+		game.load.atlas('phoejay', 'phoejay_mov.png', 'phoejay_mov.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+		// load divinity
 		game.load.path = 'assets/img/entity/';
-		game.load.spritesheet('ember', 'ember.png',5,5);
-		game.load.image('divinity', 'divinity.png', 88, 95);
+		game.load.image('divinity', 'divinity.png');
+
+		// all the animals path
+		game.load.path = 'assets/img/entity/animals/';
+		// here we goooooooo
+		game.load.atlas('animals', 'animals.png', 'animals.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+		game.load.image('dead_burrel', 'images/dead_burrel.png');
+
+		// particlesssss
+		game.load.path = 'assets/img/particles/';
+		game.load.image('particle_divinity', 'particle_divinity.png');
+		game.load.image('particle_PJ', 'particle_PJ.png');
 
 		// tilemap spritesheets
 		game.load.path = 'assets/img/tilesets/USE_THESE/';
@@ -109,7 +120,21 @@ Load.prototype = {
 		game.load.audio('end_theme', ['end_theme.mp3', 'end_theme.ogg']); // end game intense theme
 
 		// sfx loading
-		game.load.path = 'assets/audio/fx/';
+
+		// MOVEMENT
+		game.load.path = 'assets/audio/fx/movement/';
+
+		game.load.audio('jump1', ['jump.mp3', 'jump.ogg']);
+		game.load.audio('jump2', ['jump_low.mp3']);
+		game.load.audio('jump3', ['boing.mp3', 'boing.ogg']);
+		game.load.audio('land', ['tap_land.mp3']);
+		game.load.audio('glide', ['jump_high.mp3']);
+
+		// ANIMALS
+		game.load.path = 'assets/audio/fx/animals/';
+				
+		game.load.audio('screech', ['screech.mp3', 'screech.ogg']);
+
 		// environmental sounds
 		game.load.audio('heavy_wind', ['heavy_wind.mp3', 'heavy_wind.ogg']); // 2nd/last part stump mountain wind sound
 		// game SFX

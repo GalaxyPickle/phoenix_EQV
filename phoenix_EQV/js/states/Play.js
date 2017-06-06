@@ -124,6 +124,14 @@ Play.prototype = {
 		sfx_land1 = game.add.audio('land' );
 		sfx_glide = game.add.audio('glide');
 		sfx_fall1 = game.add.audio('fall' );
+		sfx_call = game.add.audio('screech');
+		
+		this.jump1 = false;
+		this.jump2 = false;
+		this.jump3 = false;
+		this.land1 = false;
+		this.glide = false;
+		this.fall1 = false;
 
 		// MUSICCXSSSSSZZZZZ
 		jungle_music = game.add.audio('jungle_theme');
@@ -171,7 +179,7 @@ Play.prototype = {
 		layer.resizeWorld();
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(10, 10, 'phoejay','static');
+		this.player = this.add.sprite(100, 100, 'phoejay','static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
@@ -243,11 +251,13 @@ Play.prototype = {
 			'down': Phaser.KeyCode.DOWN,
 			'left': Phaser.KeyCode.LEFT,
 			'right': Phaser.KeyCode.RIGHT,
+
 			'follow': Phaser.KeyCode.F,
 			'gravity': Phaser.KeyCode.G,
-			'controls': Phaser.KeyCode.C,
+			'controls': Phaser.KeyCode.X,
 			'particles': Phaser.KeyCode.J,
 			'toggle': Phaser.KeyCode.K,
+			
 			'cameraUp': Phaser.KeyCode.W,
 			'cameraDown': Phaser.KeyCode.S,
 			'cameraLeft': Phaser.KeyCode.A,
@@ -276,7 +286,7 @@ Play.prototype = {
 
 		//spawn divinity
 		divinity = 0;
-		var creature = new DeadAnimal(game, 'animal', 'divinity', '', this.player.body, 8, 300);
+		var creature = new DeadAnimal(game, 200, 200, 'dead_burrel', 'divinity', '', this.player.body, 10, 1000);
 		game.add.existing(creature);
 
 		// fade-in
@@ -284,6 +294,26 @@ Play.prototype = {
 		fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
 		fade_in.alpha = 1;
 		game.add.tween(fade_in).to( { alpha: 0 }, 2000, "Linear", true, 0); // unveil
+		
+		/*
+        Code for the pause menu
+		*/
+
+		// Create a label to use as a button
+		pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
+		pause_label.fixedToCamera = true;
+		pause_label.inputEnabled = true;
+		pause_label.events.onInputUp.add(function () {
+			// When the paus button is pressed, we pause the game
+			game.paused = true;
+
+			// And a label to illustrate which menu item was chosen. (This is not necessary)
+			choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', { font: '30px Arial', fill: '#fff' });
+			choiseLabel.anchor.setTo(0.5, 0.5);
+		});
+
+		// Add a input listener that can help us return from being paused
+		game.input.onDown.add(unpause, self);
 	},
 
 	updatePlayer: function (player) {
@@ -336,6 +366,9 @@ Play.prototype = {
 		var touching = body.touching;
 		var controls = this.controls;
 		var features = this.features;
+
+		// our own variables
+
 		// Update slow motion values; these two are great fun together
 		// ( ?� ?? ?�)
 		if (this.time.slowMotion !== features.slowMotion) {
@@ -483,6 +516,16 @@ Play.prototype = {
 		var grounded = false;
 		dir = controls.right.isDown - controls.left.isDown; //direction facing
 		this.jumpswitch = !this.jumpswitch && controls.up.isDown;
+		
+		//wall touch animation
+		/*
+		if (blocked.left || touching.left || blocked.right || touching.right)
+			this.player.animations.play('crouch');*/
+
+		// MAKE A CALL PHOEJAY!!!!!!
+		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
+			game.add.audio('screech').play();
+		}
 
 		//vertical movement
 		if (dir) {
@@ -498,23 +541,27 @@ Play.prototype = {
 		if (gravity.y > 0 && (blocked.down || touching.down)) {
 			this.jetpack = this.jetpackmax;
 			this.jump = 0;
+			this.jump2 = false;
 			grounded = true;
-			//sfx_land1.play()
+			if (!this.land1) {
+				sfx_land1.play();
+				this.land1 = true;
+			}
 			if (!dir) this.player.animations.play('static');
 			else { //running
 				this.player.animations.play('walk');
 				fireTime -= 1;
 			}
 		}
+		else this.land1 = false;
 
 		if (grounded && this.jumpswitch) {
 			body.velocity.y = -features.jump*.3;    
 			this.jump = 1;
-			//sfx_jump1.play()
+			sfx_jump1.play()
 		}
 
 		if (this.jump == 1 && controls.up.isDown) { //first jump shorthop
-			// sfx_jump2.play()
 			if (this.jetpack > 0) {
 				body.velocity.y = -360;
 				this.jetpack -= 1;
@@ -522,19 +569,31 @@ Play.prototype = {
 			this.player.animations.play('hop');
 		}
 
-		if (this.jump == 1 && !controls.up.isDown){
-			//reset
-			
+		if (this.jump == 1 && !controls.up.isDown){ //reset
 			this.jump = 2;
-			
 		}
 		if (this.jump == 3) {
 			if (controls.up.isDown) {
 				if (body.y > this.lasty) body.velocity.y = 130;
 				this.player.animations.play('top');
+				if (!this.jump2) {
+					sfx_jump2.play();
+					this.jump2 = true;
+				}
+				else if (!this.glide) {
+					sfx_glide.play();
+					this.glide = true;
+				}
 			}
-			else this.player.animations.play('glide');
-			//sfx_glide.play()
+			else {
+				this.player.animations.play('glide');
+				this.glide = false;
+			}
+			
+			/*if (blocked.left || touching.left || blocked.right || touching.right)
+			this.player.animations.play('crouch');*/
+			
+			//
 		}
 
 		if ((this.jump == 0 || this.jump == 2) && !grounded && controls.up.isDown) { //first jump post-jump
@@ -557,9 +616,13 @@ Play.prototype = {
 
 			if (!features.jump || gravity.y >= 0){
 				body.acceleration.y = Math.abs(gravity.y) + features.acceleration;
-				//sfx_fall1.play()
+				if (!this.fall1) {
+					sfx_fall1.play()
+					this.fall1 = true;
+				}
 			}
 		}
+		else this.fall1 = false;
 
 		// Wall jump
 		if (features.wallJump && (controls.up.justPressed() && gravity.y > 0) || (controls.down.justPressed() && gravity.y < 0)) {
@@ -570,13 +633,13 @@ Play.prototype = {
 				if (blocked.left || touching.left) {
 					body.velocity.x = features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					//sfx_jump3.play()
+					sfx_jump3.play()
 				}
 
 				if (blocked.right || touching.right) {
 					body.velocity.x = -features.wallJump;
 					body.velocity.y = gravity.y < 0 ? features.jump : -features.jump;
-					//sfx_jump3.play()
+					sfx_jump3.play()
 				}
 			}
 		}
@@ -633,7 +696,15 @@ Play.prototype = {
 var fireTime = 10;
 
 
+function unpause(event) {
+	// Only act if paused
+	if(game.paused){
+		choiseLabel.destroy();
 
+		// Unpause the game
+		game.paused = false;
+	}
+};
 
 
 
