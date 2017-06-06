@@ -141,6 +141,10 @@ Play.prototype = {
 		jungle_music.loop = true;
 
 		// SOUND FX
+		jungle_sounds = game.add.audio('jungle_sounds');
+		jungle_sounds.play('', 0, 1, true);
+		jungle_sounds.loop = true;
+		
 		// fullscreen key
 		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
         fullscreen_key.onDown.add(this.goFull, game);

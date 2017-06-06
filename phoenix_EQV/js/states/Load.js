@@ -139,22 +139,24 @@ Load.prototype = {
 
 		// MOVEMENT
 		game.load.path = 'assets/audio/fx/movement/';
-
+		// phoejay movement
 		game.load.audio('jump1', ['jump.mp3', 'jump.ogg']);
 		game.load.audio('jump2', ['jump_low.mp3']);
 		game.load.audio('jump3', ['boing.mp3', 'boing.ogg']);
 		game.load.audio('land', ['tap_land.mp3']);
 		game.load.audio('glide', ['jump_high.mp3']);
 
-		// ANIMALS
+		// aminals
 		game.load.path = 'assets/audio/fx/animals/';
-				
+		// screech
 		game.load.audio('screech', ['screech.mp3', 'screech.ogg']);
+		// .........
 
+		// environ sounds
+		game.load.path = 'assets/audio/fx/environment/'
 		// environmental sounds
 		game.load.audio('heavy_wind', ['heavy_wind.mp3', 'heavy_wind.ogg']); // 2nd/last part stump mountain wind sound
-		// game SFX
-		game.load.audio('jump', ['jump.mp3', 'jump.ogg']); // jump
+		// game.load.audio('jungle_sounds', ['jungle_sounds.mp3', 'jungle_sounds.ogg']);
 
 		game.load.start();
 	},
@@ -253,6 +255,7 @@ Load.prototype = {
 		this.bg_tree.tilePosition.y += .1;
 	},
 	startGame: function() {
+		jungle_sounds.stop();
 		game.state.start('Play');
 	},
 	render: function() {

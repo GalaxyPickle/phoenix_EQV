@@ -15,13 +15,13 @@ Title.prototype = {
 	create: function() {
 		console.log('Title: create');
 
-		// timer
-		// create a Timer object - (autoDestroy) = kill timer after its event is dispatched
+		// // timer
+		// // create a Timer object - (autoDestroy) = kill timer after its event is dispatched
 		// timer01 = game.time.create(false);
-		// add a new event to the Timer (delay, callback, context)
+		// // add a new event to the Timer (delay, callback, context)
 		// max = 4;
-		// timedEvent01 = timer01.add(Phaser.Timer.SECOND * max, null, game);
-		// start the timer (delay)
+		// timedEvent01 = timer01.add(Phaser.Timer.SECOND * max, myFunction, game);
+		// // start the timer (delay)
 		// timer01.start();
 
 		// load splash screen image
