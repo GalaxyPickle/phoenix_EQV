@@ -1,13 +1,13 @@
 var divinity;
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, playerbody, n, time) {
+	constructor(game, x, y, key_animal, key_div, key_bar, playerbody, coords, time) {
 
 		super(game, x, y, key_animal);
 		
 		this.anchor.set(0.5);
 
-		this.n = n;
+		this.coordinates = coords;
 		this.time = time;
 		this.t = -100;
 		this.player = playerbody;
@@ -18,11 +18,14 @@ class DeadAnimal extends Phaser.Sprite {
 		if (this.t >= 0) this.t--;
 		
 		if (this.t < 0 && this.t > -100) {
-			for (var i = 0; i < this.n; i++)
+			for (var i = 0; i < this.coordinates.length; i++)
 				this.divinities[i].remove();
+			game.camera.shake(0.006, 210);
+			this.t = -100;
+			//play fail sound
 		}
 		
-		if (divinity >= this.n) this.success();
+		if (divinity >= this.coordinates.length) this.success();
 		
 		this.ydistance = this.player.x + 20 - this.x + 10;
 		this.xdistance = this.player.y + 20 - this.y + 10;
@@ -32,10 +35,10 @@ class DeadAnimal extends Phaser.Sprite {
 	}
 		
 	spawnDivinity() {
-		for (var i = 0; i < this.n; i++) {
+		for (var i = 0; i < this.coordinates.length; i++) {
 			divinity = 0;
 			this.t = this.time;
-			this.divinities[i] = new Divinity(game, this.x, this.y, 'divinity', '', this.player, i);
+			this.divinities[i] = new Divinity(game, this.x, this.y, 'divinity', this.player, this.coordinates[i]);
 			game.add.existing(this.divinities[i]);
 		}
 	}
