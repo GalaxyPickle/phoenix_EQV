@@ -1,4 +1,6 @@
 var divinity;
+var alive;
+//for the live animal
 class DeadAnimal extends Phaser.Sprite {
 	
 	constructor(game, x, y, key_animal, key_div, key_bar, playerbody, coords, time) {
@@ -12,6 +14,8 @@ class DeadAnimal extends Phaser.Sprite {
 		this.t = -100;
 		this.player = playerbody;
 		this.divinities = new Array();
+		alive = false;
+		//animal is not alive yet
 	}
 	
 	update() {
@@ -46,8 +50,22 @@ class DeadAnimal extends Phaser.Sprite {
 	success() {
 		divinity = 0;
 		console.log("congrats");
-		
-		game.add.sprite(300, 600, 'mushroom');
+		var max = 3;
+		// timer
+		// create a Timer object - (autoDestroy) = kill timer after its event is dispatched
+		var timer01 = game.time.create(false);
+		// add a new event to the Timer (delay, callback, context)
+		var timedEvent01 = timer01.add(Phaser.Timer.SECOND * max, killFire, game);
+		// start the timer (delay)
+		timer01.start();
+		var revival = game.add.sprite(this.x, this.y, 'revival');
+		revival.animations.add('revival_animate', [0,1,2,3], 10, true);
+		revival.animations.play('revival_animate');
 		this.destroy();
+		//make the live version appear
+		function killFire(){
+			revival.destroy();
+			alive = true;
+		}
 	}
 }
