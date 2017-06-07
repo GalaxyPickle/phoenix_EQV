@@ -261,12 +261,8 @@ Play.prototype = {
 			'down': Phaser.KeyCode.DOWN,
 			'left': Phaser.KeyCode.LEFT,
 			'right': Phaser.KeyCode.RIGHT,
-
-			'follow': Phaser.KeyCode.F,
-			'gravity': Phaser.KeyCode.G,
+			
 			'controls': Phaser.KeyCode.X,
-			'particles': Phaser.KeyCode.J,
-			'toggle': Phaser.KeyCode.K,
 			
 			'cameraUp': Phaser.KeyCode.W,
 			'cameraDown': Phaser.KeyCode.S,
@@ -432,11 +428,6 @@ Play.prototype = {
 			camera.unfollow();
 		}
 
-		// Toggle gravity
-		if (controls.gravity.justDown) {
-			features.enableGravity = !features.enableGravity;
-		}
-
 		// Update gravity
 		if (features.enableGravity) {
 			gravity.y = features.gravity;
@@ -485,15 +476,6 @@ Play.prototype = {
 		this.emitter.forEach(function (p) {
 			p.alpha = p.lifespan / 1000;
 		});
-
-		// Toggle particle flow
-		if (controls.particles.justDown) {
-			if (this.emitter.on) {
-				this.emitter.kill();
-			} else {
-				this.emitter.flow(3000 / this.time.slowMotion, 1, 5);
-			}
-		}
 
 		// Toggle the Arcade Slopes plugin itself
 		if (features.slopes && !this.game.slopes) {
@@ -719,9 +701,6 @@ Play.prototype = {
 			debug.line('Click:', 'Teleport');
 			debug.line('WASD:', 'Move/jump');
 			debug.line('Arrows:', 'Move the camera');
-			debug.line('F:', 'Toggle camera follow');
-			debug.line('G:', 'Toggle gravity');
-			debug.line('J:', 'Toggle particles');
 			debug.line('K:', 'Toggle Arcade Slopes plugin');
 			debug.line('C:', 'Show these controls');
 			debug.stop();
@@ -758,8 +737,12 @@ function unpause(event) {
 	}
 };
 
-
-
-
+/*
+//handle pause menu
+		if (game.paused) {
+			console.log("yo");
+			if (this.input.keyboard.justPressed(Phaser.KeyCode.R)) game.state.start('Title');
+		}
+*/
 
 // EOF //
