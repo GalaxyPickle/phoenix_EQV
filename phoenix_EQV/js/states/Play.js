@@ -125,7 +125,7 @@ Play.prototype = {
 		sfx_jump3 = game.add.audio('jump3');
 		sfx_land1 = game.add.audio('land' );
 		sfx_glide = game.add.audio('glide');
-		sfx_fall1 = game.add.audio('fall' );
+		//sfx_fall1 = game.add.audio('fall' );
 		sfx_call = game.add.audio('screech');
 		
 		this.jump1 = false;
@@ -133,7 +133,7 @@ Play.prototype = {
 		this.jump3 = false;
 		this.land1 = false;
 		this.glide = false;
-		this.fall1 = false;
+		//this.fall1 = false;
 
 		// MUSICCXSSSSSZZZZZ
 		jungle_music = game.add.audio('jungle_theme');
@@ -303,7 +303,7 @@ Play.prototype = {
 			[500,400],
 			[60,700]
 		]
-		var creature = new DeadAnimal(game, 200, 200, 'dead_burrel', 'divinity', '', this.player.body, coordinates, 1000);
+		var creature = new DeadAnimal(game, 200, 200, 'dead_burrel', 'divinity', '', this.player.body, coordinates, 1000, this.camera);
 		game.add.existing(creature);
 		//add the live burrel at the same time but make it invisible at first
 		burrel = this.add.sprite(6050, 1145, 'burrel', 'static');
@@ -327,11 +327,13 @@ Play.prototype = {
 		*/
 
 		// Create a label to use as a button
-		pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
-		pause_label.fixedToCamera = true;
-		pause_label.inputEnabled = true;
-		pause_label.events.onInputUp.add(function () {
+		game.pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
+		game.pause_label.fixedToCamera = true;
+		game.pause_label.inputEnabled = true;
+		game.pause_label.events.onInputUp.add(function () {
 			// When the paus button is pressed, we pause the game
+			game.pause_label.setText("Unpause");
+			game.pause_label.x -= 30;
 			game.paused = true;
 
 			// And a label to illustrate which menu item was chosen. (This is not necessary)
@@ -341,6 +343,8 @@ Play.prototype = {
 
 		// Add a input listener that can help us return from being paused
 		game.input.onDown.add(unpause, self);
+		var reset_key = this.game.input.keyboard.addKey(Phaser.Keyboard.R);
+		reset_key.onDown.add(restart, self); 
 	},
 
 	updatePlayer: function (player) {
@@ -542,6 +546,10 @@ Play.prototype = {
 		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
 			game.add.audio('screech').play();
 		}
+		
+		if (this.input.keyboard.justPressed(Phaser.KeyCode.P)) {
+			
+		}
 
 		//vertical movement
 		if (dir) {
@@ -633,7 +641,7 @@ Play.prototype = {
 			if (!features.jump || gravity.y >= 0){
 				body.acceleration.y = Math.abs(gravity.y) + features.acceleration;
 				if (!this.fall1) {
-					sfx_fall1.play()
+					//sfx_fall1.play()
 					this.fall1 = true;
 				}
 			}
@@ -727,22 +735,22 @@ Play.prototype = {
 
 var fireTime = 10;
 
+function restart(event) {
+	if (game.paused) {
+		game.paused = false;
+		game.state.start('Boot');
+	}
+};
+
 function unpause(event) {
 	// Only act if paused
 	if(game.paused){
+		game.pause_label.setText("Pause");
 		choiseLabel.destroy();
 
 		// Unpause the game
 		game.paused = false;
 	}
 };
-
-/*
-//handle pause menu
-		if (game.paused) {
-			console.log("yo");
-			if (this.input.keyboard.justPressed(Phaser.KeyCode.R)) game.state.start('Title');
-		}
-*/
 
 // EOF //
