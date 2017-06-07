@@ -54,7 +54,7 @@ class Divinity extends Phaser.Sprite {
 			if (this.distance < 50) {
 				divinity += 1;
 				this.emitter.on = false;
-				game.camera.shake(0.005, 160);
+				game.camera.shake(0.005, 50);
 				
 				// SFX
 				game.add.audio('collect').play();

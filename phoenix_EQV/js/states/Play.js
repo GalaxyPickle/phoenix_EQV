@@ -150,8 +150,8 @@ Play.prototype = {
 		// jungle_sounds.loop = true;
 
 		// fullscreen key
-		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
-        fullscreen_key.onDown.add(this.goFull, game);
+		// fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
+  		// fullscreen_key.onDown.add(this.goFull, game);
 
 		// I always have this on :)
 		this.time.advancedTiming = true;
