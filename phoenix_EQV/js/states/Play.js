@@ -181,9 +181,9 @@ Play.prototype = {
 		layer2 = this.map.createLayer('Noncollision_1');
 
 		layer3 = this.map.createLayer('Collision_1');
-		this.map.setCollisionBetween(1, 107, true, "Collision_1");
+		this.map.setCollisionBetween(1, 173, true, "Collision_1");
 		// DEBUG
-		//layer.debug = true;
+		layer3.debug = false;
 		this.game.slopes.convertTilemapLayer(layer3, game.cache.getJSON('slope_map'));
 
 		layer3.resizeWorld();
