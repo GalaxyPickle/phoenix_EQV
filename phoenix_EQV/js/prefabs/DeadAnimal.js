@@ -3,7 +3,7 @@ var alive;
 //for the live animal
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, playerbody, coords, time) {
+	constructor(game, x, y, key_animal, key_div, key_bar, playerbody, coords, time, camera) {
 
 		super(game, x, y, key_animal);
 		
@@ -66,6 +66,8 @@ class DeadAnimal extends Phaser.Sprite {
 	}
 	
 	update() {
+		//camera.unfollow();
+		
 		if (this.t >= 0) this.t--;
 		
 		if (this.t < 0 && this.t > -100) {
