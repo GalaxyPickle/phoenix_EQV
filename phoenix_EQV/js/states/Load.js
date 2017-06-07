@@ -25,9 +25,9 @@ Load.prototype = {
 
 		// aaaaand start the ambiance ;)
 		jungle_sounds = game.add.audio('jungle_sounds');
-		jungle_sounds.play('', 0, 1, true);
-		jungle_sounds.loop = true;
+		jungle_sounds.play();
 		jungle_sounds.onDecoded.add(this.music_fade, game);
+		jungle_sounds.onLoop.add(this.hasLooped, game);
 
 		// show loading text when starts loading
 		game.load.onFileComplete.add(this.fileComplete, game);
@@ -128,7 +128,7 @@ Load.prototype = {
 
 		// LOADING SOUNDS --------------------------------------------------
 
-		// load path to snd assets
+		// load path to music assets
 		game.load.path = 'assets/audio/music/';
 		// load all the audio music assets
 		game.load.audio('jungle_theme', ['jungle_theme.mp3', 'jungle_theme.ogg']); // first stage theme
@@ -136,25 +136,35 @@ Load.prototype = {
 		game.load.audio('end_theme', ['end_theme.mp3', 'end_theme.ogg']); // end game intense theme
 
 		// sfx loading
+		// misc sounds
+		game.load.path = 'assets/audio/fx/misc/';
+
+		game.load.audio('revival', ['chorus.ogg']);
+		game.load.audio('fail', ['dun_fail.mp3', 'dun_fail.ogg']);
+		game.load.audio('collect', ['YES.mp3', 'YES.ogg']);
+		game.load.audio('begin', ['begin.mp3']);
 
 		// MOVEMENT
 		game.load.path = 'assets/audio/fx/movement/';
-
+		// phoejay movement
 		game.load.audio('jump1', ['jump.mp3', 'jump.ogg']);
 		game.load.audio('jump2', ['jump_low.mp3']);
 		game.load.audio('jump3', ['boing.mp3', 'boing.ogg']);
 		game.load.audio('land', ['tap_land.mp3']);
 		game.load.audio('glide', ['jump_high.mp3']);
 
-		// ANIMALS
+		// aminals
 		game.load.path = 'assets/audio/fx/animals/';
-				
+		// screech
 		game.load.audio('screech', ['screech.mp3', 'screech.ogg']);
+		game.load.audio('burrel', ['burrel1.mp3']);
+		// .........
 
+		// environ sounds
+		game.load.path = 'assets/audio/fx/environment/'
 		// environmental sounds
 		game.load.audio('heavy_wind', ['heavy_wind.mp3', 'heavy_wind.ogg']); // 2nd/last part stump mountain wind sound
-		// game SFX
-		game.load.audio('jump', ['jump.mp3', 'jump.ogg']); // jump
+		// game.load.audio('jungle_sounds', ['jungle_sounds.mp3', 'jungle_sounds.ogg']);
 
 		game.load.start();
 	},
@@ -183,6 +193,9 @@ Load.prototype = {
 	music_fade: function() {
 		jungle_sounds.fadeIn(5000);
 	},
+	hasLooped: function() {
+		jungle_sounds.play();
+	},
 	goFull: function() {
 
 		let centerX = game.world.centerX
@@ -195,7 +208,7 @@ Load.prototype = {
 			game.height = game.world.height = H;
 
 			// set click fullscreen text
-			click_b.setText("double-tap F for fullscreen");
+			click_b.setText("press F for fullscreen");
 
 			// set center
 			centerX = game.width / 2;
@@ -233,6 +246,8 @@ Load.prototype = {
 	create: function() {
 		console.log('Load: create');
 
+		jungle_sounds.loop = true;
+
 		// crop bar crizzle?
 		if (this.preload_bar != null)
 			this.preload_bar.cropEnabled = false;
@@ -246,7 +261,7 @@ Load.prototype = {
 			tween.onComplete.add(this.startGame, game);
 		}
 		if (game.input.keyboard.justPressed(Phaser.Keyboard.ENTER)) {
-			game.state.start('Play');
+			this.startGame
 		}
 		// tilesprite movement
 		this.bg_tree.tilePosition.x -= 1;

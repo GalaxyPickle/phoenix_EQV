@@ -29,6 +29,10 @@ Boot.prototype = {
 		//menu
 		game.load.image('pause_menu', 'meta/number-buttons-90x90.png', 270, 180);
 
+		// SFX 
+		game.load.path = 'assets/audio/fx/environment/';
+		game.load.audio('jungle_sounds', ['jungle_sounds.mp3', 'jungle_sounds.ogg']);
+
 		// make the canvas look better?
 		game.renderer.renderSession.roundPixels = true;
 		Phaser.Canvas.setImageRenderingCrisp(game.canvas);
