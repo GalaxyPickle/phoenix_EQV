@@ -141,10 +141,14 @@ Play.prototype = {
 		jungle_music.loop = true;
 
 		// SOUND FX
-		jungle_sounds = game.add.audio('jungle_sounds');
-		jungle_sounds.play('', 0, 1, true);
-		jungle_sounds.loop = true;
-		
+		// play jungle sound
+		jungle_sounds.volume = 1;
+		// wind sound
+		heavy_wind = game.add.audio('heavy_wind');
+		// jungle_sounds = game.add.audio('jungle_sounds');
+		// jungle_sounds.play('', 0, 1, true);
+		// jungle_sounds.loop = true;
+
 		// fullscreen key
 		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
         fullscreen_key.onDown.add(this.goFull, game);
@@ -234,11 +238,6 @@ Play.prototype = {
 		// Create 2000 particles using our newly cached image
 		this.emitter.makeParticles('particle_PJ');
 
-		// Give each particle a circular collision body
-		this.emitter.forEach(function (p) {
-			p.alpha = p.lifespan / 1000;
-		});
-
 		// Attach Arcade Physics polygon data to the particle bodies
 		// this.game.slopes.enable(this.emitter);
 
@@ -295,6 +294,10 @@ Play.prototype = {
 		// Prevent the debug text from rendering with a shadow
 		this.game.debug.renderShadow = false;
 
+		// ---------------------------------------------------------------------------------------------------------
+		// ---------------------------     ALL DEAD ANIMAL CODE GOES HERE    ---------------------------------------
+		// ---------------------------------------------------------------------------------------------------------
+
 		//spawn divinity
 		divinity = 0;
 		var coordinates = [
@@ -312,6 +315,10 @@ Play.prototype = {
 		burrel.animations.play('burrel_animate');
 		burrel.visible = alive;
 		//could change the variable name when other animals are added
+
+		// ---------------------------------------------------------------------------------------------------------
+		// ---------------------------------------------------------------------------------------------------------
+		// ---------------------------------------------------------------------------------------------------------
 
 		// fade-in
 		// add the fade-in sprite overlay
@@ -474,6 +481,11 @@ Play.prototype = {
 		// Ensure that all new particles defy gravity
 		this.emitter.gravity.y = -this.physics.arcade.gravity.y;
 
+		// Give each particle fade-out
+		this.emitter.forEach(function (p) {
+			p.alpha = p.lifespan / 1000;
+		});
+
 		// Toggle particle flow
 		if (controls.particles.justDown) {
 			if (this.emitter.on) {
@@ -537,7 +549,7 @@ Play.prototype = {
 		// Keep the particle emitter attached to the player (though there's
 		// probably a better way than this)
 		this.emitter.x = this.player.x + 50 * this.player.scale.x * -1;
-		this.emitter.y = this.player.y - 25;
+		this.emitter.y = this.player.y - 22;
 		
 		//wall touch animation
 		/*
