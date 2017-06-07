@@ -30,14 +30,6 @@ class DeadAnimal extends Phaser.Sprite {
 			game.add.tween(e).to( { alpha: 1 }, 1000, "Linear", true, 0, -1, true); // forever
 		});
 
-		// BAR AT TOP OF SCREEN.
-		this.bar = game.add.sprite(game.width / 2, 50, 'bar');
-		this.bar.fixedToCamera = true;
-		this.bar.width = game.width / 2;
-		this.bar.visible = alive;
-		this.bar.anchor.set(0.5);
-		this.bar.tint = 0x4fb5e7;
-
 		//animal is not alive yet
 	}
 
@@ -63,6 +55,14 @@ class DeadAnimal extends Phaser.Sprite {
 	    //	false means don't explode all the sprites at once, but instead release at a rate of one particle per 100ms
 	    //	The 2000 value is the lifespan of each particle before it's killed
 	    this.emitter.start(false, 2000, 50);
+
+	    // BAR AT TOP OF SCREEN.
+		this.bar = game.add.sprite(game.width / 2, 25, 'bar');
+		this.bar.fixedToCamera = true;
+		this.bar.width = game.width / 2;
+		this.bar.visible = alive;
+		this.bar.anchor.set(0.5);
+		this.bar.tint = 0x4fb5e7;
 	}
 	
 	update() {
@@ -111,7 +111,7 @@ class DeadAnimal extends Phaser.Sprite {
 		}
 		else this.startEmitting();
 
-		this.bar.width =  (game.width / 2 * this.t) / (game.width / 2 * this.time);
+		this.bar.width = -(game.width - 20) + (this.t);
 	}
 		
 	spawnDivinity() {
