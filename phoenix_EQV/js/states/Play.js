@@ -125,7 +125,7 @@ Play.prototype = {
 		sfx_jump3 = game.add.audio('jump3');
 		sfx_land1 = game.add.audio('land' );
 		sfx_glide = game.add.audio('glide');
-		sfx_fall1 = game.add.audio('fall' );
+		//sfx_fall1 = game.add.audio('fall' );
 		sfx_call = game.add.audio('screech');
 		
 		this.jump1 = false;
@@ -133,7 +133,7 @@ Play.prototype = {
 		this.jump3 = false;
 		this.land1 = false;
 		this.glide = false;
-		this.fall1 = false;
+		//this.fall1 = false;
 
 		// MUSICCXSSSSSZZZZZ
 		jungle_music = game.add.audio('jungle_theme');
@@ -141,9 +141,17 @@ Play.prototype = {
 		jungle_music.loop = true;
 
 		// SOUND FX
+		// play jungle sound
+		jungle_sounds.volume = 1;
+		// wind sound
+		heavy_wind = game.add.audio('heavy_wind');
+		// jungle_sounds = game.add.audio('jungle_sounds');
+		// jungle_sounds.play('', 0, 1, true);
+		// jungle_sounds.loop = true;
+
 		// fullscreen key
-		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
-        fullscreen_key.onDown.add(this.goFull, game);
+		// fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
+  		// fullscreen_key.onDown.add(this.goFull, game);
 
 		// I always have this on :)
 		this.time.advancedTiming = true;
@@ -230,11 +238,6 @@ Play.prototype = {
 		// Create 2000 particles using our newly cached image
 		this.emitter.makeParticles('particle_PJ');
 
-		// Give each particle a circular collision body
-		this.emitter.forEach(function (p) {
-			p.alpha = p.lifespan / 1000;
-		});
-
 		// Attach Arcade Physics polygon data to the particle bodies
 		// this.game.slopes.enable(this.emitter);
 
@@ -258,12 +261,8 @@ Play.prototype = {
 			'down': Phaser.KeyCode.DOWN,
 			'left': Phaser.KeyCode.LEFT,
 			'right': Phaser.KeyCode.RIGHT,
-
-			'follow': Phaser.KeyCode.F,
-			'gravity': Phaser.KeyCode.G,
+			
 			'controls': Phaser.KeyCode.X,
-			'particles': Phaser.KeyCode.J,
-			'toggle': Phaser.KeyCode.K,
 			
 			'cameraUp': Phaser.KeyCode.W,
 			'cameraDown': Phaser.KeyCode.S,
@@ -291,6 +290,10 @@ Play.prototype = {
 		// Prevent the debug text from rendering with a shadow
 		this.game.debug.renderShadow = false;
 
+		// ---------------------------------------------------------------------------------------------------------
+		// ---------------------------     ALL DEAD ANIMAL CODE GOES HERE    ---------------------------------------
+		// ---------------------------------------------------------------------------------------------------------
+
 		//spawn divinity
 		divinity = 0;
 		var coordinates = [
@@ -300,7 +303,7 @@ Play.prototype = {
 			[500,400],
 			[60,700]
 		]
-		var creature = new DeadAnimal(game, 200, 200, 'dead_burrel', 'divinity', '', this.player.body, coordinates, 1000);
+		var creature = new DeadAnimal(game, 3000, 200, 'dead_burrel', 'divinity', '', this.player, coordinates, 1000, this.camera);
 		game.add.existing(creature);
 		//add the live burrel at the same time but make it invisible at first
 		burrel = this.add.sprite(6050, 1145, 'burrel', 'static');
@@ -308,6 +311,10 @@ Play.prototype = {
 		burrel.animations.play('burrel_animate');
 		burrel.visible = alive;
 		//could change the variable name when other animals are added
+
+		// ---------------------------------------------------------------------------------------------------------
+		// ---------------------------------------------------------------------------------------------------------
+		// ---------------------------------------------------------------------------------------------------------
 
 		// fade-in
 		// add the fade-in sprite overlay
@@ -320,11 +327,13 @@ Play.prototype = {
 		*/
 
 		// Create a label to use as a button
-		pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
-		pause_label.fixedToCamera = true;
-		pause_label.inputEnabled = true;
-		pause_label.events.onInputUp.add(function () {
+		game.pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
+		game.pause_label.fixedToCamera = true;
+		game.pause_label.inputEnabled = true;
+		game.pause_label.events.onInputUp.add(function () {
 			// When the paus button is pressed, we pause the game
+			game.pause_label.setText("Unpause");
+			game.pause_label.x -= 30;
 			game.paused = true;
 
 			// And a label to illustrate which menu item was chosen. (This is not necessary)
@@ -334,6 +343,8 @@ Play.prototype = {
 
 		// Add a input listener that can help us return from being paused
 		game.input.onDown.add(unpause, self);
+		var reset_key = this.game.input.keyboard.addKey(Phaser.Keyboard.R);
+		reset_key.onDown.add(restart, self); 
 	},
 
 	updatePlayer: function (player) {
@@ -421,11 +432,6 @@ Play.prototype = {
 			camera.unfollow();
 		}
 
-		// Toggle gravity
-		if (controls.gravity.justDown) {
-			features.enableGravity = !features.enableGravity;
-		}
-
 		// Update gravity
 		if (features.enableGravity) {
 			gravity.y = features.gravity;
@@ -470,14 +476,10 @@ Play.prototype = {
 		// Ensure that all new particles defy gravity
 		this.emitter.gravity.y = -this.physics.arcade.gravity.y;
 
-		// Toggle particle flow
-		if (controls.particles.justDown) {
-			if (this.emitter.on) {
-				this.emitter.kill();
-			} else {
-				this.emitter.flow(3000 / this.time.slowMotion, 1, 5);
-			}
-		}
+		// Give each particle fade-out
+		this.emitter.forEach(function (p) {
+			p.alpha = p.lifespan / 1000;
+		});
 
 		// Toggle the Arcade Slopes plugin itself
 		if (features.slopes && !this.game.slopes) {
@@ -533,7 +535,7 @@ Play.prototype = {
 		// Keep the particle emitter attached to the player (though there's
 		// probably a better way than this)
 		this.emitter.x = this.player.x + 50 * this.player.scale.x * -1;
-		this.emitter.y = this.player.y - 25;
+		this.emitter.y = this.player.y - 22;
 		
 		//wall touch animation
 		/*
@@ -543,6 +545,10 @@ Play.prototype = {
 		// MAKE A CALL PHOEJAY!!!!!!
 		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
 			game.add.audio('screech').play();
+		}
+		
+		if (this.input.keyboard.justPressed(Phaser.KeyCode.P)) {
+			
 		}
 
 		//vertical movement
@@ -635,7 +641,7 @@ Play.prototype = {
 			if (!features.jump || gravity.y >= 0){
 				body.acceleration.y = Math.abs(gravity.y) + features.acceleration;
 				if (!this.fall1) {
-					sfx_fall1.play()
+					//sfx_fall1.play()
 					this.fall1 = true;
 				}
 			}
@@ -703,9 +709,6 @@ Play.prototype = {
 			debug.line('Click:', 'Teleport');
 			debug.line('WASD:', 'Move/jump');
 			debug.line('Arrows:', 'Move the camera');
-			debug.line('F:', 'Toggle camera follow');
-			debug.line('G:', 'Toggle gravity');
-			debug.line('J:', 'Toggle particles');
 			debug.line('K:', 'Toggle Arcade Slopes plugin');
 			debug.line('C:', 'Show these controls');
 			debug.stop();
@@ -732,18 +735,22 @@ Play.prototype = {
 
 var fireTime = 10;
 
+function restart(event) {
+	if (game.paused) {
+		game.paused = false;
+		game.state.start('Boot');
+	}
+};
+
 function unpause(event) {
 	// Only act if paused
 	if(game.paused){
+		game.pause_label.setText("Pause");
 		choiseLabel.destroy();
 
 		// Unpause the game
 		game.paused = false;
 	}
 };
-
-
-
-
 
 // EOF //

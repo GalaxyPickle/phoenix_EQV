@@ -23,7 +23,7 @@ class Divinity extends Phaser.Sprite {
 		//	Emitters have a center point and a width/height, which extends from their center point to the left/right and up/down
 	    this.emitter = game.add.emitter(this.x, this.y, 20, 20);
 
-	    //	This emitter will have a width of 800px, so a particle can emit from anywhere in the range emitter.x += emitter.width / 2
+	    //	This emitter will have a width of 10px
 	    this.emitter.width = 10;
 
 	    this.emitter.makeParticles('particle_divinity');
@@ -54,7 +54,11 @@ class Divinity extends Phaser.Sprite {
 			if (this.distance < 50) {
 				divinity += 1;
 				this.emitter.on = false;
-				game.camera.shake(0.005, 160);
+				game.camera.shake(0.005, 50);
+				
+				// SFX
+				game.add.audio('collect').play();
+
 				this.destroy();
 			}
 			else if (this.distance < 150) {
@@ -81,7 +85,7 @@ class Divinity extends Phaser.Sprite {
 		this.emitter.y = this.y;
 
 		this.emitter.forEachAlive(function(p) {
-			p.alpha = p.lifespan / 2000;	
+			p.alpha = p.lifespan / 2000;
 		});
 	}
 	
