@@ -3,7 +3,7 @@ var alive;
 //for the live animal
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, playerbody, coords, time) {
+	constructor(game, x, y, key_animal, key_div, key_bar, playerbody, coords, time, camera) {
 
 		super(game, x, y, key_animal);
 		
@@ -29,6 +29,7 @@ class DeadAnimal extends Phaser.Sprite {
 			e.fixedToCamera = true;
 			game.add.tween(e).to( { alpha: 1 }, 1000, "Linear", true, 0, -1, true); // forever
 		});
+
 		//animal is not alive yet
 	}
 
@@ -54,18 +55,31 @@ class DeadAnimal extends Phaser.Sprite {
 	    //	false means don't explode all the sprites at once, but instead release at a rate of one particle per 100ms
 	    //	The 2000 value is the lifespan of each particle before it's killed
 	    this.emitter.start(false, 2000, 50);
+
+	    // BAR AT TOP OF SCREEN.
+		this.bar = game.add.sprite(game.width / 2, 25, 'bar');
+		this.bar.fixedToCamera = true;
+		this.bar.width = game.width / 2;
+		this.bar.visible = alive;
+		this.bar.anchor.set(0.5);
+		this.bar.tint = 0x4fb5e7;
 	}
 	
 	update() {
+		//camera.unfollow();
+		
 		if (this.t >= 0) this.t--;
 		
 		if (this.t < 0 && this.t > -100) {
 			for (var i = 0; i < this.coordinates.length; i++)
 				this.divinities[i].remove();
-			game.camera.shake(0.006, 210);
+			game.camera.shake(0.006, 200);
 			this.t = -100;
 			//play fail sound
 			game.add.audio('fail').play();
+
+			// TIMER BAR THINGY AT TOP OF SCREEN
+			this.bar.visible = false;
 		}
 		
 		if (divinity >= this.coordinates.length) this.success();
@@ -79,6 +93,9 @@ class DeadAnimal extends Phaser.Sprite {
 			this.text_s.setText('to begin revival');
 			// if press space, start collectin!
 			if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
+				// TIMER BAR THINGY AT TOP OF SCREEN
+				this.bar.visible = true;
+				this.bar.width = game.width / 2;
 				game.add.audio('begin').play();
 				this.spawnDivinity();
 			}
@@ -95,6 +112,8 @@ class DeadAnimal extends Phaser.Sprite {
 			});
 		}
 		else this.startEmitting();
+
+		this.bar.width = -(game.width - 20) + (this.t);
 	}
 		
 	spawnDivinity() {
@@ -127,6 +146,7 @@ class DeadAnimal extends Phaser.Sprite {
 
 		// KILLL IT
 		this.emitter.on = false;
+		this.bar.kill();
 		this.destroy();
 
 		//make the live version appear

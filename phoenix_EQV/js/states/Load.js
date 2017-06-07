@@ -143,6 +143,7 @@ Load.prototype = {
 		game.load.audio('fail', ['dun_fail.mp3', 'dun_fail.ogg']);
 		game.load.audio('collect', ['YES.mp3', 'YES.ogg']);
 		game.load.audio('begin', ['begin.mp3']);
+		game.load.audio('tick_tock', ['tick_tock.mp3', 'tick_tock.ogg']);
 
 		// MOVEMENT
 		game.load.path = 'assets/audio/fx/movement/';
@@ -180,7 +181,7 @@ Load.prototype = {
 
 		// set other texts
 		space.setText("PRESS SPACE");
-		click_b.setText("double-tap F for fullscreen");
+		click_b.setText("press F for fullscreen");
 
 		texties = [space, click_b];
 		// for each text, make it tween foreverrrrr flash
@@ -210,9 +211,9 @@ Load.prototype = {
 			// set click fullscreen text
 			click_b.setText("press F for fullscreen");
 
-			// set center
-			centerX = game.width / 2;
-			centerY = game.height / 2;
+			// // set center
+			// centerX = game.width / 2;
+			// centerY = game.height / 2;
 		}
 		else {
 			console.log('{fullscreen} TRUE')
@@ -221,7 +222,7 @@ Load.prototype = {
 			game.height = window.screen.height;
 
 			// set click fullscreen text
-			click_b.setText("double-tap F for windowed");
+			click_b.setText("press F for windowed");
 
 			// set center
 			centerX = window.screen.width / 2;
