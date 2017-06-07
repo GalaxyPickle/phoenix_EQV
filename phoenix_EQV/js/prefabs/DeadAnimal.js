@@ -3,7 +3,7 @@ var alive;
 //for the live animal
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, playerbody, coords, time, camera) {
+	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera) {
 
 		super(game, x, y, key_animal);
 		
@@ -12,8 +12,11 @@ class DeadAnimal extends Phaser.Sprite {
 		this.coordinates = coords;
 		this.time = time;
 		this.t = -100;
-		this.player = playerbody;
+		this.player = phoejay.body;
+		this.pj = phoejay;
 		this.divinities = new Array();
+		this.cam = camera;
+		this.discovered = false;
 		alive = false;
 
 		// display text
@@ -66,7 +69,6 @@ class DeadAnimal extends Phaser.Sprite {
 	}
 	
 	update() {
-		//camera.unfollow();
 		
 		if (this.t >= 0) this.t--;
 		
@@ -87,6 +89,11 @@ class DeadAnimal extends Phaser.Sprite {
 		this.ydistance = this.player.x + 20 - this.x + 10;
 		this.xdistance = this.player.y + 20 - this.y + 10;
 		this.distance = Math.sqrt(this.xdistance*this.xdistance + this.ydistance*this.ydistance);
+		
+		if (this.distance < 1200 && !this.discovered) {
+			this.discovered = true;
+			var tween = game.add.tween(this.cam).to( { x: this.x - game.width/2, y: this.y - game.height/2}, 2400, Phaser.Easing.Exponential.Out, true);
+		}
 		
 		if (this.distance < 150 && this.t <= 0) {
 			this.text.setText('SPACE');
