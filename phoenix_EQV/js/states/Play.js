@@ -303,7 +303,7 @@ Play.prototype = {
 			[500,400],
 			[60,700]
 		]
-		var creature = new DeadAnimal(game, 200, 200, 'dead_burrel', 'divinity', '', this.player.body, coordinates, 1000, this.camera);
+		var creature = new DeadAnimal(game, 3000, 200, 'dead_burrel', 'divinity', '', this.player, coordinates, 1000, this.camera);
 		game.add.existing(creature);
 		//add the live burrel at the same time but make it invisible at first
 		burrel = this.add.sprite(6050, 1145, 'burrel', 'static');
