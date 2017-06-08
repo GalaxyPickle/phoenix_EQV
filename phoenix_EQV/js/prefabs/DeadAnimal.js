@@ -8,7 +8,7 @@ class DeadAnimal extends Phaser.Sprite {
 		super(game, x, y, key_animal);
 		
 		this.anchor.set(0.5);
-
+		
 		this.coordinates = coords;
 		this.time = time;
 		this.t = -100;
