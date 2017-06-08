@@ -79,6 +79,9 @@ Load.prototype = {
 		// splash screen
 		game.load.image('splash', 'meta/splash.png');
 
+		// BACKGROUND
+		game.load.image('bg_mountain', 'bg/mountain.png');
+
 		// player
 		//load the player
 		game.load.path = 'assets/img/entity/phoenix/';
@@ -156,9 +159,11 @@ Load.prototype = {
 
 		// aminals
 		game.load.path = 'assets/audio/fx/animals/';
-		// screech
-		game.load.audio('screech', ['screech.mp3', 'screech.ogg']);
-		game.load.audio('burrel', ['burrel1.mp3']);
+		game.load.audio('screech', ['screech.mp3', 'screech.ogg']); // screech
+		
+		game.load.audio('burrel_sound', ['burrel1.mp3', 'burrel1.ogg']);
+		game.load.audio('fox_sound', ['fox_call.mp3', 'fox_call.ogg']);
+		game.load.audio('deer_sound', ['deer.mp3', 'deer.ogg']);
 		// .........
 
 		// environ sounds
