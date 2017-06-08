@@ -1,9 +1,13 @@
 var divinity;
-var alive;
-//for the live animal
+var alive1;
+//for the burrel
+var alive2; 
+//for the fox
+var alive3; 
+//for the deer
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera) {
+	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera, aniNumber) {
 
 		super(game, x, y, key_animal);
 		
@@ -159,7 +163,19 @@ class DeadAnimal extends Phaser.Sprite {
 		//make the live version appear
 		function killFire(){
 			revival.destroy();
-			alive = true;
+			if (this.aniNumber == 1)
+			{
+				alive1 = true;
+			}
+			if (this.aniNumber == 2)
+			{
+				alive2 = true;
+			}
+			if (this.aniNumber == 3)
+			{
+				alive3 = true;
+			}
+			
 		}
 	}
 }

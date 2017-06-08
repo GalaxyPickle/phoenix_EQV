@@ -4,7 +4,13 @@
 // written by: ____________
 
 var divinity;
-var alive;
+var alive1;
+//for burrel
+var alive2;
+//for fox
+var alive3;
+//for deer
+var creature;
 
 var Play = function(game) {
 	// variables
@@ -195,7 +201,7 @@ Play.prototype = {
 		layer3.resizeWorld();
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(14000, 100, 'phoejay','static');
+		this.player = this.add.sprite(6608, 918, 'phoejay','static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
@@ -302,21 +308,52 @@ Play.prototype = {
 
 		//spawn divinity
 		divinity = 0;
-		var coordinates = [
-			[1,2],
-			[100,200],
-			[120,200],
-			[500,400],
-			[60,700]
+		var coordinates1 = [
+			[6632,1753],
+			[6881,939],
+			[6827,2100],
+			[7727,1602],
+			[8052,1233],
+			[8206,1588],
+			[8567,1700],
+			[8342,2373],
 		]
-		var creature = new DeadAnimal(game, 3000, 200, 'dead_burrel', 'divinity', '', this.player, coordinates, 1000, this.camera);
+		var coordinates2 = [
+			[9639,1039],
+			[9755,2391],
+			[10155,2388],
+			[10724,818],
+			[10321,927],
+			[11942,2152],
+			[11085,2367],
+			[11085,912],
+			[11483,1395]	
+		]
+		//////first stage- revive the burrel
+		creature = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 30000, this.camera, 1);
 		game.add.existing(creature);
+
+		
 		//add the live burrel at the same time but make it invisible at first
-		burrel = this.add.sprite(6050, 1145, 'burrel', 'static');
+		burrel = this.add.sprite(9236, 1850, 'burrel', 'static');
 		burrel.animations.add('burrel_animate', [0, 1, 2], 5, true);
 		burrel.animations.play('burrel_animate');
-		burrel.visible = alive;
+		burrel.visible = alive1;
+
+
 		//could change the variable name when other animals are added
+		
+		//////second stage- revive the fox
+        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 30000, this.camera, 2);
+		game.add.existing(creature);
+		
+
+		
+		fox = this.add.sprite(12800, 1821, 'fox','fox_1');
+		fox.animations.add('fox_animate', [0, 1, 2], 5, true);
+		fox.animations.play('fox_animate');
+
+		fox.visible = alive2;
 
 		// ---------------------------------------------------------------------------------------------------------
 		// ---------------------------------------------------------------------------------------------------------
@@ -404,6 +441,7 @@ Play.prototype = {
 		var controls = this.controls;
 		var features = this.features;
 
+		game.physics.arcade.collide(player, creature);
 		// our own variables
 
 		// Update slow motion values; these two are great fun together
@@ -515,6 +553,7 @@ Play.prototype = {
 
 		// Collide the player against the collision layer
 		this.physics.arcade.collide(this.player, layer3);
+		
 
 		// Collide the player against the particles
 		//this.physics.arcade.collide(this.emitter, this.player);
@@ -702,7 +741,8 @@ Play.prototype = {
 		}
 
 		//ANIMALS
-		burrel.visible = alive;
+		burrel.visible = alive1;
+		fox.visible = alive2;
 
 		//Embers
 		// if (fireTime < 0) {
