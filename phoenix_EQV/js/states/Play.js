@@ -189,7 +189,7 @@ Play.prototype = {
 		layer3.resizeWorld();
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(14000, 100, 'phoejay','static');
+		this.player = this.add.sprite(20000, 100, 'phoejay','static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
