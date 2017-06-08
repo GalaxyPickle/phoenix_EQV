@@ -738,7 +738,7 @@ var fireTime = 10;
 function restart(event) {
 	if (game.paused) {
 		game.paused = false;
-		game.state.start('Boot');
+		location.reload();
 	}
 };
 
