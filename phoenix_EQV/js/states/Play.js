@@ -4,12 +4,8 @@
 // written by: ____________
 
 var divinity;
-var alive1;
-//for burrel
-var alive2;
-//for fox
-var alive3;
-//for deer
+var alive;
+var creature1;
 var creature;
 
 var Play = function(game) {
@@ -172,16 +168,9 @@ Play.prototype = {
 		// add background image/tilemaps
 		// add the bg
 		bg = game.add.tileSprite(0, 0, 3000, 2000, 'bg');
-		bg_trees = game.add.tileSprite(0, 0, 3000, 2000, 'bg_tree');
+		bg_trees = game.add.tileSprite(0, 0, 1989, 2386, 'bg_tree');
 		bg.fixedToCamera = true;
 		bg_trees.fixedToCamera = true;
-
-		bg_mountains = game.add.tileSprite(0, game.height - 600, 3000, 600, 'bg_mountain');
-		bg_mountains.fixedToCamera = true;
-		bg_mountains.alpha = 0;
-
-		bg_trans = 18150;
-		new_area = false;
 
 		// Create the tilemap object from the map JSON data
 
@@ -317,7 +306,7 @@ Play.prototype = {
 			[8052,1233],
 			[8206,1588],
 			[8567,1700],
-			[8342,2373],
+			[8342,2373]
 		]
 		var coordinates2 = [
 			[9639,1039],
@@ -328,24 +317,23 @@ Play.prototype = {
 			[11942,2152],
 			[11085,2367],
 			[11085,912],
-			[11483,1395]	
+			[11483,1395]
 		]
 		//////first stage- revive the burrel
-		creature = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 30000, this.camera, 1);
-		game.add.existing(creature);
-
+		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera);
+		game.add.existing(creature1);
 		
 		//add the live burrel at the same time but make it invisible at first
 		burrel = this.add.sprite(9236, 1850, 'burrel', 'static');
 		burrel.animations.add('burrel_animate', [0, 1, 2], 5, true);
 		burrel.animations.play('burrel_animate');
-		burrel.visible = alive1;
+		burrel.visible = alive;
 
 
 		//could change the variable name when other animals are added
 		
 		//////second stage- revive the fox
-        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 30000, this.camera, 2);
+        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 30000, this.camera);
 		game.add.existing(creature);
 		
 
@@ -354,7 +342,7 @@ Play.prototype = {
 		fox.animations.add('fox_animate', [0, 1, 2], 5, true);
 		fox.animations.play('fox_animate');
 
-		fox.visible = alive2;
+		fox.visible = alive;
 
 		// ---------------------------------------------------------------------------------------------------------
 		// ---------------------------------------------------------------------------------------------------------
@@ -442,7 +430,7 @@ Play.prototype = {
 		var controls = this.controls;
 		var features = this.features;
 
-		game.physics.arcade.collide(player, creature);
+		game.physics.arcade.collide(this.player, creature1);
 		// our own variables
 
 		// Update slow motion values; these two are great fun together
@@ -487,32 +475,7 @@ Play.prototype = {
 		// update the tilesprites for prallaxing
 		bg_trees.tilePosition.x = -camera.view.x / 5;
 		bg_trees.tilePosition.y = -camera.view.y / 5;
-		bg_mountains.tilePosition.x = -camera.view.x / 5;
 		bg.tilePosition.y = -camera.view.y / 10;
-
-		// switch tilesprite bgs
-		// switch background FX and music upon different area change
-		if (this.player.x > bg_trans) {
-
-			// tilesprites
-			bg_mountains.visible = true;
-			if (bg_trees.alpha > 0.05) bg_trees.alpha -= 0.01;
-			else bg_trees.visible = false;
-			if (bg_mountains.alpha < 1) bg_mountains.alpha += 0.01;
-
-			// background SFX
-			// game.add.tween(heavy_wind).to( { volume: 1 }, 800, "Linear", true, 0, -1, true); // flash forever
-		}
-		else {
-
-			// tilesprites
-			bg_trees.visible = true;
-			if (bg_trees.alpha < 1) bg_trees.alpha += 0.01;
-			if (bg_mountains.alpha > 0.05) bg_mountains.alpha -= 0.01;
-			else bg_mountains.visible = false;
-
-			// background SFX
-		}
 
 		// Update player body properties
 		body.drag.x = features.dragX;
@@ -756,8 +719,8 @@ Play.prototype = {
 		}
 
 		//ANIMALS
-		burrel.visible = alive1;
-		fox.visible = alive2;
+		burrel.visible = alive;
+		fox.visible = alive;
 
 		//Embers
 		// if (fireTime < 0) {
@@ -773,8 +736,7 @@ Play.prototype = {
 		var features = this.features;
 
 		// Render the frame rate
-		// debug.text('FPS: ' + this.time.fps || '--', 50, 50, "red");
-		// debug.text('X: ' + this.player.x + ' Y: ' + this.player.y, 50, 100, 'red');
+		debug.text('FPS: ' + this.time.fps || '--', 50, 50, "red");
 
 		// Render the keyboard controls
 		if(controls.controls.isDown) {
