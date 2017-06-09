@@ -350,7 +350,7 @@ Play.prototype = {
 		//could change the variable name when other animals are added
 		
 		//////second stage- revive the fox
-        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 30000, this.camera, 2);
+        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera, 2);
 		game.add.existing(creature);
 		
 
@@ -447,7 +447,6 @@ Play.prototype = {
 		var controls = this.controls;
 		var features = this.features;
 
-		game.physics.arcade.collide(this.player, creature1);
 		// our own variables
 
 		// Update slow motion values; these two are great fun together
@@ -719,6 +718,7 @@ Play.prototype = {
 			}
 		}
 		
+		/*
 		//next level
 		if (this.player.body.x > game.world.width - 50) {
 			layer1.destroy();
@@ -733,7 +733,7 @@ Play.prototype = {
 			this.player.bringToTop();
 			
 			layer3.resizeWorld();
-		}
+		}*/
 
 		//ANIMALS
 		burrel.visible = alive1;

@@ -102,9 +102,14 @@ class DeadAnimal extends Phaser.Sprite {
 			var tween = game.add.tween(this.cam).to( { x: this.x - game.width/2, y: this.y - game.height/2}, 2400, Phaser.Easing.Exponential.Out, true);
 		}
 		
+		if (this.distance < 50) this.player.x -= 10;
+		
 		if (this.distance < 150 && this.t <= 0) {
 			this.text.setText('SPACE');
 			this.text_s.setText('to begin revival');
+			
+			this.text.bringToTop();
+			this.text_s.bringToTop();
 			// if press space, start collectin!
 			if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
 				// TIMER BAR THINGY AT TOP OF SCREEN
@@ -127,7 +132,7 @@ class DeadAnimal extends Phaser.Sprite {
 		}
 		else this.startEmitting();
 
-		this.bar.width = this.t*200/game.width;
+		this.bar.width = (game.width-60)*(this.t/this.time);
 	}
 		
 	spawnDivinity() {
@@ -141,7 +146,7 @@ class DeadAnimal extends Phaser.Sprite {
 	
 	success() {
 		divinity = 0;
-		console.log("congrats");
+		var tween = game.add.tween(this.cam).to( { x: this.x - game.width/2, y: this.y - game.height/2}, 2400, Phaser.Easing.Exponential.Out, true);
 
 		// SFX for revival
 		game.add.audio('revival').play();
