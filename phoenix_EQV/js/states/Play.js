@@ -195,8 +195,16 @@ Play.prototype = {
 
 		layer3.resizeWorld();
 
+		//Add Tutorial pictures
+		this.Move = this.add.sprite(109, 2063, 'Move', 'static');
+		this.Look = this.add.sprite(1481, 1069, 'Look', 'static');
+		this.Glide = this.add.sprite(3006, 1100, 'Glide', 'static');
+		this.Wall_Jump = this.add.sprite(6221, 1475, 'Wall_Jump', 'static');
+		this.Pause = this.add.sprite(4600, 390, 'Pause', 'static');
+
+
 		// Create a player texture atlas
-		this.player = this.add.sprite(6608, 918, 'phoejay','static');
+		this.player = this.add.sprite(200, 2290, 'phoejay','static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
@@ -277,6 +285,10 @@ Play.prototype = {
 			'cameraRight': Phaser.KeyCode.D
 		});
 
+		// Set camera to start on player
+		this.camera.x = this.player.x - screen.width/2 + 101.6;
+		this.camera.y = this.player.y - screen.height/2 + 77;
+		
 		// Follow the player with the camera
 		this.camera.follow(this.player);
 

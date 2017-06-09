@@ -105,6 +105,18 @@ Load.prototype = {
 		game.load.image('sprout', 'images/sprout.png');
 		game.load.image('flower', 'images/flower.png');
 
+		// load instruction images
+		game.load.path = 'assets/img/Tutorial_Pictures/';
+		game.load.image('Move', 'Move.png');
+		game.load.image('Look', 'Look.png');
+		game.load.image('Glide', 'Glide.png');
+		game.load.image('Wall_Jump', 'Wall_Jump.png');
+		game.load.image('Pause', 'Pause.png');
+
+
+
+
+
 		//load the revival transition thing
 		game.load.path = 'assets/img/entity/revival/';
 		game.load.atlas('revival', 'revival_animation.png', 'revival_animation.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);

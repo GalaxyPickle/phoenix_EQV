@@ -23,6 +23,7 @@ Title.prototype = {
 		// timedEvent01 = timer01.add(Phaser.Timer.SECOND * max, myFunction, game);
 		// // start the timer (delay)
 		// timer01.start();
+		game.stage.backgroundColor = "#000";
 
 		// load splash screen image
 		splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');

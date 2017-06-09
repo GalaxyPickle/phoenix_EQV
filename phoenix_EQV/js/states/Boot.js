@@ -16,7 +16,7 @@ Boot.prototype = {
 		game.load.image('fade-in', 'meta/fade_in.png');
 
 		// splash screen
-		game.load.image('splash', 'meta/splash.png');
+		game.load.image('splash', 'logo.png');
 
 		// load the loading bar sprite and BG
 		game.load.image('bar', 'meta/bar.png');
