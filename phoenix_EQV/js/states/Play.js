@@ -172,9 +172,16 @@ Play.prototype = {
 		// add background image/tilemaps
 		// add the bg
 		bg = game.add.tileSprite(0, 0, 3000, 2000, 'bg');
-		bg_trees = game.add.tileSprite(0, 0, 1989, 2386, 'bg_tree');
+		bg_trees = game.add.tileSprite(0, 0, 3000, 2000, 'bg_tree');
 		bg.fixedToCamera = true;
 		bg_trees.fixedToCamera = true;
+
+		bg_mountains = game.add.tileSprite(0, game.height - 600, 3000, 600, 'bg_mountain');
+		bg_mountains.fixedToCamera = true;
+		bg_mountains.alpha = 0;
+
+		bg_trans = 18150;
+		new_area = false;
 
 		// Create the tilemap object from the map JSON data
 
@@ -480,7 +487,32 @@ Play.prototype = {
 		// update the tilesprites for prallaxing
 		bg_trees.tilePosition.x = -camera.view.x / 5;
 		bg_trees.tilePosition.y = -camera.view.y / 5;
+		bg_mountains.tilePosition.x = -camera.view.x / 5;
 		bg.tilePosition.y = -camera.view.y / 10;
+
+		// switch tilesprite bgs
+		// switch background FX and music upon different area change
+		if (this.player.x > bg_trans) {
+
+			// tilesprites
+			bg_mountains.visible = true;
+			if (bg_trees.alpha > 0.05) bg_trees.alpha -= 0.01;
+			else bg_trees.visible = false;
+			if (bg_mountains.alpha < 1) bg_mountains.alpha += 0.01;
+
+			// background SFX
+			// game.add.tween(heavy_wind).to( { volume: 1 }, 800, "Linear", true, 0, -1, true); // flash forever
+		}
+		else {
+
+			// tilesprites
+			bg_trees.visible = true;
+			if (bg_trees.alpha < 1) bg_trees.alpha += 0.01;
+			if (bg_mountains.alpha > 0.05) bg_mountains.alpha -= 0.01;
+			else bg_mountains.visible = false;
+
+			// background SFX
+		}
 
 		// Update player body properties
 		body.drag.x = features.dragX;
@@ -741,7 +773,8 @@ Play.prototype = {
 		var features = this.features;
 
 		// Render the frame rate
-		debug.text('FPS: ' + this.time.fps || '--', 50, 50, "red");
+		// debug.text('FPS: ' + this.time.fps || '--', 50, 50, "red");
+		// debug.text('X: ' + this.player.x + ' Y: ' + this.player.y, 50, 100, 'red');
 
 		// Render the keyboard controls
 		if(controls.controls.isDown) {
