@@ -1,6 +1,10 @@
 var divinity;
-var alive;
-//for the live animal
+var alive1;
+//for burrel
+var alive2;
+//for fox;
+var alive3;
+//for deer
 class DeadAnimal extends Phaser.Sprite {
 	
 	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera) {
@@ -17,7 +21,9 @@ class DeadAnimal extends Phaser.Sprite {
 		this.divinities = new Array();
 		this.cam = camera;
 		this.discovered = false;
-		alive = false;
+		alive1 = false;
+		alive2 = false;
+		alive3 = false;
 
 		// display text
 		this.text = game.add.text(game.width / 2, game.height / 2, 'SPACE', big_style);
@@ -63,7 +69,8 @@ class DeadAnimal extends Phaser.Sprite {
 		this.bar = game.add.sprite(game.width / 2, 25, 'bar');
 		this.bar.fixedToCamera = true;
 		this.bar.width = game.width / 2;
-		this.bar.visible = alive;
+		this.bar.visible = alive1;
+		//need to fix this later
 		this.bar.anchor.set(0.5);
 		this.bar.tint = 0x4fb5e7;
 	}
@@ -159,7 +166,18 @@ class DeadAnimal extends Phaser.Sprite {
 		//make the live version appear
 		function killFire(){
 			revival.destroy();
-			alive = true;
+			if (this.aniNumber == 1)
+			{
+				alive1 = true;
+			}
+			if (this.aniNumber == 2)
+			{
+				alive2 = true;
+			}
+			if (this.aniNumber == 3)
+			{
+				alive3 = true;
+			}
 		}
 	}
 }
