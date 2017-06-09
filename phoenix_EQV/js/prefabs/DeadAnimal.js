@@ -7,7 +7,7 @@ var alive3;
 //for deer
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera) {
+	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera, aniNumber) {
 
 		super(game, x, y, key_animal);
 		
