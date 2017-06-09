@@ -21,7 +21,7 @@ class DeadAnimal extends Phaser.Sprite {
 		this.divinities = new Array();
 		this.cam = camera;
 		this.discovered = false;
-		alive = false;
+		this.alive = false;
 
 		// display text
 		this.text = game.add.text(game.width / 2, game.height / 2, 'SPACE', big_style);
@@ -67,7 +67,7 @@ class DeadAnimal extends Phaser.Sprite {
 		this.bar = game.add.sprite(game.width / 2, 25, 'bar');
 		this.bar.fixedToCamera = true;
 		this.bar.width = game.width / 2;
-		this.bar.visible = alive;
+		this.bar.visible = this.alive;
 		this.bar.anchor.set(0.5);
 		this.bar.tint = 0x4fb5e7;
 	}
