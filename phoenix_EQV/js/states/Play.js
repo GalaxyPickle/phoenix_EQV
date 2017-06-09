@@ -325,7 +325,7 @@ Play.prototype = {
 			[11483,1395]
 		]
 		//////first stage- revive the burrel
-		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera);
+		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera, 1);
 		game.add.existing(creature1);
 		
 		//add the live burrel at the same time but make it invisible at first
@@ -338,7 +338,7 @@ Play.prototype = {
 		//could change the variable name when other animals are added
 		
 		//////second stage- revive the fox
-        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 30000, this.camera);
+        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 30000, this.camera, 2);
 		game.add.existing(creature);
 		
 
