@@ -5,12 +5,6 @@
 
 var divinity;
 
-var alive1 = false;
-//for burrel
-var alive2;
-//for fox
-var alive3;
-//for deer
 var creature1;
 var creature2;
 var creature3;
@@ -25,10 +19,6 @@ var Play = function(game) {
 	layer3 = null;
 	tiles = null;
 	divCounter = 0;
-
-	deer = null;
-	fox = null;
-	burrel = null;
 
 	//bubbles = new Array();
 
@@ -352,10 +342,11 @@ Play.prototype = {
 		game.add.existing(creature1);
 		
 		//add the live burrel at the same time but make it invisible at first
-		burrel = this.add.sprite(9236, 1850, 'burrel', 'static');
-		burrel.animations.add('burrel_animate', [0, 1, 2], 5, true);
-		burrel.animations.play('burrel_animate');
-		burrel.visible = alive1;
+		game.burrel = this.add.sprite(9236, 1850, 'burrel', 'static');
+		game.burrel.animations.add('burrel_animate', [0, 1, 2], 5, true);
+		game.burrel.animations.play('burrel_animate');
+		
+		game.burrel.visible = creature1.alive;
 
 		//could change the variable name when other animals are added
 		
@@ -363,13 +354,11 @@ Play.prototype = {
         creature2 = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera, 2);
 		game.add.existing(creature2);
 		
+		game.fox = this.add.sprite(13260, 1941, 'fox','fox_1');
+		game.fox.animations.add('fox_animate', [0, 1, 2], 5, true);
+		game.fox.animations.play('fox_animate');
 
-		
-		fox = this.add.sprite(12800, 1821, 'fox','fox_1');
-		fox.animations.add('fox_animate', [0, 1, 2], 5, true);
-		fox.animations.play('fox_animate');
-
-		fox.visible = alive2;
+		game.fox.visible = creature2.alive;
 
 		// ---------------------------------------------------------------------------------------------------------
 		// ---------------------------------------------------------------------------------------------------------
@@ -389,18 +378,11 @@ Play.prototype = {
 		game.pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
 		game.pause_label.fixedToCamera = true;
 		game.pause_label.inputEnabled = true;
-		game.pause_label.events.onInputUp.add(function () {
-			// When the paus button is pressed, we pause the game
-			game.pause_label.setText("Unpause");
-			game.pause_label.x -= 30;
-			game.paused = true;
-
-			// And a label to illustrate which menu item was chosen. (This is not necessary)
-			choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', { font: '30px Arial', fill: '#fff' });
-			choiseLabel.anchor.setTo(0.5, 0.5);
-		});
+		game.pause_label.events.onInputUp.add(pause);
 
 		// Add a input listener that can help us return from being paused
+		var pause_key = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
+		pause_key.onDown.add(pause_switch, self);
 		game.input.onDown.add(unpause, self);
 		var reset_key = this.game.input.keyboard.addKey(Phaser.Keyboard.R);
 		reset_key.onDown.add(restart, self); 
@@ -765,8 +747,8 @@ Play.prototype = {
 		}*/
 
 		//ANIMALS
-		burrel.visible = true;
-		fox.visible = alive2;
+		game.burrel.visible = creature1.alive;
+		game.fox.visible = true;
 
 		//Embers
 		// if (fireTime < 0) {
@@ -823,7 +805,23 @@ function restart(event) {
 	}
 };
 
-function unpause(event) {
+function pause_switch() {
+	if (game.paused) unpause();
+	else pause();
+}
+
+function pause() {
+	// When the paus button is pressed, we pause the game
+	game.pause_label.setText("Unpause");
+	game.pause_label.x -= 30;
+	game.paused = true;
+
+	// And a label to illustrate which menu item was chosen. (This is not necessary)
+	choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', { font: '30px Arial', fill: '#fff' });
+	choiseLabel.anchor.setTo(0.5, 0.5);
+};
+
+function unpause() {
 	// Only act if paused
 	if(game.paused){
 		game.pause_label.setText("Pause");
