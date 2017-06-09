@@ -4,7 +4,12 @@
 // written by: ____________
 
 var divinity;
-var alive;
+var alive1;
+//for burrel
+var alive2;
+//for fox
+var alive3;
+//for deer
 var creature1;
 var creature;
 
@@ -327,7 +332,7 @@ Play.prototype = {
 		burrel = this.add.sprite(9236, 1850, 'burrel', 'static');
 		burrel.animations.add('burrel_animate', [0, 1, 2], 5, true);
 		burrel.animations.play('burrel_animate');
-		burrel.visible = alive;
+		burrel.visible = alive1;
 
 
 		//could change the variable name when other animals are added
@@ -342,7 +347,7 @@ Play.prototype = {
 		fox.animations.add('fox_animate', [0, 1, 2], 5, true);
 		fox.animations.play('fox_animate');
 
-		fox.visible = alive;
+		fox.visible = alive2;
 
 		// ---------------------------------------------------------------------------------------------------------
 		// ---------------------------------------------------------------------------------------------------------
@@ -719,8 +724,8 @@ Play.prototype = {
 		}
 
 		//ANIMALS
-		burrel.visible = alive;
-		fox.visible = alive;
+		burrel.visible = alive1;
+		fox.visible = alive2;
 
 		//Embers
 		// if (fireTime < 0) {
