@@ -1,13 +1,6 @@
-var divinity;
-var alive1;
-//for burrel
-var alive2;
-//for fox;
-var alive3;
-//for deer
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera) {
+	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera, aniNumber) {
 
 		super(game, x, y, key_animal);
 		
@@ -21,9 +14,7 @@ class DeadAnimal extends Phaser.Sprite {
 		this.divinities = new Array();
 		this.cam = camera;
 		this.discovered = false;
-		alive1 = false;
-		alive2 = false;
-		alive3 = false;
+		this.aniNumber = aniNumber;
 
 		// display text
 		this.text = game.add.text(game.width / 2, game.height / 2, 'SPACE', big_style);
@@ -160,6 +151,7 @@ class DeadAnimal extends Phaser.Sprite {
 		// start the timer (delay)
 		timer01.start();
 		var revival = game.add.sprite(this.x, this.y, 'revival');
+		revival.anchor.set(0.5);
 		revival.animations.add('revival_animate', [0,1,2,3], 10, true);
 		revival.animations.play('revival_animate');
 

@@ -4,14 +4,16 @@
 // written by: ____________
 
 var divinity;
-var alive1;
+
+var alive1 = false;
 //for burrel
 var alive2;
 //for fox
 var alive3;
 //for deer
 var creature1;
-var creature;
+var creature2;
+var creature3;
 
 var Play = function(game) {
 	// variables
@@ -23,6 +25,7 @@ var Play = function(game) {
 	layer3 = null;
 	tiles = null;
 	divCounter = 0;
+
 	deer = null;
 	fox = null;
 	burrel = null;
@@ -354,12 +357,11 @@ Play.prototype = {
 		burrel.animations.play('burrel_animate');
 		burrel.visible = alive1;
 
-
 		//could change the variable name when other animals are added
 		
 		//////second stage- revive the fox
-        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera, 2);
-		game.add.existing(creature);
+        creature2 = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera, 2);
+		game.add.existing(creature2);
 		
 
 		
@@ -763,7 +765,7 @@ Play.prototype = {
 		}*/
 
 		//ANIMALS
-		burrel.visible = alive1;
+		burrel.visible = true;
 		fox.visible = alive2;
 
 		//Embers
