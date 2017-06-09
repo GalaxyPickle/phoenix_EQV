@@ -79,9 +79,6 @@ Load.prototype = {
 		// splash screen
 		game.load.image('splash', 'meta/splash.png');
 
-		// BACKGROUND
-		game.load.image('bg_mountain', 'bg/mountain.png');
-
 		// player
 		//load the player
 		game.load.path = 'assets/img/entity/phoenix/';
@@ -125,7 +122,7 @@ Load.prototype = {
 		// load tilemap path
 		game.load.path = 'json/';
 		// load tilemaps
-		game.load.tilemap('map', 'AB_Forest.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.tilemap('map', 'newest_forest.json', null, Phaser.Tilemap.TILED_JSON);
 		// load slope map
 		game.load.json('slope_map', 'slope_map.json');
 
@@ -159,11 +156,9 @@ Load.prototype = {
 
 		// aminals
 		game.load.path = 'assets/audio/fx/animals/';
-		game.load.audio('screech', ['screech.mp3', 'screech.ogg']); // screech
-		
-		game.load.audio('burrel_sound', ['burrel1.mp3', 'burrel1.ogg']);
-		game.load.audio('fox_sound', ['fox_call.mp3', 'fox_call.ogg']);
-		game.load.audio('deer_sound', ['deer.mp3', 'deer.ogg']);
+		// screech
+		game.load.audio('screech', ['screech.mp3', 'screech.ogg']);
+		game.load.audio('burrel', ['burrel1.mp3']);
 		// .........
 
 		// environ sounds
