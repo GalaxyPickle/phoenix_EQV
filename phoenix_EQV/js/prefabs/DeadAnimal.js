@@ -15,6 +15,7 @@ class DeadAnimal extends Phaser.Sprite {
 		this.cam = camera;
 		this.discovered = false;
 		this.aniNumber = aniNumber;
+		this.alive = false;
 
 		// display text
 		this.text = game.add.text(game.width / 2, game.height / 2, 'SPACE', big_style);
@@ -60,7 +61,7 @@ class DeadAnimal extends Phaser.Sprite {
 		this.bar = game.add.sprite(game.width / 2, 25, 'bar');
 		this.bar.fixedToCamera = true;
 		this.bar.width = game.width / 2;
-		this.bar.visible = alive1;
+		this.bar.visible = this.alive;
 		//need to fix this later
 		this.bar.anchor.set(0.5);
 		this.bar.tint = 0x4fb5e7;
@@ -159,22 +160,12 @@ class DeadAnimal extends Phaser.Sprite {
 		this.emitter.on = false;
 		this.bar.kill();
 		this.destroy();
+		
+		this.alive = true;
 
 		//make the live version appear
 		function killFire(){
 			revival.destroy();
-			if (this.aniNumber == 1)
-			{
-				alive1 = true;
-			}
-			if (this.aniNumber == 2)
-			{
-				alive2 = true;
-			}
-			if (this.aniNumber == 3)
-			{
-				alive3 = true;
-			}
 		}
 	}
 }
