@@ -79,6 +79,9 @@ Load.prototype = {
 		// splash screen
 		game.load.image('splash', 'meta/splash.png');
 
+		// BACKGROUND
+		game.load.image('bg_mountain', 'bg/mountain.png');
+
 		// player
 		//load the player
 		game.load.path = 'assets/img/entity/phoenix/';
