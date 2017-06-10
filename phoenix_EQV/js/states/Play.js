@@ -6,14 +6,10 @@
 var divinity;
 
 
+var creature1;
+var creature2;
+var creature3;
 
-var alive1;
-//for burrel
-var alive2;
-//for fox
-var alive3;
-//for deer
-var creature;
 
 var Play = function(game) {
 	// variables
@@ -25,9 +21,6 @@ var Play = function(game) {
 	layer3 = null;
 	tiles = null;
 	divCounter = 0;
-	deer = null;
-	fox = null;
-	burrel = null;
 
 	//bubbles = new Array();
 
@@ -179,6 +172,13 @@ Play.prototype = {
 		bg.fixedToCamera = true;
 		bg_trees.fixedToCamera = true;
 
+		bg_mountains = game.add.tileSprite(0, game.height - 600, 3000, 600, 'bg_mountain');
+		bg_mountains.fixedToCamera = true;
+		bg_mountains.alpha = 0;
+
+		bg_trans = 18150;
+		new_area = false;
+
 		// Create the tilemap object from the map JSON data
 
 		this.map = this.add.tilemap('map');
@@ -186,8 +186,8 @@ Play.prototype = {
 		this.map.addTilesetImage('collision_layer','forest');
 		this.map.addTilesetImage('noncollision_layer','forest2');
 
-		layer1 = this.map.createLayer('Noncollision_2');
-		layer2 = this.map.createLayer('Noncollision_1');
+		layer1 = this.map.createLayer('Noncollision_1');
+		layer2 = this.map.createLayer('Noncollision_2');
 
 		layer3 = this.map.createLayer('Collision_1');
 		this.map.setCollisionBetween(1, 173, true, "Collision_1");
@@ -197,8 +197,16 @@ Play.prototype = {
 
 		layer3.resizeWorld();
 
+		//Add Tutorial pictures
+		this.Move = this.add.sprite(109, 2063, 'Move', 'static');
+		this.Look = this.add.sprite(1481, 1069, 'Look', 'static');
+		this.Glide = this.add.sprite(3006, 900, 'Glide', 'static');
+		this.Wall_Jump = this.add.sprite(6121, 1455, 'Wall_Jump', 'static');
+		this.Pause = this.add.sprite(4630, 400, 'Pause', 'static');
+
+
 		// Create a player texture atlas
-		this.player = this.add.sprite(6608, 918, 'phoejay','static');
+		this.player = this.add.sprite(200, 2290, 'phoejay','static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
@@ -279,6 +287,11 @@ Play.prototype = {
 			'cameraRight': Phaser.KeyCode.D
 		});
 
+		// Set camera to start on player
+		// Player position - 1/2 screen size + 1/2 Phoejay image size
+		this.camera.x = this.player.x - screen.width/2 + 101.6;
+		this.camera.y = this.player.y - screen.height/2 + 77;
+		
 		// Follow the player with the camera
 		this.camera.follow(this.player);
 
@@ -313,7 +326,7 @@ Play.prototype = {
 			[8052,1233],
 			[8206,1588],
 			[8567,1700],
-			[8342,2373],
+			[8342,2373]
 		]
 		var coordinates2 = [
 			[9639,1039],
@@ -324,23 +337,21 @@ Play.prototype = {
 			[11942,2152],
 			[11085,2367],
 			[11085,912],
-			[11483,1395]	
+			[11483,1395]
 		]
 		//////first stage- revive the burrel
 
-		creature = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 30000, this.camera, 1);
 
-		game.add.existing(creature);
 
+		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera, 1);
+		game.add.existing(creature1);
 		
 		//add the live burrel at the same time but make it invisible at first
-		burrel = this.add.sprite(9236, 1850, 'burrel', 'static');
-		burrel.animations.add('burrel_animate', [0, 1, 2], 5, true);
-		burrel.animations.play('burrel_animate');
-
-	
-
-		burrel.visible = alive1;
+		game.burrel = this.add.sprite(9236, 1850, 'burrel', 'static');
+		game.burrel.animations.add('burrel_animate', [0, 1, 2], 5, true);
+		game.burrel.animations.play('burrel_animate');
+		
+		game.burrel.visible = creature1.alive;
 
 
 
@@ -348,19 +359,17 @@ Play.prototype = {
 		
 		//////second stage- revive the fox
 
-    
-        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 30000, this.camera, 2);
-
-		game.add.existing(creature);
-		
+        creature2 = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera, 2);
+		game.add.existing(creature2);
 
 		
-		fox = this.add.sprite(12800, 1821, 'fox','fox_1');
-		fox.animations.add('fox_animate', [0, 1, 2], 5, true);
-		fox.animations.play('fox_animate');
+		game.fox = this.add.sprite(13260, 1941, 'fox','fox_1');
+		game.fox.animations.add('fox_animate', [0, 1, 2], 5, true);
+		game.fox.animations.play('fox_animate');
 
 
-		fox.visible = alive2;
+		game.fox.visible = creature2.alive;
+
 
 
 		// ---------------------------------------------------------------------------------------------------------
@@ -381,18 +390,11 @@ Play.prototype = {
 		game.pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
 		game.pause_label.fixedToCamera = true;
 		game.pause_label.inputEnabled = true;
-		game.pause_label.events.onInputUp.add(function () {
-			// When the paus button is pressed, we pause the game
-			game.pause_label.setText("Unpause");
-			game.pause_label.x -= 30;
-			game.paused = true;
-
-			// And a label to illustrate which menu item was chosen. (This is not necessary)
-			choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', { font: '30px Arial', fill: '#fff' });
-			choiseLabel.anchor.setTo(0.5, 0.5);
-		});
+		game.pause_label.events.onInputUp.add(pause);
 
 		// Add a input listener that can help us return from being paused
+		var pause_key = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
+		pause_key.onDown.add(pause_switch, self);
 		game.input.onDown.add(unpause, self);
 		var reset_key = this.game.input.keyboard.addKey(Phaser.Keyboard.R);
 		reset_key.onDown.add(restart, self); 
@@ -449,7 +451,6 @@ Play.prototype = {
 		var controls = this.controls;
 		var features = this.features;
 
-		game.physics.arcade.collide(player, creature);
 		// our own variables
 
 		// Update slow motion values; these two are great fun together
@@ -491,10 +492,29 @@ Play.prototype = {
 			gravity.y = 0;
 		}
 
-		// update the tilesprites for prallaxing
-		bg_trees.tilePosition.x = -camera.view.x / 5;
-		bg_trees.tilePosition.y = -camera.view.y / 5;
-		bg.tilePosition.y = -camera.view.y / 10;
+		/// switch tilesprite bgs
+		// switch background FX and music upon different area change
+		if (this.player.x > bg_trans) {
+
+			// tilesprites
+			bg_mountains.visible = true;
+			if (bg_trees.alpha > 0.05) bg_trees.alpha -= 0.01;
+			else bg_trees.visible = false;
+			if (bg_mountains.alpha < 1) bg_mountains.alpha += 0.01;
+
+			// background SFX
+			// game.add.tween(heavy_wind).to( { volume: 1 }, 800, "Linear", true, 0, -1, true); // flash forever
+		}
+		else {
+
+			// tilesprites
+			bg_trees.visible = true;
+			if (bg_trees.alpha < 1) bg_trees.alpha += 0.01;
+			if (bg_mountains.alpha > 0.05) bg_mountains.alpha -= 0.01;
+			else bg_mountains.visible = false;
+
+			// background SFX
+		}
 
 		// Update player body properties
 		body.drag.x = features.dragX;
@@ -721,6 +741,7 @@ Play.prototype = {
 			}
 		}
 		
+		/*
 		//next level
 		if (this.player.body.x > game.world.width - 50) {
 			layer1.destroy();
@@ -735,14 +756,15 @@ Play.prototype = {
 			this.player.bringToTop();
 			
 			layer3.resizeWorld();
-		}
+		}*/
 
 		//ANIMALS
 
+
 		
 
-		burrel.visible = alive1;
-		fox.visible = alive2;
+		game.burrel.visible = creature1.alive;
+		game.fox.visible = true;
 
 
 		//Embers
@@ -800,7 +822,23 @@ function restart(event) {
 	}
 };
 
-function unpause(event) {
+function pause_switch() {
+	if (game.paused) unpause();
+	else pause();
+}
+
+function pause() {
+	// When the paus button is pressed, we pause the game
+	game.pause_label.setText("Unpause");
+	game.pause_label.x -= 30;
+	game.paused = true;
+
+	// And a label to illustrate which menu item was chosen. (This is not necessary)
+	choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', { font: '30px Arial', fill: '#fff' });
+	choiseLabel.anchor.setTo(0.5, 0.5);
+};
+
+function unpause() {
 	// Only act if paused
 	if(game.paused){
 		game.pause_label.setText("Pause");

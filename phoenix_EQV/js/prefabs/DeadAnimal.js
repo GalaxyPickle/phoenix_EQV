@@ -1,10 +1,3 @@
-var divinity;
-var alive1;
-//for the burrel
-var alive2; 
-//for the fox
-var alive3; 
-//for the deer
 class DeadAnimal extends Phaser.Sprite {
 	
 	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera, aniNumber) {
@@ -21,7 +14,8 @@ class DeadAnimal extends Phaser.Sprite {
 		this.divinities = new Array();
 		this.cam = camera;
 		this.discovered = false;
-		alive = false;
+		this.aniNumber = aniNumber;
+		this.alive = false;
 
 		// display text
 		this.text = game.add.text(game.width / 2, game.height / 2, 'SPACE', big_style);
@@ -67,7 +61,8 @@ class DeadAnimal extends Phaser.Sprite {
 		this.bar = game.add.sprite(game.width / 2, 25, 'bar');
 		this.bar.fixedToCamera = true;
 		this.bar.width = game.width / 2;
-		this.bar.visible = alive;
+		this.bar.visible = this.alive;
+		//need to fix this later
 		this.bar.anchor.set(0.5);
 		this.bar.tint = 0x4fb5e7;
 	}
@@ -99,14 +94,19 @@ class DeadAnimal extends Phaser.Sprite {
 			var tween = game.add.tween(this.cam).to( { x: this.x - game.width/2, y: this.y - game.height/2}, 2400, Phaser.Easing.Exponential.Out, true);
 		}
 		
+		if (this.distance < 50) this.player.x -= 10;
+		
 		if (this.distance < 150 && this.t <= 0) {
 			this.text.setText('SPACE');
 			this.text_s.setText('to begin revival');
+			
+			this.text.bringToTop();
+			this.text_s.bringToTop();
 			// if press space, start collectin!
 			if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
 				// TIMER BAR THINGY AT TOP OF SCREEN
 				this.bar.visible = true;
-				this.bar.width = game.width / 2;
+				this.bar.width = game.width;
 				game.add.audio('begin').play();
 				this.spawnDivinity();
 			}
@@ -124,7 +124,7 @@ class DeadAnimal extends Phaser.Sprite {
 		}
 		else this.startEmitting();
 
-		this.bar.width = -(game.width - 20) + (this.t);
+		this.bar.width = (game.width-60)*(this.t/this.time);
 	}
 		
 	spawnDivinity() {
@@ -138,7 +138,7 @@ class DeadAnimal extends Phaser.Sprite {
 	
 	success() {
 		divinity = 0;
-		console.log("congrats");
+		var tween = game.add.tween(this.cam).to( { x: this.x - game.width/2, y: this.y - game.height/2}, 2400, Phaser.Easing.Exponential.Out, true);
 
 		// SFX for revival
 		game.add.audio('revival').play();
@@ -152,6 +152,7 @@ class DeadAnimal extends Phaser.Sprite {
 		// start the timer (delay)
 		timer01.start();
 		var revival = game.add.sprite(this.x, this.y, 'revival');
+		revival.anchor.set(0.5);
 		revival.animations.add('revival_animate', [0,1,2,3], 10, true);
 		revival.animations.play('revival_animate');
 
@@ -159,23 +160,12 @@ class DeadAnimal extends Phaser.Sprite {
 		this.emitter.on = false;
 		this.bar.kill();
 		this.destroy();
+		
+		this.alive = true;
 
 		//make the live version appear
 		function killFire(){
 			revival.destroy();
-			if (this.aniNumber == 1)
-			{
-				alive1 = true;
-			}
-			if (this.aniNumber == 2)
-			{
-				alive2 = true;
-			}
-			if (this.aniNumber == 3)
-			{
-				alive3 = true;
-			}
-			
 		}
 	}
 }
