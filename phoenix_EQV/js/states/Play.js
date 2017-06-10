@@ -4,7 +4,15 @@
 // written by: ____________
 
 var divinity;
-var alive;
+
+
+
+var alive1;
+//for burrel
+var alive2;
+//for fox
+var alive3;
+//for deer
 var creature;
 
 var Play = function(game) {
@@ -319,7 +327,9 @@ Play.prototype = {
 			[11483,1395]	
 		]
 		//////first stage- revive the burrel
-		creature = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 30000, this.camera);
+
+		creature = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 30000, this.camera, 1);
+
 		game.add.existing(creature);
 
 		
@@ -327,13 +337,20 @@ Play.prototype = {
 		burrel = this.add.sprite(9236, 1850, 'burrel', 'static');
 		burrel.animations.add('burrel_animate', [0, 1, 2], 5, true);
 		burrel.animations.play('burrel_animate');
-		burrel.visible = alive;
+
+	
+
+		burrel.visible = alive1;
+
 
 
 		//could change the variable name when other animals are added
 		
 		//////second stage- revive the fox
-        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 30000, this.camera);
+
+    
+        creature = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 30000, this.camera, 2);
+
 		game.add.existing(creature);
 		
 
@@ -342,7 +359,9 @@ Play.prototype = {
 		fox.animations.add('fox_animate', [0, 1, 2], 5, true);
 		fox.animations.play('fox_animate');
 
-		fox.visible = alive;
+
+		fox.visible = alive2;
+
 
 		// ---------------------------------------------------------------------------------------------------------
 		// ---------------------------------------------------------------------------------------------------------
@@ -719,8 +738,12 @@ Play.prototype = {
 		}
 
 		//ANIMALS
-		burrel.visible = alive;
-		fox.visible = alive;
+
+		
+
+		burrel.visible = alive1;
+		fox.visible = alive2;
+
 
 		//Embers
 		// if (fireTime < 0) {
