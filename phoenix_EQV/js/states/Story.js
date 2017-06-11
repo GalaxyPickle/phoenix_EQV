@@ -35,10 +35,10 @@ Story.prototype = {
 		this.bg_tree = game.add.tileSprite(0, 0, 1989, 2386, 'bg_tree');
 		var grass = game.add.image(0, game.world.height - 100, 'grass');
 		//add images needed for animation
-		var ashes = game.add.sprite(50, game.world.height - 120, 'ashes');
-		var light_ray = game.add.sprite(170, game.world.height - 900, 'light_ray');
+		var ashes = game.add.sprite(50, game.world.height - 140, 'ashes');
+		var light_ray = game.add.sprite(190, game.world.height - 900, 'light_ray');
 		light_ray.anchor.setTo(0.5, 0.5);
-		var revival = game.add.sprite(80, game.world.height - 320, 'revival');
+		var revival = game.add.sprite(100, game.world.height - 340, 'revival');
 		revival.animations.add('revival_animate', [0,1,2,3], 15, true);
 		//hide revival animation for later
 		revival.visible = false;
@@ -117,7 +117,7 @@ Story.prototype = {
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);
 			birdy.animations.play('phoejay_mov');
-			birdy.body.velocity.x = 300;
+			birdy.body.velocity.x = 320;
 		}
 		function startGame(){
 			game.state.start('Play');
