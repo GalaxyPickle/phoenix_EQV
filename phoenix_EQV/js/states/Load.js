@@ -78,6 +78,9 @@ Load.prototype = {
 		// load all the image assets for the game
 		// splash screen
 		game.load.image('splash', 'meta/splash.png');
+		game.load.image('grass', 'bg/grass.png');
+		game.load.image('light_ray', 'entity/light_ray.png');
+		game.load.image('ashes', 'ashes.png');
 
 		// BACKGROUND
 		game.load.image('bg_mountain', 'bg/mountain.png');
@@ -284,7 +287,7 @@ Load.prototype = {
 		this.bg_tree.tilePosition.y += .1;
 	},
 	startGame: function() {
-		game.state.start('Play');
+		game.state.start('Story');
 	},
 	render: function() {
 

@@ -138,18 +138,24 @@ Play.prototype = {
 		//this.fall1 = false;
 
 		// MUSICCXSSSSSZZZZZ
+		// jungle music
 		jungle_music = game.add.audio('jungle_theme');
 		jungle_music.play('', 0, .75, true);
 		jungle_music.loop = true;
+		// deforest music
+		deforest_music = game.add.audio('deforest_theme');
+		deforest_music.onLoop.add(this.deforest_stop, game);
+		deforest_music.loop = true;
+		end_music = game.add.audio('end_theme');
 
 		// SOUND FX
 		// play jungle sound
 		jungle_sounds.volume = 1;
 		// wind sound
 		heavy_wind = game.add.audio('heavy_wind');
-		// jungle_sounds = game.add.audio('jungle_sounds');
-		// jungle_sounds.play('', 0, 1, true);
-		// jungle_sounds.loop = true;
+		heavy_wind.play('', 0, 1, true);
+		heavy_wind.loop = true;
+		heavy_wind.volume = 0;
 
 		// fullscreen key
 		// fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
@@ -400,6 +406,14 @@ Play.prototype = {
 		reset_key.onDown.add(restart, self); 
 	},
 
+	// function to start final music once semi-final finishes
+	deforest_stop: function() {
+		deforest_music.stop();
+		deforest_music.loop = false;
+		end_music.play('', 0, 1, true);
+		end_music.loop = true;
+	},
+
 	updatePlayer: function (player) {
 		var features = this.features;
 		var graphics = this.playerGraphics;
@@ -438,6 +452,8 @@ Play.prototype = {
 			player.body.slopes = null; // TODO: Fix Phaser.Util.Mixin or use something else
 			this.game.slopes.enable(player);
 		}
+
+		player.scale.x = -1;
 	},
 
 	update: function () {
@@ -492,9 +508,15 @@ Play.prototype = {
 			gravity.y = 0;
 		}
 
+		// ---------------------------------------------------------------------------------------
+		// 								tilesprites and sound environmental change
+		// ---------------------------------------------------------------------------------------
+
 		/// switch tilesprite bgs
 		// switch background FX and music upon different area change
 		if (this.player.x > bg_trans) {
+
+			new_area = true;
 
 			// tilesprites
 			bg_mountains.visible = true;
@@ -504,6 +526,10 @@ Play.prototype = {
 
 			// background SFX
 			// game.add.tween(heavy_wind).to( { volume: 1 }, 800, "Linear", true, 0, -1, true); // flash forever
+			if (jungle_sounds.volume > 0) {
+				jungle_sounds.volume -= 0.01;
+				heavy_wind.volume += 0.01;
+			}
 		}
 		else {
 
@@ -514,7 +540,29 @@ Play.prototype = {
 			else bg_mountains.visible = false;
 
 			// background SFX
+			if (heavy_wind.volume > 0) {
+				heavy_wind.volume -= 0.01;
+				jungle_sounds.volume += 0.01;
+			}
 		}
+
+		// music change
+		if (new_area && !deforest_music.isPlaying && !end_music.isPlaying) {
+			deforest_music.play('', 0, 0.0, true);
+			game.add.tween(jungle_music).to( {volume: 0}, 5000).start();
+			jungle_music.loop = false;
+			game.add.tween(deforest_music).to( {volume: 1}, 5000).start();
+		}
+
+		// update the tilesprites for parallaxing
+		bg_trees.tilePosition.x = -camera.view.x / 5;
+		bg_trees.tilePosition.y = -camera.view.y / 5;
+		bg_mountains.tilePosition.x = -camera.view.x / 5;
+		bg.tilePosition.y = -camera.view.y / 10;
+
+		// ---------------------------------------------------------------------------------------
+		// 
+		// ---------------------------------------------------------------------------------------
 
 		// Update player body properties
 		body.drag.x = features.dragX;
