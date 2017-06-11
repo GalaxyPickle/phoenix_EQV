@@ -124,7 +124,6 @@ Story.prototype = {
 		}
 	},
 	update: function() {
-		console.log('Story: update');
 		//if space pressed skip to play state
 		if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
 			game.state.start('Play');
