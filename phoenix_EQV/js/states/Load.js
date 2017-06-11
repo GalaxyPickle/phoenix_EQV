@@ -79,6 +79,7 @@ Load.prototype = {
 		// splash screen
 		game.load.image('splash', 'meta/splash.png');
 		game.load.image('grass', 'bg/grass.png');
+		game.load.image('light_ray', 'entity/light_ray.png');
 		game.load.image('ashes', 'ashes.png');
 
 		// BACKGROUND
@@ -88,7 +89,6 @@ Load.prototype = {
 		//load the player
 		game.load.path = 'assets/img/entity/phoenix/';
 		game.load.atlas('phoejay', 'phoejay_mov.png', 'phoejay_mov.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-		game.load.image('light_ray', 'light_ray.png');
 		// load divinity
 		game.load.path = 'assets/img/entity/';
 		game.load.image('divinity', 'divinity.png');
