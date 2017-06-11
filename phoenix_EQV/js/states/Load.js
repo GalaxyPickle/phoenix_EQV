@@ -287,7 +287,7 @@ Load.prototype = {
 		this.bg_tree.tilePosition.y += .1;
 	},
 	startGame: function() {
-		game.state.start('Play');
+		game.state.start('Story');
 	},
 	render: function() {
 
