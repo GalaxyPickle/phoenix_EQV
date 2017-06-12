@@ -812,22 +812,17 @@ Play.prototype = {
 			}
 		}
 		
-		/*
-		//next level
-		if (this.player.body.x > game.world.width - 50) {
-			layer1.destroy();
-			layer2.destroy();
-			layer3.destroy();
-			
-			layer1 = this.map.createLayer('Noncollision_2');
-			layer2 = this.map.createLayer('Noncollision_1');
-			layer3 = this.map.createLayer('Collision_1');
-			this.player.body.x = 100;
-			this.player.body.y = 100;
-			this.player.bringToTop();
-			
-			layer3.resizeWorld();
-		}*/
+
+		//    ▄███████▄    ▄█    █▄     ▄██████▄     ▄████████      ▄█    ▄████████ ▄██   ▄   
+		//   ███    ███   ███    ███   ███    ███   ███    ███     ███   ███    ███ ███   ██▄ 
+		//   ███    ███   ███    ███   ███    ███   ███    █▀      ███   ███    ███ ███▄▄▄███ 
+		//   ███    ███  ▄███▄▄▄▄███▄▄ ███    ███  ▄███▄▄▄         ███   ███    ███ ▀▀▀▀▀▀███ 
+		// ▀█████████▀  ▀▀███▀▀▀▀███▀  ███    ███ ▀▀███▀▀▀         ███ ▀███████████ ▄██   ███ 
+		//   ███          ███    ███   ███    ███   ███    █▄      ███   ███    ███ ███   ███ 
+		//   ███          ███    ███   ███    ███   ███    ███     ███   ███    ███ ███   ███ 
+		//  ▄████▀        ███    █▀     ▀██████▀    ██████████ █▄ ▄███   ███    █▀   ▀█████▀  
+		//                                                     ▀▀▀▀▀▀                         
+
 
 		// MAKE A CALL PHOEJAY!!!!!!
 		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
