@@ -56,8 +56,8 @@ Load.prototype = {
 
 		// add fullscreen key (esc)
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.RESIZE;
-		fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
-		fullscreen_key.onDown.add(this.goFull, game);
+		// fullscreen_key = game.input.keyboard.addKey(Phaser.Keyboard.F);
+		// fullscreen_key.onDown.add(this.goFull, game);
 
 		// add the fade-in sprite overlay
 		this.fade_in = game.add.tileSprite(0, 0, 3000, 3000, 'fade-in');
