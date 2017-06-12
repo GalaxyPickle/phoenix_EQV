@@ -114,6 +114,7 @@ Load.prototype = {
 		// load instruction images
 		game.load.path = 'assets/img/Tutorial_Pictures/';
 		game.load.image('Move', 'Move.png');
+		game.load.image('Double_Jump', 'Double_Jump.png');
 		game.load.image('Look', 'Look.png');
 		game.load.image('Glide', 'Glide.png');
 		game.load.image('Wall_Jump', 'Wall_Jump.png');
