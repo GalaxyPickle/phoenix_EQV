@@ -219,7 +219,7 @@ Play.prototype = {
 		this.player.animations.add('top', ['top'], 1, false);
 		this.player.animations.add('glide', ['glide'], 1, false);
 		this.player.animations.add('crouch', ['wallcrouch'], 1, false);
-		this.player.animations.add('fall', ['wallhop'], 1, true);
+		//this.player.animations.add('fall', ['wallhop'], 1, true);
 
 
 		// Create a graphics object for the player
@@ -812,7 +812,7 @@ Play.prototype = {
 		
 
 		game.burrel.visible = creature1.alive;
-		game.fox.visible = true;
+		game.fox.visible = creature2.alive;
 
 
 		//Embers
