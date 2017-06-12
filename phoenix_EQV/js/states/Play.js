@@ -204,15 +204,16 @@ Play.prototype = {
 		layer3.resizeWorld();
 
 		//Add Tutorial pictures
-		this.Move = this.add.sprite(109, 2063, 'Move', 'static');
-		this.Look = this.add.sprite(1481, 1069, 'Look', 'static');
-		this.Glide = this.add.sprite(3006, 900, 'Glide', 'static');
-		this.Wall_Jump = this.add.sprite(6121, 1455, 'Wall_Jump', 'static');
-		this.Pause = this.add.sprite(4630, 400, 'Pause', 'static');
+		this.Move = this.add.sprite(109, 2063, 'Move', 0);
+		this.Look = this.add.sprite(1481, 1069, 'Look', 0);
+		this.Double_Jump = this.add.sprite(388, 1412, 'Double_Jump', 0);
+		this.Glide = this.add.sprite(3126, 900, 'Glide', 0);
+		this.Wall_Jump = this.add.sprite(6121, 1455, 'Wall_Jump', 0);
+		this.Pause = this.add.sprite(4630, 400, 'Pause', 0);
 
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(200, 2290, 'phoejay','static');
+		this.player = this.add.sprite(200, 2290, 'phoejay', 'static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
