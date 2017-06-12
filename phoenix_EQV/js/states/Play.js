@@ -346,6 +346,16 @@ Play.prototype = {
 			[11085,912],
 			[11483,1395]
 		]
+
+		var coordinates3 = [
+			[21864,1160],
+			[21464,2248],
+			[23856,2040],
+			[24664,2552],
+			[25576,2280],
+			[25960,1272]
+			
+		]
 		//////first stage- revive the burrel
 
 
@@ -376,6 +386,19 @@ Play.prototype = {
 
 
 		game.fox.visible = creature2.alive;
+
+		//////third stage- revive the deer
+		creature3 = new DeadAnimal(game, 22672, 3054, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera, 3);
+		game.add.existing(creature3);
+
+		
+		game.deer = this.add.sprite(22672, 2724, 'deer','deer_1');
+		this.player.animations.add('deer_animate', Phaser.Animation.generateFrameNames('deer_', 1, 3), 10, true);
+		game.fox.animations.play('deer_animate');
+
+
+		game.deer.visible = creature3.alive;
+
 
 
 
@@ -814,6 +837,7 @@ Play.prototype = {
 
 		game.burrel.visible = creature1.alive;
 		game.fox.visible = creature2.alive;
+		game.deer.visible = creature3.alive;
 
 
 		//Embers
