@@ -22,7 +22,6 @@ Load.prototype = {
 		// add the bg
 		this.bg = game.add.tileSprite(0, 0, 3000, 3000, 'bg');
 		this.bg_tree = game.add.tileSprite(0, 0, 1989, 2386, 'bg_tree');
-		bg_title = game.add.image(game.world.centerX, game.world.centerY - 200, 'title');
 
 		// aaaaand start the ambiance ;)
 		jungle_sounds = game.add.audio('jungle_sounds');
@@ -45,11 +44,11 @@ Load.prototype = {
 		game.load.setPreloadSprite(preload_bar);
 
 		// TEXT STYLE
-		big_style = { fontSize: '100px', fill: '#333', font: 'Meta'};
+		big_style = { fontSize: '50px', fill: '#333', font: 'Meta'};
 		small_style = { fontSize: '20px', fill: '#333', font: 'Meta'};
 
 		// set other texts
-		space = game.add.text(game.world.centerX, game.world.centerY, "", big_style);
+		space = game.add.text(game.world.centerX, game.world.centerY + 300, "", big_style);
 		click_b = game.add.text(game.world.centerX, game.world.height - 50, "", small_style);
 		//	Progress report for loading bar
 		text_loading = game.add.text(game.world.centerX, game.world.centerY + 3, 'Loading...', small_style);
@@ -200,10 +199,13 @@ Load.prototype = {
 		preload_bar.kill();
 
 		// set other texts
-		space.setText("PRESS SPACE");
-		click_b.setText("press F for fullscreen");
+		bg_title = game.add.image(game.world.centerX, game.world.centerY, 'title');
+		bg_title.anchor.set(0.5);
 
-		texties = [space, click_b];
+		space.setText("PRESS SPACE");
+		//click_b.setText("press F for fullscreen");
+
+		texties = [space] //click_b];
 		// for each text, make it tween foreverrrrr flash
 		texties.forEach(function(e) {
 			e.anchor.set(0.5);
