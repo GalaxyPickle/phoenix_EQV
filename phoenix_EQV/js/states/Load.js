@@ -48,7 +48,7 @@ Load.prototype = {
 		small_style = { fontSize: '20px', fill: '#333', font: 'Meta'};
 
 		// set other texts
-		space = game.add.text(game.world.centerX, game.world.centerY + 200, "", big_style);
+		space = game.add.text(game.world.centerX, game.world.centerY + 300, "", big_style);
 		click_b = game.add.text(game.world.centerX, game.world.height - 50, "", small_style);
 		//	Progress report for loading bar
 		text_loading = game.add.text(game.world.centerX, game.world.centerY + 3, 'Loading...', small_style);
@@ -199,9 +199,9 @@ Load.prototype = {
 		preload_bar.kill();
 
 		// set other texts
-		bg_title = game.add.image(game.world.centerX, game.world.centerY - 100, 'title');
+		bg_title = game.add.image(game.world.centerX, game.world.centerY, 'title');
 		bg_title.anchor.set(0.5);
-		
+
 		space.setText("PRESS SPACE");
 		//click_b.setText("press F for fullscreen");
 
