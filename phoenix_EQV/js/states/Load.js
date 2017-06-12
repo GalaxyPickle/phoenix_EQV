@@ -22,6 +22,7 @@ Load.prototype = {
 		// add the bg
 		this.bg = game.add.tileSprite(0, 0, 3000, 3000, 'bg');
 		this.bg_tree = game.add.tileSprite(0, 0, 1989, 2386, 'bg_tree');
+		bg_title = game.add.image(game.world.centerX, game.world.centerY - 200, 'title');
 
 		// aaaaand start the ambiance ;)
 		jungle_sounds = game.add.audio('jungle_sounds');

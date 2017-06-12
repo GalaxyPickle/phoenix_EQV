@@ -690,11 +690,6 @@ Play.prototype = {
 		/*
 		if (blocked.left || touching.left || blocked.right || touching.right)
 			this.player.animations.play('crouch');*/
-
-		// MAKE A CALL PHOEJAY!!!!!!
-		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
-			game.add.audio('screech').play();
-		}
 		
 		if (this.input.keyboard.justPressed(Phaser.KeyCode.P)) {
 			
@@ -833,6 +828,13 @@ Play.prototype = {
 			
 			layer3.resizeWorld();
 		}*/
+
+		// MAKE A CALL PHOEJAY!!!!!!
+		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
+			game.add.audio('screech').play();
+		}
+		if (this.input.keyboard.isDown(Phaser.KeyCode.C))
+				this.player.animations.play('top');
 
 		//ANIMALS
 
