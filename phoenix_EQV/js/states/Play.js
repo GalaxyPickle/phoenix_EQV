@@ -325,6 +325,8 @@ Play.prototype = {
 
 		//spawn divinity
 		divinity = 0;
+
+
 		var coordinates1 = [
 			[6632,1753],
 			[6881,939],
@@ -393,8 +395,8 @@ Play.prototype = {
 
 		
 		game.deer = this.add.sprite(22672, 2724, 'deer','deer_1');
-		this.player.animations.add('deer_animate', Phaser.Animation.generateFrameNames('deer_', 1, 3), 10, true);
-		game.fox.animations.play('deer_animate');
+		game.deer.animations.add('deer_animate', [0, 1, 2], 5, true);
+		game.deer.animations.play('deer_animate');
 
 
 		game.deer.visible = creature3.alive;
@@ -837,7 +839,7 @@ Play.prototype = {
 
 		game.burrel.visible = creature1.alive;
 		game.fox.visible = creature2.alive;
-		game.deer.visible = creature3.alive;
+		//game.deer.visible = creature3.alive;
 
 
 		//Embers
