@@ -83,7 +83,7 @@ class DeadAnimal extends Phaser.Sprite {
 			this.bar.visible = false;
 		}
 		
-		if (divinity = this.coordinates.length) this.success();
+		if (divinity >= this.coordinates.length) this.success();
 		
 		this.ydistance = this.player.x + 20 - this.x + 10;
 		this.xdistance = this.player.y + 20 - this.y + 10;
