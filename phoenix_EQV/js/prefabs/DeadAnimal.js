@@ -152,7 +152,7 @@ class DeadAnimal extends Phaser.Sprite {
 		// start the timer (delay)
 		timer01.start();
 		var revival = game.add.sprite(this.x, this.y, 'revival');
-		revival.anchor.set(0.5);
+		revival.anchor.set(0.7, 0.85);
 		revival.animations.add('revival_animate', [0,1,2,3], 10, true);
 		revival.animations.play('revival_animate');
 
