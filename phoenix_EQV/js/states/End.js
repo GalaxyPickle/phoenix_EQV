@@ -10,7 +10,7 @@ Boot.prototype = {
 	preload: function() {
 		console.log('End: preload');
 
-		
+
 	},
 	create: function() {
 		console.log('End: create')
@@ -18,3 +18,4 @@ Boot.prototype = {
 	update: function() {
 
 	}
+};
