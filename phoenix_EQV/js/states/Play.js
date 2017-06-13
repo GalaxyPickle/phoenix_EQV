@@ -402,7 +402,7 @@ Play.prototype = {
 		game.add.existing(creature3);
 
 		
-		game.deer = this.add.sprite(26672, 2784, 'deer','deer_1');
+		game.deer = this.add.sprite(26672, 2600, 'deer','deer_1');
 		game.deer.animations.add('deer_animate', [0, 1, 2], 5, true);
 		game.deer.animations.play('deer_animate');
 
@@ -855,7 +855,10 @@ Play.prototype = {
 
 		game.flower.visible = creature4.alive;
 
-
+		if (creature4.alive) {
+			tween = game.add.tween(this.fade_in).to( { alpha: 1 }, 1000, "Linear", true, 0); // REVEIL
+			tween.onComplete.add(this.startCredits, game);
+		}
 
 
 		//Embers
@@ -901,6 +904,9 @@ Play.prototype = {
 		if (features.debugInputInfo) {
 			debug.inputInfo(540, 628);
 		}
+	},
+	startCredits: function() {
+		game.state.start('End');
 	}
 }
 
