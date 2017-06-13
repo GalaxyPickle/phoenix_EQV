@@ -165,6 +165,8 @@ Load.prototype = {
 		game.load.audio('collect', ['YES.mp3', 'YES.ogg']);
 		game.load.audio('begin', ['begin.mp3']);
 		game.load.audio('tick_tock', ['tick_tock.mp3', 'tick_tock.ogg']);
+		game.load.audio('pause', ['freeze.ogg', 'freeze.mp3']);
+		game.load.audio('unpause', ['unfreeze.ogg', 'unfreeze.mp3']);
 
 		// MOVEMENT
 		game.load.path = 'assets/audio/fx/movement/';
@@ -301,6 +303,9 @@ Load.prototype = {
 		this.bg_tree.tilePosition.y += .1;
 	},
 	startGame: function() {
+		bg_title.alpha = 0;
+		rfeather.alpha = 0;
+		lfeather.alpha = 0;
 		game.state.start('Story');
 	},
 	render: function() {
