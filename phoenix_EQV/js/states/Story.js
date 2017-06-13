@@ -33,14 +33,14 @@ Story.prototype = {
 		//add background stuff
 		this.bg = game.add.tileSprite(0, 0, 3000, 3000, 'bg');
 		this.bg_tree = game.add.tileSprite(0, 0, 1989, 2386, 'bg_tree');
-		var grass = game.add.image(0, game.world.height - 100, 'grass');
+		let grass = game.add.image(0, game.world.height - 100, 'grass');
 		//add images needed for animation
-		var ashes = game.add.sprite(50, game.world.height - 140, 'ashes');
+		let ashes = game.add.sprite(50, game.world.height - 140, 'ashes');
 		ashes.alpha = 0;
 		game.add.tween(ashes).to( { alpha: 1 }, 2000, "Linear", true, 0);
-		var light_ray = game.add.sprite(190, game.world.height - 900, 'light_ray');
+		let light_ray = game.add.sprite(190, game.world.height - 900, 'light_ray');
 		light_ray.anchor.setTo(0.5, 0.5);
-		var revival = game.add.sprite(100, game.world.height - 340, 'revival');
+		let revival = game.add.sprite(100, game.world.height - 340, 'revival');
 		revival.animations.add('revival_animate', [0,1,2,3], 15, true);
 		//hide revival animation for later
 		revival.visible = false;
@@ -48,24 +48,24 @@ Story.prototype = {
 		light_ray.body.velocity.y = 180;
 		
 		//timer to change first text
-		var timer01 = game.time.create(false);
-		var timedEvent01 = timer01.add(Phaser.Timer.SECOND * 7, updateText, game);
+		let timer01 = game.time.create(false);
+		let timedEvent01 = timer01.add(Phaser.Timer.SECOND * 7, updateText, game);
 		timer01.start();
 		//timer to change second text
-		var timer02 = game.time.create(false);
-		var timedEvent02 = timer01.add(Phaser.Timer.SECOND * 16, updateText2, game);
+		let timer02 = game.time.create(false);
+		let timedEvent02 = timer01.add(Phaser.Timer.SECOND * 16, updateText2, game);
 		timer02.start();
 		//timer to change third text
-		var timer03 = game.time.create(false);
-		var timedEvent03 = timer01.add(Phaser.Timer.SECOND * 23, updateText3, game);
+		let timer03 = game.time.create(false);
+		let timedEvent03 = timer01.add(Phaser.Timer.SECOND * 23, updateText3, game);
 		timer03.start();
 		//timer for the ray of light and revival fire
-		var timer04 = game.time.create(false);
-		var timedEvent04 = timer01.add(Phaser.Timer.SECOND * 4, fireStart, game);
+		let timer04 = game.time.create(false);
+		let timedEvent04 = timer01.add(Phaser.Timer.SECOND * 4, fireStart, game);
 		timer03.start();
 		//time to go to game
-		var timer05 = game.time.create(false);
-		var timedEvent05 = timer01.add(Phaser.Timer.SECOND * 27, startGame, game);
+		let timer05 = game.time.create(false);
+		let timedEvent05 = timer01.add(Phaser.Timer.SECOND * 27, startGame, game);
 		timer03.start();
 
 		//add text for story
