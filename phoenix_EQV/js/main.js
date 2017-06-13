@@ -36,6 +36,7 @@ window.onload = function() {
 	game.state.add('Load', Load);
 	game.state.add('Story', Story);
 	game.state.add('Play', Play);
+	game.state.add('End', End);
 
 	game.state.start('Boot');
 }
