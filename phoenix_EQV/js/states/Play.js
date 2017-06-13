@@ -213,7 +213,7 @@ Play.prototype = {
 
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(200, 2290, 'phoejay', 'static');
+		this.player = this.add.sprite(31000, 440, 'phoejay', 'static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
@@ -361,6 +361,10 @@ Play.prototype = {
 			[25960,1274],
 			[25960,1274]
 		];
+
+		var coordinates4 = [
+			[31720, 500]
+		]
 		//////first stage- revive the burrel
 
 		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera);
@@ -400,7 +404,15 @@ Play.prototype = {
 
 		game.deer.visible = creature3.alive;
 
+		//////final stage- revive the flower
+		creature4 = new DeadAnimal(game, 32250, 550, 'sprout', 'divinity', '', this.player, coordinates4, 5000, this.camera, 4);
+		game.add.existing(creature4);
 
+		
+		game.flower = this.add.sprite(32110, 280, 'flower', 0);
+
+
+		game.flower.visible = creature4.alive;
 
 
 		// ---------------------------------------------------------------------------------------------------------
@@ -835,12 +847,11 @@ Play.prototype = {
 
 		//ANIMALS
 
-
-		
-
 		game.burrel.visible = creature1.alive;
 		game.fox.visible = creature2.alive;
 		game.deer.visible = creature3.alive;
+		game.flower.visible = creature4.alive;
+
 
 
 		//Embers
