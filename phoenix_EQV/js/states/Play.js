@@ -121,6 +121,8 @@ Play.prototype = {
 		console.log('Play: preload');
 	},
 	create: function() {
+		game.end = false;
+		
 		console.log('Play: create');
 		sfx_jump1 = game.add.audio('jump1');
 		sfx_jump2 = game.add.audio('jump2');
@@ -213,7 +215,7 @@ Play.prototype = {
 
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(31000, 440, 'phoejay', 'static');
+		this.player = this.add.sprite(100, 440, 'phoejay', 'static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);

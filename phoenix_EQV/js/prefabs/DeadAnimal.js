@@ -15,6 +15,8 @@ class DeadAnimal extends Phaser.Sprite {
 		this.cam = camera;
 		this.discovered = false;
 		this.alive = false;
+		this.isFlower = false;
+		if (this.coordinates.length == 1) this.isFlower = true;
 
 		// display text
 		this.text = game.add.text(game.width / 2, game.height / 2, 'SPACE', big_style);
@@ -82,7 +84,7 @@ class DeadAnimal extends Phaser.Sprite {
 			this.bar.visible = false;
 		}
 		
-		if (divinity >= this.coordinates.length) this.success();
+		if (!this.isFlower && divinity >= this.coordinates.length) this.success();
 		
 		this.ydistance = this.player.x + 20 - this.x + 10;
 		this.xdistance = this.player.y + 20 - this.y + 10;
@@ -90,6 +92,7 @@ class DeadAnimal extends Phaser.Sprite {
 		
 		if (this.distance < 1200 && !this.discovered) {
 			this.discovered = true;
+			this.isFlower = false;
 			var tween = game.add.tween(this.cam).to( { x: this.x - game.width/2, y: this.y - game.height/2}, 2400, Phaser.Easing.Exponential.Out, true);
 		}
 		
