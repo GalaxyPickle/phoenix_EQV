@@ -1,6 +1,6 @@
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera) {
+	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera, snd_num) {
 
 		super(game, x, y, key_animal);
 		
@@ -15,6 +15,9 @@ class DeadAnimal extends Phaser.Sprite {
 		this.cam = camera;
 		this.discovered = false;
 		this.alive = false;
+		this.isFlower = false;
+		this.snd_num = snd_num;
+		if (this.coordinates.length == 1) this.isFlower = true;
 
 		// display text
 		this.text = game.add.text(game.width / 2, game.height / 2, 'SPACE', big_style);
@@ -82,7 +85,7 @@ class DeadAnimal extends Phaser.Sprite {
 			this.bar.visible = false;
 		}
 		
-		if (divinity >= this.coordinates.length) this.success();
+		if (!this.isFlower && divinity >= this.coordinates.length) this.success();
 		
 		this.ydistance = this.player.x + 20 - this.x + 10;
 		this.xdistance = this.player.y + 20 - this.y + 10;
@@ -90,6 +93,7 @@ class DeadAnimal extends Phaser.Sprite {
 		
 		if (this.distance < 1200 && !this.discovered) {
 			this.discovered = true;
+			this.isFlower = false;
 			var tween = game.add.tween(this.cam).to( { x: this.x - game.width/2, y: this.y - game.height/2}, 2400, Phaser.Easing.Exponential.Out, true);
 		}
 		
@@ -158,9 +162,16 @@ class DeadAnimal extends Phaser.Sprite {
 		// KILLL IT
 		this.emitter.on = false;
 		this.bar.kill();
+		if (this.snd_num == 1)
+			game.add.audio('burrel').play();
+		else if (this.snd_num == 2)
+			game.add.audio('fox').play();
+		else if (this.snd_num == 3)
+			game.add.audio('deer').play();
+		else if (this.snd_num == 4)
+			game.add.audio('burrel').play();
+
 		this.destroy();
-		
-		this.alive = true;
 
 		//make the live version appear
 		function killFire(){

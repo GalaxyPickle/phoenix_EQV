@@ -121,6 +121,8 @@ Play.prototype = {
 		console.log('Play: preload');
 	},
 	create: function() {
+		game.end = false;
+		
 		console.log('Play: create');
 		sfx_jump1 = game.add.audio('jump1');
 		sfx_jump2 = game.add.audio('jump2');
@@ -213,7 +215,7 @@ Play.prototype = {
 
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(31000, 440, 'phoejay', 'static');
+		this.player = this.add.sprite(100, 440, 'phoejay', 'static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
@@ -367,7 +369,7 @@ Play.prototype = {
 		]
 		//////first stage- revive the burrel
 
-		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera);
+		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera, 1);
 		game.add.existing(creature1);
 		
 		//add the live burrel at the same time but make it invisible at first
@@ -381,7 +383,7 @@ Play.prototype = {
 		
 		//////second stage- revive the fox
 
-        creature2 = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera);
+        creature2 = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera, 2);
 		game.add.existing(creature2);
 
 		
@@ -394,7 +396,9 @@ Play.prototype = {
 
 		//////third stage- revive the deer
 
-		creature3 = new DeadAnimal(game, 26672, 2784, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera);
+
+		creature3 = new DeadAnimal(game, 26672, 2784, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera, 3);
+
 		game.add.existing(creature3);
 
 		
@@ -433,10 +437,10 @@ Play.prototype = {
 		*/
 
 		// Create a label to use as a button
-		game.pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
-		game.pause_label.fixedToCamera = true;
-		game.pause_label.inputEnabled = true;
-		game.pause_label.events.onInputUp.add(pause);
+		// game.pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
+		// game.pause_label.fixedToCamera = true;
+		// game.pause_label.inputEnabled = true;
+		// game.pause_label.events.onInputUp.add(pause);
 
 		// Add a input listener that can help us return from being paused
 		var pause_key = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
@@ -824,29 +828,24 @@ Play.prototype = {
 			}
 		}
 		
-		/*
-		//next level
-		if (this.player.body.x > game.world.width - 50) {
-			layer1.destroy();
-			layer2.destroy();
-			layer3.destroy();
-			
-			layer1 = this.map.createLayer('Noncollision_2');
-			layer2 = this.map.createLayer('Noncollision_1');
-			layer3 = this.map.createLayer('Collision_1');
-			this.player.body.x = 100;
-			this.player.body.y = 100;
-			this.player.bringToTop();
-			
-			layer3.resizeWorld();
-		}*/
+				
+		//    ▄███████▄    ▄█    █▄     ▄██████▄     ▄████████      ▄█    ▄████████ ▄██   ▄   
+		//   ███    ███   ███    ███   ███    ███   ███    ███     ███   ███    ███ ███   ██▄ 
+		//   ███    ███   ███    ███   ███    ███   ███    █▀      ███   ███    ███ ███▄▄▄███ 
+		//   ███    ███  ▄███▄▄▄▄███▄▄ ███    ███  ▄███▄▄▄         ███   ███    ███ ▀▀▀▀▀▀███ 
+		// ▀█████████▀  ▀▀███▀▀▀▀███▀  ███    ███ ▀▀███▀▀▀         ███ ▀███████████ ▄██   ███ 
+		//   ███          ███    ███   ███    ███   ███    █▄      ███   ███    ███ ███   ███ 
+		//   ███          ███    ███   ███    ███   ███    ███     ███   ███    ███ ███   ███ 
+		//  ▄████▀        ███    █▀     ▀██████▀    ██████████ █▄ ▄███   ███    █▀   ▀█████▀  
+		//                                                     ▀▀▀▀▀▀                         
+
 
 		// MAKE A CALL PHOEJAY!!!!!!
 		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
 			game.add.audio('screech').play();
 		}
 		if (this.input.keyboard.isDown(Phaser.KeyCode.C))
-				this.player.animations.play('top');
+			this.player.animations.play('top');
 
 		//ANIMALS
 
@@ -921,23 +920,22 @@ function pause_switch() {
 
 function pause() {
 	// When the paus button is pressed, we pause the game
-	game.pause_label.setText("Unpause");
-	game.pause_label.x -= 30;
+	// game.add.audio('pause').play();
 	game.paused = true;
 
 	// And a label to illustrate which menu item was chosen. (This is not necessary)
-	choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', { font: '30px Arial', fill: '#fff' });
+	choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', big_style);
 	choiseLabel.anchor.setTo(0.5, 0.5);
 };
 
 function unpause() {
 	// Only act if paused
 	if(game.paused){
-		game.pause_label.setText("Pause");
 		choiseLabel.destroy();
 
 		// Unpause the game
 		game.paused = false;
+		game.add.audio('unpause').play();
 	}
 };
 
