@@ -1,6 +1,6 @@
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera, aniNumber) {
+	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera) {
 
 		super(game, x, y, key_animal);
 		
@@ -14,7 +14,6 @@ class DeadAnimal extends Phaser.Sprite {
 		this.divinities = new Array();
 		this.cam = camera;
 		this.discovered = false;
-		this.aniNumber = aniNumber;
 		this.alive = false;
 
 		// display text
