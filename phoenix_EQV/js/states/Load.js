@@ -121,6 +121,7 @@ Load.prototype = {
 		game.load.image('Glide', 'Glide.png');
 		game.load.image('Wall_Jump', 'Wall_Jump.png');
 		game.load.image('Pause', 'Pause.png');
+		game.load.image('Call', 'Call.png');
 
 
 

@@ -82,8 +82,8 @@ var Play = function(game) {
 		enableGravity: true,
 
 		// Fun
-		slowMotion: 1,
-		debug: 1,
+		slowMotion: 0,
+		debug: 0,
 	};
 };
 Play.prototype = {
@@ -120,6 +120,8 @@ Play.prototype = {
 	},
 	create: function() {
 		game.end = false;
+		end = false;
+		cheat = false;
 		
 		console.log('Play: create');
 		sfx_jump1 = game.add.audio('jump1');
@@ -205,6 +207,7 @@ Play.prototype = {
 
 		//Add Tutorial pictures
 		this.Move = this.add.sprite(109, 2063, 'Move', 0);
+		this.Call = this.add.sprite(109, 200, 'Call', 0);
 		this.Look = this.add.sprite(1481, 1069, 'Look', 0);
 		this.Double_Jump = this.add.sprite(388, 1412, 'Double_Jump', 0);
 		this.Glide = this.add.sprite(3126, 900, 'Glide', 0);
@@ -213,7 +216,7 @@ Play.prototype = {
 
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(100, 440, 'phoejay', 'static');
+		this.player = this.add.sprite(100, 2350, 'phoejay', 'static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
@@ -308,13 +311,13 @@ Play.prototype = {
 		var that = this;
 
 		// Register a pointer input event handler that teleports the player
-		this.input.onDown.add(function (pointer, mouseEvent) {
-			that.player.position.x = pointer.worldX;
-			that.player.position.y = pointer.worldY;
+		// this.input.onDown.add(function (pointer, mouseEvent) {
+		// 	that.player.position.x = pointer.worldX;
+		// 	that.player.position.y = pointer.worldY;
 
-			// Reset the player's velocity
-			that.player.body.velocity.set(0);
-		});
+		// 	// Reset the player's velocity
+		// 	that.player.body.velocity.set(0);
+		// });
 
 		// Prevent the debug text from rendering with a shadow
 		this.game.debug.renderShadow = false;
@@ -409,7 +412,7 @@ Play.prototype = {
 		//////third stage- revive the deer
  
 
-		creature3 = new DeadAnimal(game, 26672, 2784, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera, 3);
+		creature3 = new DeadAnimal(game, 26672, 2800, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera, 3);
 
 		game.add.existing(creature3);
 
@@ -718,10 +721,6 @@ Play.prototype = {
 		/*
 		if (blocked.left || touching.left || blocked.right || touching.right)
 			this.player.animations.play('crouch');*/
-		
-		if (this.input.keyboard.justPressed(Phaser.KeyCode.P)) {
-			
-		}
 
 		//vertical movement
 		if (dir) {
@@ -864,11 +863,13 @@ Play.prototype = {
 		game.burrel.visible = creature1.alive;
 		game.fox.visible = creature2.alive;
 		game.deer.visible = creature3.alive;
-
 		game.flower.visible = creature4.alive;
 
-		if (creature4.alive) {
-			tween = game.add.tween(fade_in).to( { alpha: 1 }, 1000, "Linear", true, 0); // REVEIL
+		if (creature4.alive && !end) {
+			end = true;
+			if (creature1.alive == false && creature2.alive == false && creature3.alive == false)
+				cheat = true;
+			tween = game.add.tween(fade_in).to( { alpha: 1 }, 2000, "Linear", true, 0); // REVEIL
 			tween.onComplete.add(this.startCredits, game);
 		}
 
@@ -887,7 +888,7 @@ Play.prototype = {
 		var features = this.features;
 
 		// Render the frame rate
-		debug.text('FPS: ' + this.time.fps || '--', 50, 50, "red");
+		// debug.text('FPS: ' + this.time.fps || '--', 50, 50, "red");
 
 		// Render the keyboard controls
 		if(controls.controls.isDown) {
@@ -934,7 +935,6 @@ function restart(event) {
 function pause_switch() {
 	if (game.paused) unpause();
 	else pause();
-	game.state.start('End');
 }
 
 function pause() {
