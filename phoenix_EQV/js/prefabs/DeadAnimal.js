@@ -16,6 +16,7 @@ class DeadAnimal extends Phaser.Sprite {
 		this.discovered = false;
 		this.alive = false;
 		this.isFlower = false;
+		this.snd_num = snd_num;
 		if (this.coordinates.length == 1) this.isFlower = true;
 
 		// display text
@@ -161,13 +162,13 @@ class DeadAnimal extends Phaser.Sprite {
 		// KILLL IT
 		this.emitter.on = false;
 		this.bar.kill();
-		if (snd_num == 1)
+		if (this.snd_num == 1)
 			game.add.audio('burrel').play();
-		else if (snd_num == 2)
+		else if (this.snd_num == 2)
 			game.add.audio('fox').play();
-		else if (snd_num == 3)
+		else if (this.snd_num == 3)
 			game.add.audio('deer').play();
-		else if (snd_num == 4)
+		else if (this.snd_num == 4)
 			game.add.audio('burrel').play();
 
 		this.destroy();
