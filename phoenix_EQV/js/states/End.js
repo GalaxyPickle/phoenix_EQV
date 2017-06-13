@@ -41,11 +41,11 @@ End.prototype = {
 		timer03.start();
 
 		//add text for story
-		story1 = game.add.text(game.world.centerX, game.world.centerY, "After 100 years the phoenix Phoejay is finally reborn.", small_style);
+		story1 = game.add.text(game.width/2, game.height/2, "The phoenix looks down upon the fruits of its labor.", small_style);
 		story1.anchor.setTo(0.5, 0.5);
 		story1.bringToTop();
 		//make it fade in
-		story1.alpha = 1;
+		story1.alpha = 0;
 		game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);
 		
 		function updateText(){
@@ -54,7 +54,7 @@ End.prototype = {
 			console.log("hi");
 			
 			story1.destroy();
-			story1 = game.add.text(game.world.centerX, game.world.centerY, "                   The forest is familiar yet foreign to the young phoenix. \nParts of the forest remain the same but it can tell that something has changed....", small_style);
+			story1 = game.add.text(game.width/2, game.height/2, "The seeds of life have been sewn in this barren place.", small_style);
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);
 			story1.anchor.setTo(0.5, 0.5);
@@ -63,14 +63,14 @@ End.prototype = {
 			console.log("hi1");
 			
 			story1.destroy();
-			story1 = game.add.text(game.world.centerX, game.world.centerY, "The phoenix can feel something ominous in the air, but can't put its foot on what.", small_style);
+			story1 = game.add.text(game.width/2, game.height/2, "Though this forest may some day thrive once again, 32 million acres of forest are destroyed every year.", small_style);
 			story1.anchor.setTo(0.5, 0.5);
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);
 		}
 		function updateText3(){
 			story1.destroy();
-			story1 = game.add.text(game.world.centerX, game.world.centerY, "And so it beings to explore...", small_style);
+			story1 = game.add.text(game.width/2, game.height/2, "Over half of the Earth's forest cover has been lost.", small_style);
 			story1.anchor.setTo(0.5, 0.5);
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);

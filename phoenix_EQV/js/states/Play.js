@@ -915,6 +915,7 @@ function restart(event) {
 function pause_switch() {
 	if (game.paused) unpause();
 	else pause();
+	game.state.start('End');
 }
 
 function pause() {
