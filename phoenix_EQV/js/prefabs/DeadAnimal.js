@@ -168,8 +168,6 @@ class DeadAnimal extends Phaser.Sprite {
 			game.add.audio('fox').play();
 		else if (this.snd_num == 3)
 			game.add.audio('deer').play();
-		else if (this.snd_num == 4)
-			game.add.audio('burrel').play();
 
 		this.destroy();
 
