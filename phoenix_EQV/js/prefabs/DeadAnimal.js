@@ -1,6 +1,6 @@
 class DeadAnimal extends Phaser.Sprite {
 	
-	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera) {
+	constructor(game, x, y, key_animal, key_div, key_bar, phoejay, coords, time, camera, snd_num) {
 
 		super(game, x, y, key_animal);
 		
@@ -158,9 +158,16 @@ class DeadAnimal extends Phaser.Sprite {
 		// KILLL IT
 		this.emitter.on = false;
 		this.bar.kill();
+		if (snd_num == 1)
+			game.add.audio('burrel').play();
+		else if (snd_num == 2)
+			game.add.audio('fox').play();
+		else if (snd_num == 3)
+			game.add.audio('deer').play();
+		else if (snd_num == 4)
+			game.add.audio('burrel').play();
+
 		this.destroy();
-		
-		this.alive = true;
 
 		//make the live version appear
 		function killFire(){

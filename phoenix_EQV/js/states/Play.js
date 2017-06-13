@@ -367,7 +367,7 @@ Play.prototype = {
 		]
 		//////first stage- revive the burrel
 
-		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera);
+		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera, 1);
 		game.add.existing(creature1);
 		
 		//add the live burrel at the same time but make it invisible at first
@@ -381,7 +381,7 @@ Play.prototype = {
 		
 		//////second stage- revive the fox
 
-        creature2 = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera);
+        creature2 = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera, 2);
 		game.add.existing(creature2);
 
 		
@@ -393,7 +393,7 @@ Play.prototype = {
 		game.fox.visible = creature2.alive;
 
 		//////third stage- revive the deer
-		creature3 = new DeadAnimal(game, 26672, 2784, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera);
+		creature3 = new DeadAnimal(game, 26672, 2784, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera, 3);
 		game.add.existing(creature3);
 
 		

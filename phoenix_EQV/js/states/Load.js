@@ -181,7 +181,9 @@ Load.prototype = {
 		game.load.path = 'assets/audio/fx/animals/';
 		// screech
 		game.load.audio('screech', ['screech.mp3', 'screech.ogg']);
-		game.load.audio('burrel', ['burrel1.mp3']);
+		game.load.audio('burrel', ['burrel1.mp3', 'burrel1.ogg']);
+		game.load.audio('fox', ['fox_call.mp3', 'fox_call.ogg']);
+		game.load.audio('deer', ['deer.mp3', 'deer.ogg']);
 		// .........
 
 		// environ sounds
