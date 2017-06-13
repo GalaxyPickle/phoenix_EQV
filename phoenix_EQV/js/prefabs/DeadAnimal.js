@@ -173,6 +173,8 @@ class DeadAnimal extends Phaser.Sprite {
 
 		this.destroy();
 
+		this.alive = true;
+
 		//make the live version appear
 		function killFire(){
 			revival.destroy();

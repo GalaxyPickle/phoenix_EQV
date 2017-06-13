@@ -917,7 +917,7 @@ function pause() {
 	game.paused = true;
 
 	// And a label to illustrate which menu item was chosen. (This is not necessary)
-	choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', big_style);
+	choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart game', big_style);
 	choiseLabel.anchor.setTo(0.5, 0.5);
 };
 
