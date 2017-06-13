@@ -25,7 +25,6 @@ Boot.prototype = {
 		// bgs
 		game.load.image('bg', 'bg/background.png');
 		game.load.image('bg_tree', 'bg/trees.png');
-		game.load.image('title', 'bg/title_text.png');
 		
 		//menu
 		game.load.image('pause_menu', 'meta/number-buttons-90x90.png', 270, 180);
