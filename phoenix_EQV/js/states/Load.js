@@ -165,6 +165,8 @@ Load.prototype = {
 		game.load.audio('collect', ['YES.mp3', 'YES.ogg']);
 		game.load.audio('begin', ['begin.mp3']);
 		game.load.audio('tick_tock', ['tick_tock.mp3', 'tick_tock.ogg']);
+		game.load.audio('pause', ['freeze.ogg', 'freeze.mp3']);
+		game.load.audio('unpause', ['unfreeze.ogg', 'unfreeze.mp3']);
 
 		// MOVEMENT
 		game.load.path = 'assets/audio/fx/movement/';
