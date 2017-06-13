@@ -301,6 +301,9 @@ Load.prototype = {
 		this.bg_tree.tilePosition.y += .1;
 	},
 	startGame: function() {
+		bg_title.alpha = 0;
+		rfeather.alpha = 0;
+		lfeather.alpha = 0;
 		game.state.start('Story');
 	},
 	render: function() {
