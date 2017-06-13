@@ -84,6 +84,8 @@ Load.prototype = {
 
 		// BACKGROUND
 		game.load.image('bg_mountain', 'bg/mountain.png');
+		game.load.image('title', 'bg/title_text.png');
+		game.load.image('feather', 'bg/feather.png');
 
 		// player
 		//load the player
@@ -203,14 +205,22 @@ Load.prototype = {
 		bg_title.anchor.set(0.5);
 
 		space.setText("PRESS SPACE");
+		space.anchor.set(0.5);
+		space.alpha = 0.5;
+		game.add.tween(space).to( { alpha: 1 }, 1000, "Linear", true, 0, -1, true); // forever
+
+		lfeather = game.add.sprite(space.x - 350, space.y - 10, 'feather');
+		lfeather.angle = 53;
+		rfeather = game.add.sprite(space.x + 350, space.y - 10, 'feather');
+		rfeather.angle = -132;
 		//click_b.setText("press F for fullscreen");
 
-		texties = [space] //click_b];
+		texties = [lfeather, rfeather] //click_b];
 		// for each text, make it tween foreverrrrr flash
 		texties.forEach(function(e) {
 			e.anchor.set(0.5);
 			e.alpha = 0.5;
-			game.add.tween(e).to( { alpha: 1 }, 1000, "Linear", true, 0, -1, true); // forever
+			game.add.tween(e).to( { alpha: 1 }, 1000, "Linear", true, 1000, -1, true); // forever
 		}); 
 	},
 	music_fade: function() {
