@@ -69,7 +69,10 @@ Story.prototype = {
 		timer03.start();
 
 		//add text for story
-		story1 = game.add.text(game.world.centerX, game.world.centerY, "After 100 years the phoenix Phoejay is finally reborn.", small_style);
+		story1 = game.add.text(game.world.centerX, game.world.centerY,
+			"Into a tired land: the phoenix Phoejay is reborn after one long millenium.", 
+			small_style);
+
 		story1.anchor.setTo(0.5, 0.5);
 		//make it fade in
 		story1.alpha = 0;
@@ -101,7 +104,9 @@ Story.prototype = {
 			game.add.tween(birdy).to( { alpha: 1 }, 2000, "Linear", true, 0);
 			revival.destroy();
 			ashes.destroy();
-			story1 = game.add.text(game.world.centerX, game.world.centerY, "                   The forest is familiar yet foreign to the young phoenix. \nParts of the forest remain the same but it can tell that something has changed....", small_style);
+			story1 = game.add.text(game.world.centerX, game.world.centerY, 
+				"            This ancient forest is familiar, and yet foreign." + 
+				"\nParts of the land are the same, but something has changed....", small_style);
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);
 			story1.anchor.setTo(0.5, 0.5);
@@ -109,14 +114,17 @@ Story.prototype = {
 		function updateText2(){
 
 			story1.destroy();
-			story1 = game.add.text(game.world.centerX, game.world.centerY, "The phoenix can feel something ominous in the air, but can't put its foot on what.", small_style);
+			story1 = game.add.text(game.world.centerX, game.world.centerY, 
+				"Phoejay feels an immense pain radiating from the very forest itself." + 
+				"\n                    Something, something is terribly wrong.", 
+				small_style);
 			story1.anchor.setTo(0.5, 0.5);
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);
 		}
 		function updateText3(){
 			story1.destroy();
-			story1 = game.add.text(game.world.centerX, game.world.centerY, "And so it beings to explore...", small_style);
+			story1 = game.add.text(game.world.centerX, game.world.centerY, "And the Phoenix begins to explore...", small_style);
 			story1.anchor.setTo(0.5, 0.5);
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);

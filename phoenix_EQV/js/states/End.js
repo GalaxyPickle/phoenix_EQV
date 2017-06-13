@@ -30,10 +30,7 @@ End.prototype = {
 		timer02.start();
 		//timer to change third text
 		let timer03 = game.time.create(false);
-		let timedEvent03 = timer01.add(Phaser.Timer.SECOND * 23, updateText3, game);
-		timer03.start();
-		//timer for the ray of light and revival fire
-		let timer04 = game.time.create(false);
+		let timedEvent03 = timer01.add(Phaser.Timer.SECOND * 28, updateText3, game);
 		timer03.start();
 		//time to go to game
 		let timer05 = game.time.create(false);
@@ -41,7 +38,10 @@ End.prototype = {
 		timer03.start();
 
 		//add text for story
-		story1 = game.add.text(game.width/2, game.height/2, "The phoenix looks down upon the fruits of its labor.", small_style);
+		story1 = game.add.text(game.width/2, game.height/2, 
+			"The phoenix looks down over the barren, once-lush landscape.", 
+			small_style);
+
 		story1.anchor.setTo(0.5, 0.5);
 		story1.bringToTop();
 		//make it fade in
@@ -54,23 +54,32 @@ End.prototype = {
 			console.log("hi");
 			
 			story1.destroy();
-			story1 = game.add.text(game.width/2, game.height/2, "The seeds of life have been sewn in this barren place.", small_style);
+			story1 = game.add.text(game.width/2, game.height/2, 
+				"The seeds of life have been sown in this wasteland.", 
+				small_style);
+
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);
 			story1.anchor.setTo(0.5, 0.5);
 		}
-			function updateText2(){
+		function updateText2(){
 			console.log("hi1");
 			
 			story1.destroy();
-			story1 = game.add.text(game.width/2, game.height/2, "Though this forest may some day thrive once again, 32 million acres of forest are destroyed every year.", small_style);
+			story1 = game.add.text(game.width/2, game.height/2, 
+				"Though this forest may some day thrive once again, 32 million acres of forest are destroyed every year.", 
+				small_style);
+
 			story1.anchor.setTo(0.5, 0.5);
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);
 		}
 		function updateText3(){
 			story1.destroy();
-			story1 = game.add.text(game.width/2, game.height/2, "Over half of the Earth's forest cover has been lost.", small_style);
+			story1 = game.add.text(game.width/2, game.height/2, 
+				"Over half of the Earth's forest cover has been lost.", 
+				small_style);
+
 			story1.anchor.setTo(0.5, 0.5);
 			story1.alpha = 0;
 			game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 0);
