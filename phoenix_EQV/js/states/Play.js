@@ -1,8 +1,6 @@
 	// state Play
 //	has the player core loop
 
-// written by: ____________
-
 var divinity;
 
 
