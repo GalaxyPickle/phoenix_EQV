@@ -395,14 +395,14 @@ Play.prototype = {
 		game.fox.visible = creature2.alive;
 
 		//////third stage- revive the deer
-
+ 
 
 		creature3 = new DeadAnimal(game, 26672, 2784, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera, 3);
 
 		game.add.existing(creature3);
 
 		
-		game.deer = this.add.sprite(26672, 2600, 'deer','deer_1');
+		game.deer = this.add.sprite(26672, 2500, 'deer','deer_1');
 		game.deer.animations.add('deer_animate', [0, 1, 2], 5, true);
 		game.deer.animations.play('deer_animate');
 
