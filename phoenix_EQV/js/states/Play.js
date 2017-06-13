@@ -330,38 +330,52 @@ Play.prototype = {
 
 
 		var coordinates1 = [
-			[6632,1753],
-			[6881,939],
+			[6632,1692],
+			[6881,888],
 			[6827,2100],
 			[7727,1602],
-			[8052,1233],
-			[8206,1588],
-			[8567,1700],
-			[8342,2373]
+			[8573,1636],
+			[8342,2373],
+			[8904,1940],
+			[9381,1936]
 		];
 		var coordinates2 = [
-			[9639,1039],
-			[9755,2391],
+			[9720,1004],
+			[9888,2104],
 			[10155,2388],
-			[10724,818],
-			[10321,927],
-			[11942,2152],
-			[11085,2367],
-			[11085,912],
-			[11483,1395]
+			[10724,760],
+			[10321,868],
+			[10404,1820],
+			[11942,2100],
+			[11085,2324],
+			[11483,1328]
 		];
 
 		var coordinates3 = [
 			[21864,1160],
 			[21464,2248],
-			[23856,2040],
-			[24664,2552],
-			[25576,2280],
-			[25960,1272],
+			[24660,2540],
+			[25564,2288],
+			[25940,1300],
 			[25960,1273],
 			[25960,1274],
-			[25960,1274],
-			[25960,1274]
+			[25764,2796],
+			[25120,2912],
+			[24532,2908],
+			[23972,2668],
+			[23144,2852],
+			[22300,2708],
+			[22108,1200],
+			[24000,1100],
+			[22616,2976],
+			[21788,2388],
+			[23600,1300],
+			[21532,1564],
+			[21540,1932],
+			[23896,1432],
+			[25932,2148],
+			[25656,1944]
+
 		];
 
 		var coordinates4 = [
@@ -395,20 +409,25 @@ Play.prototype = {
 		game.fox.visible = creature2.alive;
 
 		//////third stage- revive the deer
+ 
+
 		creature3 = new DeadAnimal(game, 26672, 2784, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera, 3);
+
 		game.add.existing(creature3);
 
 		
-		game.deer = this.add.sprite(26672, 2600, 'deer','deer_1');
+		game.deer = this.add.sprite(26672, 2500, 'deer','deer_1');
 		game.deer.animations.add('deer_animate', [0, 1, 2], 5, true);
 		game.deer.animations.play('deer_animate');
 
 
 		game.deer.visible = creature3.alive;
 
+
 		//////final stage- revive the flower
-		creature4 = new DeadAnimal(game, 32250, 550, 'sprout', 'divinity', '', this.player, coordinates4, 5000, this.camera, 4);
+		creature4 = new DeadAnimal(game, 32250, 550, 'sprout', 'divinity', '', this.player, coordinates4, 5000, this.camera);
 		game.add.existing(creature4);
+
 
 		
 		game.flower = this.add.sprite(32110, 280, 'flower', 0);
@@ -847,12 +866,14 @@ Play.prototype = {
 		game.burrel.visible = creature1.alive;
 		game.fox.visible = creature2.alive;
 		game.deer.visible = creature3.alive;
+
 		game.flower.visible = creature4.alive;
 
 		if (creature4.alive) {
 			tween = game.add.tween(fade_in).to( { alpha: 1 }, 1000, "Linear", true, 0); // REVEIL
 			tween.onComplete.add(this.startCredits, game);
 		}
+
 
 		//Embers
 		// if (fireTime < 0) {
