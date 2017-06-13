@@ -36,6 +36,8 @@ Story.prototype = {
 		var grass = game.add.image(0, game.world.height - 100, 'grass');
 		//add images needed for animation
 		var ashes = game.add.sprite(50, game.world.height - 140, 'ashes');
+		ashes.alpha = 0;
+		game.add.tween(ashes).to( { alpha: 1 }, 2000, "Linear", true, 0);
 		var light_ray = game.add.sprite(190, game.world.height - 900, 'light_ray');
 		light_ray.anchor.setTo(0.5, 0.5);
 		var revival = game.add.sprite(100, game.world.height - 340, 'revival');
@@ -87,6 +89,8 @@ Story.prototype = {
 		}
 		
 		function updateText(){
+			//story1.alpha = 0;
+			//game.add.tween(story1).to( { alpha: 1 }, 2000, "Linear", true, 4000);
 			story1.destroy();
 			//phoejay revealed
 			birdy = game.add.sprite(200, game.world.height - 100, 'phoejay');

@@ -213,7 +213,7 @@ Play.prototype = {
 
 
 		// Create a player texture atlas
-		this.player = this.add.sprite(200, 2290, 'phoejay', 'static');
+		this.player = this.add.sprite(31000, 440, 'phoejay', 'static');
 		this.player.animations.add('walk', Phaser.Animation.generateFrameNames('walk', 1, 5), 10, true);
 		this.player.animations.add('static', ['static'], 1, false);
 		this.player.animations.add('hop', ['hop'], 1, false);
@@ -357,14 +357,17 @@ Play.prototype = {
 			[25576,2280],
 			[25960,1272],
 			[25960,1273],
+			[25960,1274],
+			[25960,1274],
 			[25960,1274]
-			
 		];
+
+		var coordinates4 = [
+			[31720, 500]
+		]
 		//////first stage- revive the burrel
 
-
-
-		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera, 1);
+		creature1 = new DeadAnimal(game, 9490, 1870, 'dead_burrel', 'divinity', '', this.player, coordinates1, 3000, this.camera);
 		game.add.existing(creature1);
 		
 		//add the live burrel at the same time but make it invisible at first
@@ -374,13 +377,11 @@ Play.prototype = {
 		
 		game.burrel.visible = creature1.alive;
 
-
-
 		//could change the variable name when other animals are added
 		
 		//////second stage- revive the fox
 
-        creature2 = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera, 2);
+        creature2 = new DeadAnimal(game, 12900, 1861, 'dead_fox', 'divinity', '', this.player, coordinates2, 4000, this.camera);
 		game.add.existing(creature2);
 
 		
@@ -392,18 +393,26 @@ Play.prototype = {
 		game.fox.visible = creature2.alive;
 
 		//////third stage- revive the deer
-		//creature3 = new DeadAnimal(game, 22672, 3054, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera, 3);
-		//game.add.existing(creature3);
+		creature3 = new DeadAnimal(game, 26672, 2784, 'dead_deer', 'divinity', '', this.player, coordinates3, 5000, this.camera);
+		game.add.existing(creature3);
 
 		
-		//game.deer = this.add.sprite(22672, 2724, 'deer','deer_1');
-		//game.deer.animations.add('deer_animate', [0, 1, 2], 5, true);
-		//game.deer.animations.play('deer_animate');
+		game.deer = this.add.sprite(26672, 2784, 'deer','deer_1');
+		game.deer.animations.add('deer_animate', [0, 1, 2], 5, true);
+		game.deer.animations.play('deer_animate');
 
 
-		//game.deer.visible = creature3.alive;
+		game.deer.visible = creature3.alive;
+
+		//////final stage- revive the flower
+		creature4 = new DeadAnimal(game, 32250, 550, 'sprout', 'divinity', '', this.player, coordinates4, 5000, this.camera, 4);
+		game.add.existing(creature4);
+
+		
+		game.flower = this.add.sprite(32110, 280, 'flower', 0);
 
 
+		game.flower.visible = creature4.alive;
 
 
 		// ---------------------------------------------------------------------------------------------------------
@@ -421,10 +430,10 @@ Play.prototype = {
 		*/
 
 		// Create a label to use as a button
-		// game.pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
-		// game.pause_label.fixedToCamera = true;
-		// game.pause_label.inputEnabled = true;
-		// game.pause_label.events.onInputUp.add(pause);
+		game.pause_label = game.add.text(game.width - 100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
+		game.pause_label.fixedToCamera = true;
+		game.pause_label.inputEnabled = true;
+		game.pause_label.events.onInputUp.add(pause);
 
 		// Add a input listener that can help us return from being paused
 		var pause_key = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
@@ -812,17 +821,22 @@ Play.prototype = {
 			}
 		}
 		
-
-		//    ▄███████▄    ▄█    █▄     ▄██████▄     ▄████████      ▄█    ▄████████ ▄██   ▄   
-		//   ███    ███   ███    ███   ███    ███   ███    ███     ███   ███    ███ ███   ██▄ 
-		//   ███    ███   ███    ███   ███    ███   ███    █▀      ███   ███    ███ ███▄▄▄███ 
-		//   ███    ███  ▄███▄▄▄▄███▄▄ ███    ███  ▄███▄▄▄         ███   ███    ███ ▀▀▀▀▀▀███ 
-		// ▀█████████▀  ▀▀███▀▀▀▀███▀  ███    ███ ▀▀███▀▀▀         ███ ▀███████████ ▄██   ███ 
-		//   ███          ███    ███   ███    ███   ███    █▄      ███   ███    ███ ███   ███ 
-		//   ███          ███    ███   ███    ███   ███    ███     ███   ███    ███ ███   ███ 
-		//  ▄████▀        ███    █▀     ▀██████▀    ██████████ █▄ ▄███   ███    █▀   ▀█████▀  
-		//                                                     ▀▀▀▀▀▀                         
-
+		/*
+		//next level
+		if (this.player.body.x > game.world.width - 50) {
+			layer1.destroy();
+			layer2.destroy();
+			layer3.destroy();
+			
+			layer1 = this.map.createLayer('Noncollision_2');
+			layer2 = this.map.createLayer('Noncollision_1');
+			layer3 = this.map.createLayer('Collision_1');
+			this.player.body.x = 100;
+			this.player.body.y = 100;
+			this.player.bringToTop();
+			
+			layer3.resizeWorld();
+		}*/
 
 		// MAKE A CALL PHOEJAY!!!!!!
 		if (this.input.keyboard.justPressed(Phaser.KeyCode.C)) {
@@ -833,12 +847,11 @@ Play.prototype = {
 
 		//ANIMALS
 
-
-		
-
 		game.burrel.visible = creature1.alive;
 		game.fox.visible = creature2.alive;
-		//game.deer.visible = creature3.alive;
+		game.deer.visible = creature3.alive;
+		game.flower.visible = creature4.alive;
+
 
 
 		//Embers
@@ -903,20 +916,19 @@ function pause_switch() {
 
 function pause() {
 	// When the paus button is pressed, we pause the game
+	game.pause_label.setText("Unpause");
+	game.pause_label.x -= 30;
 	game.paused = true;
 
 	// And a label to illustrate which menu item was chosen. (This is not necessary)
-	choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 
-		'Press R to restart', big_style);
+	choiseLabel = game.add.text(game.camera.x + game.width/2, game.camera.y + game.height/2 + 80, 'Press R to restart', { font: '30px Arial', fill: '#fff' });
 	choiseLabel.anchor.setTo(0.5, 0.5);
-	choiseLabel.alpha = 1;
-
-	// game.add.tween(choiseLabel).to( { alpha: 0 }, 1000, "Linear", true, 0, -1, true); // unveil
 };
 
 function unpause() {
 	// Only act if paused
 	if(game.paused){
+		game.pause_label.setText("Pause");
 		choiseLabel.destroy();
 
 		// Unpause the game
