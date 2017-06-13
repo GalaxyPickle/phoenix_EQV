@@ -6,9 +6,11 @@
 var End = function(game) {
 	// variables
 };
-Boot.prototype = {
+End.prototype = {
 	preload: function() {
 		console.log('End: preload');
+
+		game.stage.backgroundColor = "#333";
 
 
 	},

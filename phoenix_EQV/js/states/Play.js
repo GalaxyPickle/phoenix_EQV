@@ -856,7 +856,7 @@ Play.prototype = {
 		game.flower.visible = creature4.alive;
 
 		if (creature4.alive) {
-			tween = game.add.tween(this.fade_in).to( { alpha: 1 }, 1000, "Linear", true, 0); // REVEIL
+			tween = game.add.tween(fade_in).to( { alpha: 1 }, 1000, "Linear", true, 0); // REVEIL
 			tween.onComplete.add(this.startCredits, game);
 		}
 
